@@ -1,5 +1,9 @@
 # Submission readiness — BLOCKED ON GENUINE LIVE AND HUMAN GATES
 
+Current November7 patch-review checkpoint: actual live defective run `<DEMO_RECORD_ID>` is VERIFIED with fourFAIL/evidencevalidtrue/ReleaseProofBLOCKED. Patch review is PENDING; exact fresh base/diff and private human-only helper prepared. No corrected reviewed run or final release approval.18privatehelper tests and65review/securitytests passed; latest full baseline137/137unchanged. New24-file redacted defective export is local only. Agent execution commands plus a newly scoped fixed read-only patch inspector now suffice for independent verification; no application verifier edits or security-toggle changes. Next human action: read PATCH_REVIEW_PACKET.md and launch local review tooling personally. DeadlineNovember7,2026,23:59IST; no push/upload/remoteCI/video/submission. Earlier readiness text below is historical.
+
+## Earlier readiness history
+
 Updated November 7: genuine criteria/test review `<DEMO_RECORD_ID>` is independently VERIFIED at Level 1 using canonical CLI inspection locally and in the provider-equivalent sandbox. Agent policy was narrowly updated, saved and reopened with exact persisted text; Auto ON / Bypass OFF unchanged. Main suite 137/137 PASS. Next is the real human's fresh defective-run Switch request in REPORT_TO_CHATGPT.md; no such new run has yet been observed. Patch/release approvals, reviewed corrected run, actual remote CI/video/publication/submission remain incomplete. Previous source ZIPs are historical and do not contain this repair. No push, upload or submission occurred. Deadline November 7, 2026, 23:59 IST remains unchanged.
 
 ## Historical readiness checkpoint

@@ -1,5 +1,7 @@
 # HUMAN REVIEW PACKET — CRITERIA REVIEW VERIFIED
 
+Current live follow-through: the genuinely reviewed defective run<DEMO_RECORD_ID> now executed all six unchanged tests (5PASS/1FAIL), together with the other three real engines. Evidence is valid and ReleaseProof correctly BLOCKED. Separate correction review is now prepared in [PATCH_REVIEW_PACKET.md](PATCH_REVIEW_PACKET.md); patch and final release approvals remain PENDING. The earlier checkpoint below describes criteria verification before that live run, and its embedded criteria/test source remains unchanged.
+
 Updated November 7, 2026 IST. Human criteria/test proposal `<DEMO_RECORD_ID>` was consumed at `2026-11-06T19:28:04.476Z` with HUMAN_ATTESTED_FOR_DEMO, Level 1. Independent canonical inspection in ordinary PowerShell and the existing Codex workspace sandbox returned exit 0, `data.valid:true`, and all twelve checks true. Current criteria digest `51c39baba13fee5d5cd52078f3adab301566588b29dc1b405b5eff7706818eb7` and test SHA256 `e62a5a42d226dbb351c8e532a3834a577c0cbaffca195695988944b4a6e99c2f` match. No assistant attestation was performed. Raw file metadata stays PENDING by design; eligibility is the independent ledger record. Patch and final release approvals remain PENDING. Exact criteria/tests below are unchanged. Full main suite now 137/137, including 20 new inspection safety cases; no fresh reviewed Switch run has occurred in this repair.
 
 # Historical review procedure — already completed for these digests

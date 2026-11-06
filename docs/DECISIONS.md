@@ -2,6 +2,8 @@
 
 The protected specification is unchanged. These choices fill implementation details; they do not waive requirements.
 
+Current November7 checkpoint supersedes earlier unresolved-state wording below: genuine criteria review and the live four-engine defective run5bd5c74e are verified. The orders-authoritative policy remains limited to the separately proposed synthetic correction under V2§55.5. Human patch review, corrected reviewed run, final release review and delivery remain pending. A human-only interactive patch helper and fixed read-only inspector are prepared without changing application inputs or weakening approval/toolchain checks.
+
 | Decision                                                                     | Reason / limit                                                                  |
 | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
 | Existing Flip-Coin-AI root and codex implementation branch                   | Preserve user repository/history; no nested clone                               |
