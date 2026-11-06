@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "node": "v24.16.0",
+  "npm": "11.9.0",
+  "oasdiff": {
+    "version": "1.35.0",
+    "archive": "oasdiff_1.35.0_windows_amd64.tar.gz",
+    "archiveSha256": "5cdea2b64bd083d16dff19dba3aae011a0b7388ab33df81051cfc76800bf73e0",
+    "binarySha256": "a358a9c0331be0d9e0be35a4c900b9f1965eaf490893eaec6c5d22dda99dc5e1"
+  }
+}

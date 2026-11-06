@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "requiredChecks": ["acceptance", "accessibility", "contract", "data"],
+  "timeoutMs": 60000,
+  "browserTimeoutMs": 90000,
+  "overallTimeoutMs": 180000,
+  "maxOutputBytes": 1048576,
+  "maxCsvBytes": 2097152,
+  "maxCsvRows": 5000,
+  "axeRules": ["label"],
+  "sampleUrl": "http://127.0.0.1:4173"
+}

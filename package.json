@@ -1,0 +1,43 @@
+{
+  "name": "switchforge",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": "24.16.0"
+  },
+  "scripts": {
+    "sf": "tsx apps/cli/src/main.ts",
+    "demo:start": "tsx apps/checkout-demo/src/server.ts",
+    "typecheck": "tsc --noEmit -p tsconfig.base.json",
+    "lint": "tsc --noEmit -p tsconfig.base.json",
+    "test": "vitest run",
+    "test:unit": "vitest run tests/unit",
+    "test:integration": "vitest run tests/integration",
+    "test:security": "vitest run tests/security",
+    "test:e2e:local": "vitest run tests/e2e",
+    "doctor": "tsx apps/cli/src/main.ts doctor --json",
+    "integrity": "node scripts/source-integrity.mjs"
+  },
+  "dependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "better-sqlite3": "13.0.3",
+    "canonicalize": "5.1.0",
+    "csv-parse": "7.0.3",
+    "playwright": "1.65.0",
+    "yaml": "2.9.1",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "7.6.13",
+    "@types/node": "24.12.0",
+    "prettier": "3.9.10",
+    "tsx": "4.23.15",
+    "typescript": "7.0.2",
+    "vitest": "5.1.0"
+  }
+}

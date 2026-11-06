@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "criteriaId": "checkout-coupon-v1",
+  "revision": 1,
+  "status": "PENDING",
+  "cases": [
+    {
+      "id": "AC-001",
+      "description": "At expiry reject and preserve total"
+    },
+    {
+      "id": "AC-002",
+      "description": "One millisecond before expiry apply SAVE100 discount of 100 cents"
+    },
+    {
+      "id": "AC-003",
+      "description": "After expiry reject and preserve total"
+    },
+    {
+      "id": "AC-004",
+      "description": "Invalid or missing UTC timestamps are rejected"
+    },
+    {
+      "id": "AC-005",
+      "description": "Negative, fractional and unsafe integer cents are rejected"
+    }
+  ]
+}
