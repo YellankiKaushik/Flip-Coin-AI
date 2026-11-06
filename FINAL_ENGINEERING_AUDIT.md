@@ -1,240 +1,184 @@
 # FINAL ENGINEERING AUDIT — SWITCHFORGE
 
-Audit date: November 6, 2026. Authoritative source: protected DEEP_TECHNICAL_ARCHITECTURE_V2.md, especially §§50–65. Implementation verified at **ff94de3182f4a99960bb1785c65dcc47539c9ac3**, branch `codex/switchforge-implementation`. This is an engineering self-audit, not human approval, a security certification or a submission receipt.
+Updated 2026-11-06T14:44:45.254041+00:00. Authoritative protected source: DEEP_TECHNICAL_ARCHITECTURE_V2.md; §§50–65 override earlier text. This report supersedes the earlier delivery checkpoint, which is preserved in private history. Evaluator **f27d79c3ee58b6153868930ddd70e9206c652a7d**; CI tooling **a2233ef9ae374a668c7ae5436d7f694786b35fe1**; branch `codex/switchforge-implementation`. The final documentation commit is recorded separately in WORK_LOG.md. This is an engineering self-audit, not human approval or submission confirmation.
 
-## Outcome
+## Outcome and scope
 
-The local implementation, independent audit repairs, reproducibility checks, documentation and redacted evidence are prepared. **Full P0 and hackathon completion remain BLOCKED.** Six V2 gates remain incomplete: GATE-SW-01, GATE-SW-02, GATE-CORE-01, GATE-HUMAN-01, GATE-DEMO-01 and GATE-DEMO-02. GATE-CORE-02 and GATE-CORE-03 have scoped local proof. No completion percentage is invented.
+**Local engineering verification is VERIFIED; overall hackathon delivery remains BLOCKED.** The real human/agent room interaction now satisfies GATE-SW-01. The actual agent npm command failed before SwitchForge started, so GATE-SW-02 is FAILED. Five completion gates remain incomplete; none were removed or weakened. There is no four-PASS approved production run or READY claim.
 
-Actual production ledger inspection at **2026-11-06T11:58:32.375Z** found **zero decisions and zero criteria attestations**. Development authorization has not been converted into approval. Pending request creation is not human review. The criteria and six proposed acceptance tests remain unchanged and PENDING.
+SwitchForge verifies one synthetic checkout for a criteria owner, developer/QA reviewer and release reviewer. AcceptanceRelay checks UTC coupon behavior with Vitest, A11yRelay scans the local form with Playwright/axe, ContractGuardian compares local OpenAPI documents with oasdiff, DataRescue reconciles synthetic CSVs, and ReleaseProof binds their actual evidence to one frozen candidate and a separate human decision. It does not process payments, deploy software or provide general production authorization.
 
-The audit read the actual implementation, configuration, migration, tests, CLI and report generators. It independently reproduced defects instead of relying on the checkpoint's earlier 86-test summary. All 19 functional requirements, 10 nonfunctional requirements and eight V2 gates are retained in the traceability section.
+## Protected sources and acceptance content
 
-## Protected source integrity
+All original protected files remain byte-for-byte unchanged:
 
-All three originals retain their exact original bytes. They were never reformatted, regenerated, renamed or deleted.
-
-| Document                          |  Bytes | SHA-256                                                          |
+| File                              |  Bytes | SHA-256                                                          |
 | --------------------------------- | -----: | ---------------------------------------------------------------- |
 | DEEP_TECHNICAL_ARCHITECTURE_V2.md | 260575 | 816ee4cb4a7de5762377ffb447395e0ae59b3d2b3b7cf4ff4ae45c11ca07c8eb |
 | hack details.pdf                  | 340707 | 37ac819bf7b0af5cb3382b9acb28bf7b63db98f8dda278e539cd66b8777a5e15 |
 | PROJECT_ANALYSIS.md               |  72716 | c44b9a27cb588cacce84f89ab0279d88be37b9caeaf54f8a0fd5b5794b2b9a5d |
 
-## Project and implementation
+The corrected criteria raw SHA-256 remains f69fc54fcc167163ba6a715c10fabd4e9a63d2aaef27b5dd31efb259266a1e7c; canonical criteria digest 51c39baba13fee5d5cd52078f3adab301566588b29dc1b405b5eff7706818eb7. The six-test source raw SHA-256 remains e62a5a42d226dbb351c8e532a3834a577c0cbaffca195695988944b4a6e99c2f. The packet's criteria and test content were directly compared with the files and match. No criterion/assertion was changed or weakened.
 
-SwitchForge is human-supervised release assurance for one synthetic local checkout. Intended users are the product/criteria owner, developer/QA reviewer and release reviewer; one real participant can demonstrate several roles. Four engines verify coupon behavior, checkout accessibility, OpenAPI compatibility and CSV consistency. ReleaseProof aggregates deterministic evidence and a separate human decision. No real payment provider, customer data, deployment service or general financial-reconciliation product was introduced.
+At/after expiry rejects and preserves total; one millisecond before expiry applies SAVE100. Invalid/missing UTC timestamps and negative/fractional/unsafe integer cents reject. SAVE100, 100 cents, zero clamping, unknown-coupon behavior and exact millisecond-Z parsing are implementation decisions where the specification leaves details UNSPECIFIED; they are disclosed for human agreement. Extra engineering edge tests do not extend the six proposed acceptance cases.
 
-The workspace is a TypeScript/npm repository with CLI, sample checkout, coordinator, check adapters, SQLite ledger, artifact store and release policy. Switch Console, its managed Codex agent and Mattermost supply collaboration. There is no custom Switch transport client or replacement messaging service. The CLI remains independently executable for reproducibility; a terminal-only run does not prove the Switch product workflow. Sources: architecture §§51–56 and 59.
+## Current architecture and repairs
 
-`prepare` materializes a selected versioned scenario plus allowlisted code, tests, configuration and lockfile in a fresh snapshot. Canonical sorted raw-byte hashes bind criteria/test content, policy, effective checks and actual toolchain identity. `run` uses a candidate-scoped idempotency key, one workspace lease, literal subprocess argument arrays, sanitized environment, bounded output and an overall deadline. Candidate bytes are checked before/after checks and on assessment. Cooperative metadata monitoring remembers observed edits restored before a check ends.
+The CLI composes a core coordinator through CoordinatorLedger, ArtifactSink and CoordinatorServices ports. Core has no imports from other workspace packages. Checks cannot import release. Canonical hashing is a pure core-domain utility; the old evidence path remains a compatibility export. Production cross-package imports use declared public entry points. A dependency-graph test rejects private imports and cycles, including type dependencies (§54.3). Domain tests do not require launching a browser, SQLite ledger or agent.
 
-Each engine records real receipts, normalized findings, coverage and hash references. SQLite uses foreign keys, WAL, FULL synchronous mode and immediate transactions. Evidence files publish without replacement. A last `completion.json` binds the complete registered artifact inventory. A database COMPLETED flag alone cannot establish valid evidence.
+Preparation copies explicit allowlisted raw bytes into a new UUID registry snapshot and binds criteria/tests, policy, effective checks, verifier source, lockfile and actual toolchain in the manifest. Coordinator runs are serialized under a PID/lease lock with candidate-scoped idempotency, state transitions, bounded literal-argv processes, deadlines and cooperative snapshot change detection. Files publish without replacement; SQLite uses FK/WAL/FULL/immediate transactions. A last completion record binds the complete artifact inventory. No new SQL migration or data reconstruction was needed.
 
-ReleaseProof requires exactly four mandatory valid PASS results, nonempty coverage/evidence, matching engine/candidate/toolchain/policy, current verifier/configuration, verified artifacts and a real criteria/test review. COMPLETED is not PASS; READY_FOR_HUMAN_APPROVAL is not human attestation or deployment. Criteria, patch and release actions have different scopes and one-time nonce hashes; requests expire after 15 minutes. Sources: §§55, 57–58.
+This delivery audit first added nine security regressions: **0/9 passed before repair**, with actual JSON retained. Repairs now reject malformed stored JSON and manifest shape, wrong snapshot digest, changed proposal identity/expiry, redirected idempotency identity, active-run identity changes, mismatched result candidate and wrong assessment digest. Additional regressions reject malformed run JSON, backwards lifecycle transitions and proposal retargeting. All 12 pass. Snapshot, manifest, proposal and assessment now have strict runtime schemas in addition to existing run/result/config/policy schemas. Indexed identities and canonical digest/run bindings are checked at reads/writes. Specialized audit/criteria/completion validations remain; this is not a universal versioned schema claim for every database row.
 
-New runs explicitly store criteriaRevision, policyDigest and toolchainDigest in their existing JSON ledger payload. Snapshot payloads retain ID, digest, root, full manifest and creation time; candidateDigest hashes the canonical manifest. This is an additive payload change, **not a new SQL migration**. The original migration already has correct candidate-scoped key uniqueness. No historical database was rebuilt or deleted, and no legacy V1 global-key upgrade was claimed. Legacy runs without current bindings/completion records remain preserved and ineligible for current readiness.
+Five real adapter fault cases pass: missing readiness, missing form, occupied loopback port, invalid OpenAPI and oversized CSV produce ERROR and verifiable error evidence. Timed-out browser process trees release the port. The inputs belong to isolated test ledgers and are explicitly damaged for negative adapter testing; they never bypass coordinator integrity or confer approval. No real PASS or human attestation is fabricated.
 
-## Defects found and corrected
+Earlier verified repairs remain: semantic PASS/tool binding, exact acceptance ID matching, streaming UTF-8 decoding, atomic nonreplacement publication, durable completion, duplicate CSV counts/issue IDs, browser/server cleanup, pre-read resource caps, declared manifest exclusions, final transaction tool/TTL checks, criteria/test proposal-content binding, isolated E2E ledgers, frozen review execution, portable pinned-binary checksums and historical report-generator refusal. Their original reproduction history is preserved.
 
-| Confirmed finding                                              | Repair / verification                                                                                                                   |
-| -------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| PASS could contradict execution errors or blocking findings    | Semantic result validation rejects contradictions, empty PASS evidence/coverage and unknown versions                                    |
-| A check could identify a different engine                      | Explicit check-to-tool mapping enforced by schema                                                                                       |
-| AC-001 matched the prefix AC-0010                              | Exact whitespace-token criterion matching; regression retained                                                                          |
-| Split UTF-8 subprocess chunks corrupted output                 | Per-stream StringDecoder; real split-multibyte subprocess reproduction                                                                  |
-| Artifact existence-check/write race could replace bytes        | Exclusive flushed temporary file and atomic same-volume hard-link publication; arriving-writer regression                               |
-| COMPLETED preceded durable final evidence                      | Publish completion record last; verify required files and complete inventory before public readiness                                    |
-| Duplicate CSV rows undercounted and issue IDs collided         | Retain actual row counts and include row-specific finding content in stable issue IDs                                                   |
-| Browser launch/close could leave server cleanup incomplete     | Browser launch is inside cleanup scope; nested finally closes browser/server                                                            |
-| Resource/config enumeration gaps                               | CSV size checked before reading; candidate input cap and declared exclusions honored                                                    |
-| Release transaction lacked a final tool/TTL recheck            | Synchronous executable/package revalidation and exact candidate/policy binding inside transaction; TTL checked again before consumption |
-| Expired/malformed request could retain its displayed state     | Effective report decision rechecks expiry and candidate/assessment/policy identities                                                    |
-| Criteria review lookup did not fully bind proposal content     | Require matching criteria/test digests, proposal resource hash and actor reference                                                      |
-| E2E used real review ledger                                    | Fresh per-suite DB/artifact namespace; no dependence on later human approvals                                                           |
-| Review generator used mutable current source                   | Prepare corrected frozen snapshot, execute actual Vitest there and record hashes/IDs                                                    |
-| CI multiline commands could mask an earlier failure            | Separate dependency/tool steps and actual formatting check                                                                              |
-| Documented Windows PowerShell install failed in clean checkout | Replace unavailable Get-FileHash with .NET SHA256 stream API, retaining pinned archive/binary verification                              |
-| Historical generator could overwrite current reports           | Default invocation refuses; explicit historical export writes labelled history only                                                     |
+## Real Switch integration and actual failure
 
-The first five audit regressions genuinely failed against the checkpoint. A separate missing-finalization regression also failed before its repair. Later focused/full runs passed. Additional inspection-led fixes have scoped tests/probes. No six-case acceptance assertion or criterion was weakened or changed.
+Dedicated room `switchforge-release-demo`, Codex agent `switchforge-demo-agent`; original agents/room/container preserved. The latest observed Console shows Running. Last recorded configuration retained Auto on, Bypass permissions off and agent-management off. No provider permissions were relaxed. At 2026-11-06T14:38:45Z, Docker Engine 29.9.2 was running; Switch health returned ok; Mattermost ping returned OK; the existing container was healthy and loopback bound at 58822→8065.
 
-Atomic hard-link publication is a documented implementation decision replacing overwrite-capable rename. Unsupported hard links fail; no overwrite fallback is used. This retains the source's nonreplacement/integrity requirement (§58).
+At **19:31 IST November 6**, the real human sent the addressed read-package/doctor request. At **19:33**, the actual agent reported the failure in the same room. Actual working directory was the original configured Coding files workspace; package name switchforge, version 0.1.0, sf script tsx apps/cli/src/main.ts. Exact command `npm --silent run sf -- doctor --json`; **exit 1**, Node v24.16.0 MODULE_NOT_FOUND for npm-cli.js. **No project JSON, snapshot/run ID, candidate digest or project artifacts were emitted.** It is not a successful SwitchForge command receipt.
 
-Two native recursive fs.watch attempts aborted the pinned Windows Node worker with `!_wcsnicmp(filename, dir, dirlen)` in src/win/fs-event.c:72. Canonicalizing the root did not solve it. The shipped watchFile polling plus synchronous metadata checks passed the restored-edit/exclusion tests. This does not establish hostile-account immutability.
+Human message (private local reference) and actual agent reply (private local reference) are local-only permalinks. Actual UIA/activity observations and an unmodified genuine screenshot are preserved privately under delivery-20261106. Show activity corroborated the failed PowerShell/npm call and actual same-room post. No human message was authored by this assistant. The last room check still showed this failure with no retry result.
 
-Other unsuccessful attempts are retained in WORK_LOG.md: a scratch toolchain probe syntax error corrected before execution; UI child-cache/offscreen actions resolved through observation-based navigation; two accidentally formatted upstream licenses restored exactly and excluded from formatting; the first clean-checkout installer failure retained as failure evidence. No security barrier was bypassed.
+Independent Windows PowerShell probes of exact npm, npm.cmd and direct Node CLI all exited 0 locally. Thus the provider-context bootstrap failure is **not reproduced locally; root cause UNSPECIFIED**. The runner now documents preserving the original failure then trying npm.cmd/direct Node within an authorized diagnostic task. A genuine human-requested retry is needed; local success cannot close SW-02. No global npm wrappers, credentials, provider settings or security barriers were modified.
 
-## Current infrastructure and Switch integration
+## Current diagnostic runs and evidence
 
-At **2026-11-06T11:58:31.4589267Z**, Docker Engine **29.9.2** and Desktop were running. Switch `http://127.0.0.1:58821/health` returned `ok`; Mattermost `http://127.0.0.1:58822/api/v4/system/ping` returned `OK`. The preserved Mattermost container was healthy on loopback 58822→8065. Startup used `docker desktop start --detach` and the existing Console Start control. No reset, volume deletion, reinstall or database replacement occurred. Current health is an observation, not an uptime promise.
-
-Created dedicated Codex agent **switchforge-demo-agent**, configured to the exact original workspace. Console displays Running. Auto mode remained on, Bypass permissions off and agent-management off; default owner-addressing label was retained. No independent negative provider authorization test is claimed. Agent instructions preserve the specification, require real CLI output, separate human reviews and prohibit attestation impersonation/publication.
-
-Created **switchforge-release-demo**, bridged to the existing Mattermost connection with linked human and dedicated agent. Room instructions enforce the same boundaries. Existing existing connectivity agent, existing connectivity agent and switch-buddy-admin remain present. UIA setup observations are retained under `<PRIVATE_RECEIPT_LOCATION>`; genuine screenshots were observed through the UI tool.
-
-Only the automatic bot welcome was observed in the project room. There is **no actual human-requested project CLI receipt or same-room result yet**. A Running indicator, welcome or earlier SETUP_OK is insufficient proof. No agent-authored human message was sent. [Human actions](ACTION_REQUIRED_FROM_HUMAN.md) supplies the exact real message and local room link.
-
-## Actual final production runs
-
-Both bind evaluator implementation **ff94de3182f4a99960bb1785c65dcc47539c9ac3**. Later documentation-only changes do not alter hashed evaluator inputs.
-
-| Engine           | Defective | Corrected | Actual evidence                                                                |
-| ---------------- | --------- | --------- | ------------------------------------------------------------------------------ |
-| AcceptanceRelay  | ERROR     | ERROR     | Review denied before production Vitest; explicit error/result JSON, coverage 0 |
-| A11yRelay        | FAIL      | PASS      | Actual axe label finding/recheck, browser receipts and screenshots             |
-| ContractGuardian | FAIL      | PASS      | Actual validation/breaking JSON and tool exit codes                            |
-| DataRescue       | FAIL      | PASS      | Actual 500-cent discrepancy then clean four-row reconciliation                 |
-| ReleaseProof     | BLOCKED   | BLOCKED   | Human review and acceptance ERROR/zero coverage block                          |
+These new runs use evaluator f27d79c3ee58b6153868930ddd70e9206c652a7d; subsequent CI-script/ignore/documentation changes do not alter candidate inputs. They are explicitly **unreviewed local engineering diagnostics**, not the requested post-human-review final pair.
 
 | Scenario  | Run ID                               | Snapshot ID                          | Candidate digest                                                 |
 | --------- | ------------------------------------ | ------------------------------------ | ---------------------------------------------------------------- |
-| Defective | <DEMO_RECORD_ID> | <DEMO_RECORD_ID> | ce4484c1ac79cd73d0181eccebbf97ea1462805d96c20d8a2b11a2ab129c4e55 |
-| Corrected | <DEMO_RECORD_ID> | <DEMO_RECORD_ID> | 2124398713aa2448bb0b9e05d78792ee26738c9ff55432151dbfe9a5da6f3988 |
+| Defective | <DEMO_RECORD_ID> | <DEMO_RECORD_ID> | 589a37dc749a3084b07377ea634ce80040b486727d475fe9d8b43b4236c9a502 |
+| Corrected | <DEMO_RECORD_ID> | <DEMO_RECORD_ID> | 3940df72a1cf13ef6f5cf923135b379e253c559cd939b1900c3d0d73f86ed23a |
 
-Both `verify-evidence` operations returned valid=true. Corrected blockers: CRITERIA_AND_TEST_REVIEW_REQUIRED, acceptance:ERROR, acceptance:NO_COVERAGE. The older run additionally has the three actual FAIL findings and is superseded by the newer run of the same candidate. The run's historical evidence remains intact.
+| Engine        | Defective status / coverage | Corrected status / coverage |
+| ------------- | --------------------------- | --------------------------- |
+| acceptance    | ERROR / 0                   | ERROR / 0                   |
+| accessibility | FAIL / 1                    | PASS / 1                    |
+| contract      | FAIL / 1                    | PASS / 1                    |
+| data          | FAIL / 4                    | PASS / 4                    |
 
-These are not four approved PASS results. A new pair of snapshots/runs is required after genuine review. No expired or historical positive fixture state authorizes the current workflow.
+Both run commands exited 0 because they completed their allowed checks. They do not prove readiness. Both ReleaseProof assessments are BLOCKED. Corrected blockers: CRITERIA_AND_TEST_REVIEW_REQUIRED, acceptance:ERROR, acceptance:NO_COVERAGE. Acceptance did not execute production Vitest without authority. The defective run additionally has the three real findings, and is superseded for current readiness by the corrected run. Both verify-evidence commands returned valid=true; compare completed. release-request on corrected returned actual exit 8, APPROVAL_STALE.
 
-## Actual verification results
+Actual process times: defective run 5984 ms; corrected run 6159 ms. These omit the denied production acceptance execution and are **not** a benchmark of a full reviewed four-engine run. Full 180-second target remains NOT TESTED. Full normalized JSON, timestamps, tool versions and original artifact hashes are in the private runs receipts and original artifacts.
 
-Latest main suite: **99/99 passed, 0 failed, 0 skipped, 15 files**. The 625-combination readiness matrix is **one reported generated test**, not 625 separate tests. A separate frozen corrected review run passed **6/6**, exit 0. Its criteria raw SHA-256 is f69fc54fcc167163ba6a715c10fabd4e9a63d2aaef27b5dd31efb259266a1e7c; test source SHA-256 is e62a5a42d226dbb351c8e532a3834a577c0cbaffca195695988944b4a6e99c2f. Detailed private execution: `<PRIVATE_RECEIPT_LOCATION>`.
+## Actual test execution and reproducibility
 
-| Actual main command                                                                      | Exit | Duration |
-| ---------------------------------------------------------------------------------------- | ---: | -------: |
-| npm ci                                                                                   |    0 |  7089 ms |
-| npm run typecheck                                                                        |    0 |   703 ms |
-| npm run format:check                                                                     |    0 |  1213 ms |
-| npm test -- --reporter=json --outputFile <PRIVATE_RECEIPT_LOCATION> |    0 | 53818 ms |
-| npm audit --audit-level=high --json                                                      |    0 |  1821 ms |
-| npm --silent run sf -- doctor --json                                                     |    0 |  1572 ms |
+Main suite: **117/117 passed, 0 failed/skipped, 18 files**. Clean isolated checkout: **117/117**, also 0 failed/skipped. The 625-state matrix is one reported test. Dependency audit returned zero vulnerabilities at execution time.
 
-Audit reported zero vulnerabilities at execution time. No coverage percentage, throughput or complete reviewed-run performance measurement is invented. Command receipts: `<PRIVATE_RECEIPT_LOCATION>`. Native tools/package versions are recorded by actual doctor output.
+| Actual command                                                                                               | Exit | Duration ms |
+| ------------------------------------------------------------------------------------------------------------ | ---: | ----------: |
+| `npm ci`                                                                                                     |    0 |        7913 |
+| `npm run typecheck`                                                                                          |    0 |        1094 |
+| `npm run format:check`                                                                                       |    0 |        1422 |
+| `npm test -- --reporter=json --outputFile <PRIVATE_RECEIPT_LOCATION>` |    0 |       74102 |
+| `npm audit --audit-level=high --json`                                                                        |    0 |        1843 |
+| `npm run docs:check`                                                                                         |    0 |         441 |
+| `npm run integrity`                                                                                          |    0 |         377 |
+| `npm --silent run sf -- doctor --json`                                                                       |    0 |        1706 |
 
-### Clean checkout
+An owned local clone --no-hardlinks began with no .local, artifacts, node_modules or protected private references. Documented locked dependency, Chromium and pinned oasdiff setup, typecheck, formatting, full suite, audit, doctor and docs checks passed at evaluator f27d79c. No runtime data was copied. This is the same Windows host and declared toolchain with shared browser cache, not a fresh OS.
 
-An owned isolated temporary checkout of **ff94de3182f4a99960bb1785c65dcc47539c9ac3** began without .local, artifacts, node_modules or private protected reference documents. No ignored runtime data was copied from the original workspace. Locked install, documented Playwright/browser and pinned oasdiff installation, typecheck, formatting, **99/99 tests**, audit and doctor passed. Its final tracked worktree was clean after restoring the deliberately opposed mutable fixture.
+The actual Vitest executable then tested opposing frozen/mutable sources: defective frozen + mutable corrected gave **5 PASS, AC-001 FAIL, exit 1**; corrected frozen + mutable defective gave **6 PASS, exit 0**. Source hashes differ. Mutable source was restored, tracked checkout clean. These standalone engineering runs grant no human authority and are separate from the 117-test suite.
 
-Actual receipts/paths/durations: `<PRIVATE_RECEIPT_LOCATION>`, metadata.json, tests-all.json and COMPLETE.json. This was the **same Windows host** with declared Node/npm and shared Playwright cache, not a fresh OS or actual GitHub Actions run. The initial failed installer checkout is separately preserved under clean-checkout; subsequent successes do not erase it.
+The isolated checkout was advanced to CI tooling a2233ef9ae374a668c7ae5436d7f694786b35fe1. All seven specified jobs ran through ci-proof and passed locally: dependency-install; typecheck/format; unit 67; integration 19 plus local E2E 3; security 28; artifact-contract repeats 18; docs-link-check. Each actual report has verified published SHA-256, exits, timestamp, lock hash, Node/browser/oasdiff versions, SHA, worktree status and LOCAL_ONLY provenance. The tracked tree was clean. Counts are not summed as 135 unique tests. Windows is the sole tested target.
 
-### Frozen-source isolation experiment
+CI initially retained only textual JSON-reporter receipts; review detected Vitest's default report file outside the upload directory. Fixed explicit report destinations, validated nonzero totals/results, redacted copies and original/published hashes before the successful seven-job verification. The generated .vitest cache is now ignored and retained, never deleted.
 
-The actual Vitest executable ran with the same frozen-config/cwd arrangement used by the acceptance adapter, as a standalone engineering experiment without granting review:
+## Human review and separate decisions
 
-| Frozen source | Opposing mutable source | Actual six-case result                 | Exit |
-| ------------- | ----------------------- | -------------------------------------- | ---: |
-| Defective     | Corrected               | 5 PASS, 1 FAIL: AC-001 expiry boundary |    1 |
-| Corrected     | Defective               | 6 PASS, 0 FAIL                         |    0 |
+Actual ledger inspection at 2026-11-06T14:39:30.913Z found **0 decisions and 0 criteria attestations**. Criteria/test approval is **PENDING**. Development authorization was not converted into approval. Current requests are metadata only, REQUESTED, actor level 0:
 
-Both directions have different actual frozen/mutable source hashes. Thus the exercised test path loads the chosen frozen coupon source rather than mutable current input. Exact cases, snapshot IDs/digests and hashes: `<PRIVATE_RECEIPT_LOCATION>`. This experiment is not normalized approved AcceptanceRelay evidence.
+| Action                      | Proposal                             | Expiry UTC               | State                   |
+| --------------------------- | ------------------------------------ | ------------------------ | ----------------------- |
+| Criteria/tests              | <DEMO_RECORD_ID> | 2026-11-06T14:55:04.275Z | REQUESTED, not attested |
+| Separate precommitted patch | <DEMO_RECORD_ID> | 2026-11-06T14:55:05.059Z | REQUESTED, not attested |
 
-### Negative tests and contention
+Requests expire after 15 minutes. Recreate them if stale; never imply their elapsed time is consent. The prior 10e5fd1b criteria request expired without a decision. No final release proposal was created because corrected readiness is BLOCKED.
 
-Executed checks cover process timeout, output flood, descendants, abort, literal argv, executable denial; traversal/junction restrictions; browser origin denial; CSV/schema/UTF-8/row/byte failures; external OpenAPI references and unknown/contradictory reports; stale/duplicate/malformed results; absent/tampered evidence; restart/rollback/recovery; idempotency and noninteractive attestation denial.
+The 3344-byte actual precommitted scenario diff SHA-256 is 2344c847a48c1751ae7018acfa2da43cbee8f579a25f54f92cfe2f9fd54488ee. Fresh patch scope is the defective snapshot above. The packet discloses the existing coupon equality repair, accessible label, restored JSON response and O-1002 1000→1500-cent ledger value. Selecting corrected fixtures is not a newly authored or applied repair. No frozen snapshot was patched in a genuine run. Criteria, correction and final readiness decisions remain separate.
 
-A separate two-process SQLite schema probe in an owned temporary DB produced exits 0 and 5, with the second writer denied by SQLITE_CONSTRAINT_PRIMARYKEY and exactly one **test-only** row. The payload explicitly is not human approval, and the production ledger was untouched. `<PRIVATE_RECEIPT_LOCATION>` records the 222 ms observation. This tests transaction/key contention, not concurrent genuine human attestations.
+Only Level 1 HUMAN_ATTESTED_FOR_DEMO is supported, with reviewer identity not cryptographically verified. Level 2 isolation is not implemented; production authorization/deployment is out of scope. Positive interactive decision/replay/impersonation/concurrent-human paths remain NOT TESTED as real human/provider flows. No fake approval record was inserted to exercise them.
 
-Not every browser launch/readiness/redirect fault has been injected through every production adapter. Full positive interactive review, independent agent-impersonation denial and simultaneous real human terminal decisions remain NOT VERIFIED. Deterministic fixtures and schema probes do not replace those human/provider tests.
+## Prepared export, GitHub and submission
 
-## Criteria, patch and final decision
+New local export `.local/demo-export-delivery-1793975723732` contains 46 evidence files plus manifest. All exported sizes/hashes and tested home/workspace/credential patterns passed; ZIP bytes were round-trip verified. Actual corrected screenshot was visually inspected and shows Email associated with its input. Archive: **51054 bytes**, SHA-256 **1a3581e27930f2110a2a1f180e4ca63bfb420fbc64911ad7e3a08dccecc52fc2**. Original/exported hashes differ wherever redaction changes bytes. This presentation bundle is not a ledger import or independent approval proof. It has not been uploaded.
 
-Human review is **PENDING**. [HUMAN_REVIEW_PACKET.md](HUMAN_REVIEW_PACKET.md) embeds the exact five criteria and six tests. At/after expiry rejects and preserves total; one millisecond before expiry applies SAVE100; malformed/missing UTC timestamps and invalid/unsafe integer cents reject.
+GitHub connector read the actual branch collection: only main at 66bd0b90a33e31a067acf8b7dd435120472e330b. The actual workflow query for evaluator f27d79c returned total_count=0. An initial encoded-branch lookup was rejected by the connector URL validator; collection read recovered it. **No source push, PR publication or GitHub Actions execution occurred.** Local seven-job success is not remote CI.
 
-**Implementation decisions requiring agreement:** SAVE100, fixed 100-cent discount, zero clamping and exact millisecond-Z timestamp format fill details UNSPECIFIED by the source; they are not invented source requirements. Separate zero/sub-discount/unknown-coupon engineering tests do not extend the six proposed acceptance tests or confer approval. Sources: §§55.2 and 57.
+README, architecture, testing, runbooks, notices, human packets, authentic demo script and submission copy are prepared. Source staging was checked for credential patterns, protected/private/runtime files and whitespace errors. Source, CI and report commits are local, with no reset/history rewrite. No private DB, runtime evidence, token, binary or protected source was staged.
 
-Criteria request <DEMO_RECORD_ID> and patch request <DEMO_RECORD_ID> were created as REQUESTED at Level 0. Their 15-minute request windows have expired. A human must create a fresh request using the documented procedure after personally inspecting the exact content. No attestation was executed.
+The actual official event page displayed an account-access gate: sign in/create an account is needed. Exact authenticated submission-form labels, registration/team details, selected track, video URL and receipt remain **UNSPECIFIED**. No login, account creation, terms acceptance or submission was automated. [Official overview](https://www.wemakedevs.org/hackathons/switch) and [schedule](https://www.wemakedevs.org/hackathons/switch/schedule) support the team-workflow and repository/README/video deliverables and November 7, 2026, 23:59 IST deadline. SUBMISSION_FIELDS.md separates verified facts from proposed copy; it does not invent form fields.
 
-The actual patch diff is the local review procedure, 3344 bytes, SHA-256 2344c847a48c1751ae7018acfa2da43cbee8f579a25f54f92cfe2f9fd54488ee, bound to the defective snapshot/digest above. [PATCH_REVIEW_PACKET.md](PATCH_REVIEW_PACKET.md) discloses that the corrected fixtures were precommitted. Selecting them is not evidence of a newly authored/applied human-approved repair. No frozen snapshot was intentionally patched during a run.
+## Conformance limits and hackathon risk
 
-No final release decision exists. The implemented positive label is **Level 1 HUMAN_ATTESTED_FOR_DEMO**, with actor identity not cryptographically verified. Level 2 isolated reviewer authority is not implemented; Level 3 production authorization is out of scope. Ordinary chat or development authorization cannot set privileged state. No deployment exists.
+Protected rules PDF pp.18–20 records Switch 30%, technical execution 25%, creativity/impact 25%, presentation 20%. Recommended track is Best Business Workflow, not a recorded entry. Local verification/reproducibility is substantial; the failed live project command, pending human decisions and absent authentic end-to-end video remain material judging risks. No prize, adoption or commercial impact claim is made. Internal targets remain November 7 freeze 17:00 IST and human submission 20:00 IST.
 
-## Evidence bundle and presentation
+Shared-account Level 1, hashes and cooperative polling cannot defend against a hostile account rewriting source/DB/timestamps/keys. Installed dependency versions/lock integrity are checked, not every node_modules byte. Some browser launch/source-identity/redirect/incomplete-scan faults and positive provider permission boundaries are not independently injected through every adapter. No WCAG certification, full consumer/runtime API compatibility, p95/p99, capacity or SLA claim. Retention is preview only; no deletion. External coding providers may transmit context. Optional second agent, REA study, dashboard, cloud/PR automation and production deployment remain NOT STARTED; P0 integrity was not cut to add them.
 
-Local redacted directory: `.local/demo-export-final-1793958517304`, **46 evidence files plus export-manifest.json**. All exported lengths/SHA-256 values matched. Tested home/workspace-path and credential patterns were absent. The real corrected browser screenshot was visually inspected and shows the associated Email label. These checks do not replace the human's publication review.
+## Eight completion gates
 
-ZIP: `.local/demo-export-final-1793958517304.zip`, **56592 bytes**, SHA-256 **db0bc479a7955b085e0163dd53ed4276314b35b08db7fc68c6d4966ddee8ac11**. Original/exported hashes differ where redaction changes bytes. This presentation export is not an importable authoritative ledger or independent approval proof. No upload/publication occurred.
+| P0 gate       | Status   | Evidence / remaining dependency                                                                                         |
+| ------------- | -------- | ----------------------------------------------------------------------------------------------------------------------- |
+| GATE-SW-01    | VERIFIED | Genuine human request <PRIVATE_POST_ID> and agent reply <PRIVATE_POST_ID>; actual screenshot retained |
+| GATE-SW-02    | FAILED   | npm doctor exited 1, emitted no project JSON, run ID or artifacts; human-requested live retry required                  |
+| GATE-CORE-01  | BLOCKED  | Current AcceptanceRelay correctly refuses pending review                                                                |
+| GATE-CORE-02  | VERIFIED | All tested nonpassing cases BLOCK                                                                                       |
+| GATE-CORE-03  | VERIFIED | Byte/config/tool changes, unmanifested additions and observed restored edits rejected; cooperative scope                |
+| GATE-HUMAN-01 | BLOCKED  | Await actual human review; no approval fabricated                                                                       |
+| GATE-DEMO-01  | BLOCKED  | Full live reviewed bad/good sequence incomplete                                                                         |
+| GATE-DEMO-02  | BLOCKED  | Video, publication authorization and human submission missing                                                           |
 
-README, CLI/setup/architecture/tests/runbooks/decisions, third-party notices, human review procedures, demo script and submission checklist are prepared. Original reference documents and private DBs/binaries/setup logs are not staged. No authentic full-workflow video exists yet.
+## Required continuation, in dependency order
 
-## CI and Git
+1. A real human requests the documented npm.cmd/direct-node live retry in the actual room. Verify its directory, exact process receipt, real project JSON and same-room response. Do not impersonate them.
+2. Human reviews the unchanged criteria/tests and personally performs supported interactive attestation or rejection on a fresh request. Verify actual actor/content/nonce/decision bindings before relying on it.
+3. After matching review exists, prepare a new defective snapshot, execute all four real engines, preserve failures and BLOCKED; explain evidence in the room. Obtain separate real correction review.
+4. Prepare a new corrected snapshot, run all four, verify evidence/compare; claim READY only if actually returned. Then create a separate release proposal for the human's own review and decision.
+5. With explicit publication authorization, push the existing branch without rewriting history; inspect actual remote Actions and fix real failures. Human records authentic footage, checks public repo/README/video/evidence links, completes entry fields and submits personally before the deadline. Retain the real receipt.
 
-The Windows workflow has pinned action commits, exact Node/npm, locked dependencies, real tool installs, separate error-preserving steps, typecheck, formatting, tests, audit, doctor and read-only repository permission. Equivalent commands passed in the original workspace and clean checkout. **Actual GitHub Actions is NOT VERIFIED.** Local simulation is not remote CI. No push was performed.
+## Complete 37-row traceability
 
-Local implementation commits: f4db9c3 (audit hardening and review preparation), 3cdeb25 (portable checksum installer), ff94de3 (malformed expiry denial); previous checkpoint 34af68c and origin/history preserved. A final documentation-only commit is recorded separately in WORK_LOG.md. No history rewrite or force push. Destination remains YellankiKaushik/Flip-Coin-AI, branch codex/switchforge-implementation; publication requires explicit authorization or human action.
+| ID            | Source     | Files / evidence                     | Status                   | Limits / remaining work                                                                                                    |
+| ------------- | ---------- | ------------------------------------ | ------------------------ | -------------------------------------------------------------------------------------------------------------------------- |
+| FR-001        | §§4,59     | docs/SWITCH_GUIDE.md                 | VERIFIED                 | Real human mention 19:31 IST and named agent response 19:33 observed in the dedicated room; CLI success is separate        |
+| FR-002        | §§51,59    | apps/cli; docs/agents                | FAILED                   | Actual npm doctor attempt exit 1 before SwitchForge; local npm.cmd/direct-node probes pass; live retry pending             |
+| FR-003        | §55.2      | approval.ts; HUMAN_REVIEW_PACKET.md  | BLOCKED                  | Human expressly withheld criteria/test approval                                                                            |
+| FR-004        | §55.2      | checks/acceptance.ts; adapters.ts    | IMPLEMENTED_NOT_VERIFIED | Opposing frozen-source Vitest proved 5/6 defective, 6/6 corrected; reviewed production path PENDING                        |
+| FR-005        | §55.3      | checks/accessibility.ts; worker.ts   | VERIFIED                 | Real axe bad/good CLI and browser integration                                                                              |
+| FR-006        | §§55.3,59  | compare; docs/DEMO_AND_SUBMISSION.md | BLOCKED                  | Real scan reruns exist; genuine reviewed patch workflow absent                                                             |
+| FR-007        | §55.4      | checks/contract.ts; openapi.ts       | VERIFIED                 | Actual oasdiff validation/break/compatible/error tests                                                                     |
+| FR-008        | §55.5      | checks/data.ts; data-runner.ts       | VERIFIED                 | Actual CSV worker plus strict edge tests                                                                                   |
+| FR-009        | §§53,55.1  | CLI; run-checks.ts                   | VERIFIED                 | Four normalized reports; pending review honestly ERROR                                                                     |
+| FR-010        | §55.6      | release/policy.ts                    | VERIFIED                 | 625-combination truth table and real BLOCKED assessments                                                                   |
+| FR-011        | §57        | release/approval.ts                  | BLOCKED                  | Noninteractive denial and state tests; no real positive decision                                                           |
+| FR-012        | §59        | docs/SWITCH_GUIDE.md                 | BLOCKED                  | Real same-room bootstrap failure explanation exists; a genuine SwitchForge run/result relay is still missing               |
+| FR-013        | §§52,56,58 | manifest; evidence; compare          | VERIFIED                 | Distinct snapshots/digests/run IDs; no overwritten evidence                                                                |
+| FR-014        | §58        | ledger; coordinator                  | VERIFIED                 | Actual reuse, payload conflict and candidate-scoped keys tested                                                            |
+| FR-015        | §§56,64    | fixtures; tests/e2e                  | BLOCKED                  | Current human gate blocks full four-engine FAIL-to-PASS workflow                                                           |
+| FR-016        | §62        | docs/DECISIONS.md                    | NOT_STARTED              | Optional REA research deferred                                                                                             |
+| FR-017        | §53 V2     | CLI JSON envelopes                   | VERIFIED                 | Single-object JSON exercised by real CLI tests                                                                             |
+| FR-018        | §§4,51     | docs/DECISIONS.md                    | NOT_STARTED              | Optional second agent deferred                                                                                             |
+| FR-019        | §51        | docs/DECISIONS.md                    | NOT_STARTED              | Dashboard/PR integration deferred                                                                                          |
+| NFR-PERF-001  | §§4,16     | run timings                          | IMPLEMENTED_NOT_VERIFIED | 180-second complete reviewed run target not benchmarked                                                                    |
+| NFR-AVL-001   | §4         | README limitations                   | VERIFIED                 | No uptime/SLA promise                                                                                                      |
+| NFR-SCALE-001 | §§4,58     | lock; ledger                         | VERIFIED                 | Single run, actual idempotency conflict and live-lock recovery denial                                                      |
+| NFR-SEC-001   | §§13,60    | path/process/browser guards          | VERIFIED                 | Confinement, literal argv, network-denial and resource tests; cooperative scope                                            |
+| NFR-SEC-002   | §60        | sanitized env/export                 | VERIFIED                 | Staged scan, path-redaction and synthetic secret-marker evidence/audit persistence tests                                   |
+| NFR-REC-001   | §58        | ledger; recover                      | VERIFIED                 | Restart/rollback/recovery plus malformed persisted JSON, indexed identity, digest and active-run mutation regressions pass |
+| NFR-MNT-001   | §54        | CheckRunner registry; workspaces     | VERIFIED                 | Typed common runner, abstract coordinator ports, public production entry points and acyclic-package regression pass        |
+| NFR-OBS-001   | §§19,53    | results; receipts; audit             | VERIFIED                 | Real run/check/tool/time/hash artifacts                                                                                    |
+| NFR-AI-001    | §34        | deterministic schema/policy          | VERIFIED                 | No AI status authority; malformed/fabricated results rejected                                                              |
+| NFR-PRV-001   | §14        | synthetic fixtures; export           | VERIFIED                 | Only synthetic inputs; runtime/private sources excluded                                                                    |
+| GATE-SW-01    | §51.2      | docs/SWITCH_GUIDE.md                 | VERIFIED                 | Genuine human request <PRIVATE_POST_ID> and agent reply <PRIVATE_POST_ID>; actual screenshot retained    |
+| GATE-SW-02    | §51.2      | CLI + future Switch runner           | FAILED                   | npm doctor exited 1, emitted no project JSON, run ID or artifacts; human-requested live retry required                     |
+| GATE-CORE-01  | §51.2      | coordinator/check registry           | BLOCKED                  | Current AcceptanceRelay correctly refuses pending review                                                                   |
+| GATE-CORE-02  | §51.2      | release policy/tests                 | VERIFIED                 | All tested nonpassing cases BLOCK                                                                                          |
+| GATE-CORE-03  | §51.2      | manifest/effective config/toolchain  | VERIFIED                 | Byte/config/tool changes, unmanifested additions and observed restored edits rejected; cooperative scope                   |
+| GATE-HUMAN-01 | §51.2      | HUMAN_REVIEW_PACKET.md               | BLOCKED                  | Await actual human review; no approval fabricated                                                                          |
+| GATE-DEMO-01  | §51.2      | real fixture runs                    | BLOCKED                  | Full live reviewed bad/good sequence incomplete                                                                            |
+| GATE-DEMO-02  | §51.2      | README/docs/local source             | BLOCKED                  | Video, publication authorization and human submission missing                                                              |
 
-## Architecture conformance and residual risks
-
-These limits remain recorded; the protected specification was not changed to remove them:
-
-- Shared-account Level 1, hashes and cooperative monitoring do not defend against a hostile account that can rewrite source, database, timestamps or keys. No audit-proof or production security claim.
-- Package versions and npm lock integrity are verified; every installed node_modules byte is not independently hashed.
-- The common CheckRunner interface is typed and tested. Private cross-package implementation imports remain instead of fully enforced abstract public ports (§54.3); no architecture-lint or independently enforced package-cycle boundary is claimed. This remains architecture debt, not proof of complete conformance.
-- Persistence readers apply scoped identity, root, hash and decision checks; not every stored entity has a complete independent versioned strict schema. Additional corruption/compatibility hardening remains a follow-up.
-- Snapshot polling and synchronous metadata tests detect the exercised restored edit; they cannot guarantee observation of every malicious transient mutation. Raw bytes, not timestamps, remain the manifest identity.
-- Full positive human/provider authorization paths and some per-adapter fault injections are unverified. No Level 2 boundary was fabricated to close this gap.
-- Windows only is verified. The 180-second full reviewed-run target remains unmeasured. No SLA, p95/p99 or capacity claims.
-- axe scope is the configured label rule; no WCAG certification. OpenAPI document comparison is not live consumer/runtime compatibility. CSV policy is synthetic and narrow.
-- Retention is preview only; no deletion. External model/provider access may transmit context; local-first is not all-local inference.
-- Optional REA, second agent, dashboard, cloud, PR automation and production deployment remain NOT_STARTED.
-
-## Hackathon alignment
-
-Protected rules PDF pp.18–20 gives Switch 30%, technical execution 25%, creativity/impact 25%, presentation 20%; pp.24/28 identify repository/README/video and deadline; pp.29–33 require genuine human participation/submission. Recommended track: Best Business Workflow. Actual track selection, registration/eligibility, video URL and submission receipt remain UNSPECIFIED.
-
-Technical local proof is substantial, but Switch use remains a major judging risk until a real human request produces a real command receipt and same-room explanation, genuine correction review and rerun. No commercial impact or competition result is claimed. Authentic recording, public source/video access, actual remote CI and submission remain incomplete.
-
-Deadline: **November 7, 2026, 23:59 IST**. Internal targets: feature freeze November 7, 17:00 IST; human submission 20:00 IST. These are targets, not completion statements.
-
-## Remaining sequence
-
-1. Human personally reviews the criteria/test packet and records the supported decision, or rejects; create fresh short-lived requests.
-2. Human sends the exact addressed Mattermost message. Verify actual directory, command, exit, JSON, run ID/digest and same-room reply.
-3. Capture separate correction review and fresh post-review defective/corrected four-engine runs. Four real valid PASS results are required before READY.
-4. Human separately reviews/records final readiness; verify its effective state and exact bindings.
-5. Retain/fix the disclosed architecture and negative-test follow-ups without weakening source requirements or claiming unsupported conformance.
-6. Publish only with explicit authorization, inspect actual GitHub Actions, record real demo, check public links and submit personally; retain actual receipt.
-
-No approval, human message, video, remote CI success or submission was fabricated.
-
-## Complete requirement traceability
-
-The 37-row current matrix is appended from the maintained requirement register below. VERIFIED refers only to its scoped local evidence, not overall completion.
-
-| ID            | Source     | Evidence                             | Status                   | Scope and remaining work                                                                                 |
-| ------------- | ---------- | ------------------------------------ | ------------------------ | -------------------------------------------------------------------------------------------------------- |
-| FR-001        | §§4,59     | docs/SWITCH_GUIDE.md                 | BLOCKED                  | Dedicated room/agent exist; genuine human addressed interaction absent                                   |
-| FR-002        | §§51,59    | apps/cli; docs/agents                | BLOCKED                  | No actual Switch-driven CLI execution                                                                    |
-| FR-003        | §55.2      | approval.ts; HUMAN_REVIEW_PACKET.md  | BLOCKED                  | Human expressly withheld criteria/test approval                                                          |
-| FR-004        | §55.2      | checks/acceptance.ts; adapters.ts    | IMPLEMENTED_NOT_VERIFIED | Opposing frozen-source Vitest proved 5/6 defective, 6/6 corrected; reviewed production path PENDING      |
-| FR-005        | §55.3      | checks/accessibility.ts; worker.ts   | VERIFIED                 | Real axe bad/good CLI and browser integration                                                            |
-| FR-006        | §§55.3,59  | compare; docs/DEMO_AND_SUBMISSION.md | BLOCKED                  | Real scan reruns exist; genuine reviewed patch workflow absent                                           |
-| FR-007        | §55.4      | checks/contract.ts; openapi.ts       | VERIFIED                 | Actual oasdiff validation/break/compatible/error tests                                                   |
-| FR-008        | §55.5      | checks/data.ts; data-runner.ts       | VERIFIED                 | Actual CSV worker plus strict edge tests                                                                 |
-| FR-009        | §§53,55.1  | CLI; run-checks.ts                   | VERIFIED                 | Four normalized reports; pending review honestly ERROR                                                   |
-| FR-010        | §55.6      | release/policy.ts                    | VERIFIED                 | 625-combination truth table and real BLOCKED assessments                                                 |
-| FR-011        | §57        | release/approval.ts                  | BLOCKED                  | Noninteractive denial and state tests; no real positive decision                                         |
-| FR-012        | §59        | docs/SWITCH_GUIDE.md                 | BLOCKED                  | Same-room product result relay unverified                                                                |
-| FR-013        | §§52,56,58 | manifest; evidence; compare          | VERIFIED                 | Distinct snapshots/digests/run IDs; no overwritten evidence                                              |
-| FR-014        | §58        | ledger; coordinator                  | VERIFIED                 | Actual reuse, payload conflict and candidate-scoped keys tested                                          |
-| FR-015        | §§56,64    | fixtures; tests/e2e                  | BLOCKED                  | Current human gate blocks full four-engine FAIL-to-PASS workflow                                         |
-| FR-016        | §62        | docs/DECISIONS.md                    | NOT_STARTED              | Optional REA research deferred                                                                           |
-| FR-017        | §53 V2     | CLI JSON envelopes                   | VERIFIED                 | Single-object JSON exercised by real CLI tests                                                           |
-| FR-018        | §§4,51     | docs/DECISIONS.md                    | NOT_STARTED              | Optional second agent deferred                                                                           |
-| FR-019        | §51        | docs/DECISIONS.md                    | NOT_STARTED              | Dashboard/PR integration deferred                                                                        |
-| NFR-PERF-001  | §§4,16     | run timings                          | IMPLEMENTED_NOT_VERIFIED | 180-second complete reviewed run target not benchmarked                                                  |
-| NFR-AVL-001   | §4         | README limitations                   | VERIFIED                 | No uptime/SLA promise                                                                                    |
-| NFR-SCALE-001 | §§4,58     | lock; ledger                         | VERIFIED                 | Single run, actual idempotency conflict and live-lock recovery denial                                    |
-| NFR-SEC-001   | §§13,60    | path/process/browser guards          | VERIFIED                 | Confinement, literal argv, network-denial and resource tests; cooperative scope                          |
-| NFR-SEC-002   | §60        | sanitized env/export                 | VERIFIED                 | Staged scan, path-redaction and synthetic secret-marker evidence/audit persistence tests                 |
-| NFR-REC-001   | §58        | ledger; recover                      | VERIFIED                 | FK/restart/rollback/orphan/missing-file tests and actual recovery CLI                                    |
-| NFR-MNT-001   | §54        | CheckRunner registry; workspaces     | VERIFIED                 | Typecheck covers all app/package/test source                                                             |
-| NFR-OBS-001   | §§19,53    | results; receipts; audit             | VERIFIED                 | Real run/check/tool/time/hash artifacts                                                                  |
-| NFR-AI-001    | §34        | deterministic schema/policy          | VERIFIED                 | No AI status authority; malformed/fabricated results rejected                                            |
-| NFR-PRV-001   | §14        | synthetic fixtures; export           | VERIFIED                 | Only synthetic inputs; runtime/private sources excluded                                                  |
-| GATE-SW-01    | §51.2      | docs/SWITCH_GUIDE.md                 | BLOCKED                  | Room/agent Running; only automatic welcome, genuine human interaction absent                             |
-| GATE-SW-02    | §51.2      | CLI + future Switch runner           | BLOCKED                  | No real room-to-command-to-room proof                                                                    |
-| GATE-CORE-01  | §51.2      | coordinator/check registry           | BLOCKED                  | Current AcceptanceRelay correctly refuses pending review                                                 |
-| GATE-CORE-02  | §51.2      | release policy/tests                 | VERIFIED                 | All tested nonpassing cases BLOCK                                                                        |
-| GATE-CORE-03  | §51.2      | manifest/effective config/toolchain  | VERIFIED                 | Byte/config/tool changes, unmanifested additions and observed restored edits rejected; cooperative scope |
-| GATE-HUMAN-01 | §51.2      | HUMAN_REVIEW_PACKET.md               | BLOCKED                  | Await actual human review; no approval fabricated                                                        |
-| GATE-DEMO-01  | §51.2      | real fixture runs                    | BLOCKED                  | Full live reviewed bad/good sequence incomplete                                                          |
-| GATE-DEMO-02  | §51.2      | README/docs/local source             | BLOCKED                  | Video, publication authorization and human submission missing                                            |
+Counts: {"VERIFIED": 21, "FAILED": 2, "BLOCKED": 9, "IMPLEMENTED_NOT_VERIFIED": 2, "NOT_STARTED": 3}. VERIFIED is scoped evidence. **Overall delivery is not complete.**

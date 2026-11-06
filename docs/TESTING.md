@@ -27,3 +27,9 @@ The audit regression file covers contradictory PASS payloads, engine identity, e
 Run `npm run format:check` for the actual Prettier check. Upstream license text is excluded from formatting. E2E commands use a fresh isolated test ledger/artifact root and never read or create real human review records. The 625 state combinations are exercised inside one reported unit test.
 
 `node scripts/review-packet.mjs` prepares a new corrected frozen snapshot, runs the actual Vitest executable from that snapshot and records hashes, IDs and execution data in HUMAN_REVIEW_PACKET.md. It grants no approval. The local finalization report records the separate opposing-source experiment and clean-checkout results; remote CI remains a separate verification gate.
+
+## Current delivery verification
+
+Main and isolated checkout: 117/117 across 18 files, no failures/skips. Added 12 persistence boundary regressions, five production-adapter faults and a package import/public-interface/cycle check to the previous 99-test baseline. Initial nine persistence regressions actually failed before the repair. Negative adapter tests explicitly damage owned isolated inputs and never create review authority or production PASS evidence.
+
+All seven declared CI jobs passed through the actual ci-proof script locally in the isolated checkout. Groups: 67 unit, 19 integration, 28 security, 3 local E2E; the artifact-contract job repeats 18 tests. Receipts retain exact command exits, counts, Node/browser/oasdiff versions, git SHA/worktree state, lock hash and original/redacted report hashes. Only job-specific redacted synthetic receipts/reports are selected for upload. No remote Actions run has occurred. Offline docs:check checks tracked local Markdown destinations, excluding code examples; it does not check external URL reachability or heading anchors.

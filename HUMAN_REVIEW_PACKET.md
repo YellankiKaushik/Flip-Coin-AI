@@ -154,4 +154,12 @@ The protected original architecture, rules PDF and PROJECT_ANALYSIS.md remain un
 
 ## Final audit checkpoint
 
-Approval remains PENDING. Actual ledger inspection recorded zero criteria attestations and zero decisions. Criteria/test source hashes and all six assertions remain unchanged. The dedicated SwitchForge room/agent now exist, but actual human command proof is still missing. Expired REQUESTED proposal records are not approvals. Fresh supported procedures are in ACTION_REQUIRED_FROM_HUMAN.md. Separate engineering zero/unknown-coupon tests do not extend these proposed acceptance requirements.
+Approval remains PENDING. Actual ledger inspection recorded zero criteria attestations and zero decisions. Criteria/test source hashes and all six assertions remain unchanged. The real human request and agent response are now observed; the first npm command failed before SwitchForge started (exit 1, MODULE_NOT_FOUND for npm-cli.js). A genuine successful project command remains unverified. Expired REQUESTED proposal records are not approvals. Fresh supported procedures are in ACTION_REQUIRED_FROM_HUMAN.md. Separate engineering zero/unknown-coupon tests do not extend these proposed acceptance requirements.
+
+## Current delivery checkpoint — November 6, 2026
+
+The criteria and six tests embedded above were compared with the actual files and still match exactly. Their raw hashes are unchanged. Current isolated-checkout source f27d79c3ee58b6153868930ddd70e9206c652a7d independently reran the same frozen corrected six tests: 6 PASS, 0 FAIL, exit 0; frozen defective with opposing corrected mutable source gave 5 PASS and AC-001 FAIL, exit 1. These are standalone engineering experiments, never criteria approval. Actual reports and per-case outcomes are in <PRIVATE_RECEIPT_LOCATION>
+
+Fresh criteria proposal <DEMO_RECORD_ID> was created REQUESTED at Level 0, expires November 6, 2026, 20:25:04 IST. Resource digest afb2bcf8e881055ba3b3d4c26ede934d3f524d82b8ce53ca464ba67d72a046ed binds the exact criteria/test content. The earlier <DEMO_RECORD_ID> request expired without approval. If this fresh request expires, use ACTION_REQUIRED_FROM_HUMAN.md to generate another; never reuse an expired confirmation.
+
+Latest production diagnostic corrected run <DEMO_RECORD_ID> has acceptance ERROR, other three PASS and ReleaseProof BLOCKED. At the last ledger inspection there were zero decisions and zero criteria attestations. No acceptance assertion, criterion or protected architecture byte was altered during the delivery audit.

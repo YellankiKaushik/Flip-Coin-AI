@@ -1,35 +1,41 @@
 # Submission readiness — BLOCKED
 
-Prepared November 6, 2026. **No actual submission has occurred.** Local source verification and preparation do not satisfy human collaboration, approval or publication gates.
+Updated 2026-11-06T14:44:45.254041+00:00. No actual submission has occurred. Deadline November 7, 2026, 23:59 IST; internal freeze 17:00 and submit 20:00 IST.
 
-| Deliverable / gate                                   | Status                   | Actual evidence / required action                                                   |
-| ---------------------------------------------------- | ------------------------ | ----------------------------------------------------------------------------------- |
-| Protected source preserved                           | VERIFIED                 | Three original hashes unchanged; FINAL_ENGINEERING_AUDIT.md                         |
-| Source and dependency lockfile                       | VERIFIED                 | Evaluator ff94de3, local codex/switchforge-implementation; private runtime excluded |
-| Fresh checkout install                               | VERIFIED                 | No ignored runtime copied; documented npm/browser/pinned oasdiff setup passed       |
-| Automated suite                                      | VERIFIED                 | Main 99/99 and clean checkout 99/99; 15 files, no failures/skips                    |
-| Dependency vulnerability audit                       | VERIFIED                 | Zero reported vulnerabilities at execution time                                     |
-| Frozen acceptance-source isolation                   | VERIFIED                 | Real opposing-source experiment: defective 5/6, corrected 6/6                       |
-| Reviewed production acceptance                       | BLOCKED                  | Criteria/test review PENDING; standalone tests grant no approval                    |
-| Docker/Switch/Mattermost                             | VERIFIED                 | Current running/healthy observations; no reset/deletion                             |
-| Dedicated project agent/room                         | VERIFIED                 | switchforge-demo-agent / switchforge-release-demo; Bypass off                       |
-| Human → agent → CLI → same room                      | BLOCKED                  | Genuine human request and command receipt missing                                   |
-| Separate correction review                           | BLOCKED                  | Actual diff and packet prepared; no human attestation                               |
-| Reviewed four-engine bad/good pair                   | BLOCKED                  | Production acceptance ERROR; other three actually FAIL → PASS                       |
-| Current ReleaseProof READY                           | BLOCKED                  | Corrected assessment remains BLOCKED                                                |
-| Separate human release decision                      | BLOCKED                  | Actual decisions 0; Level 1 only                                                    |
-| Redacted directory and ZIP                           | VERIFIED                 | 46 files plus manifest; exported hashes/pattern checks passed; local only           |
-| README/setup/architecture/CLI/tests/runbooks/notices | VERIFIED                 | Prepared; source specification remains authoritative                                |
-| Exact demo script/messages                           | VERIFIED                 | docs/FINAL_DEMO_SCRIPT.md and ACTION_REQUIRED_FROM_HUMAN.md                         |
-| Authentic full-workflow video                        | NOT_STARTED              | Human must genuinely record; no fabricated video/screenshots                        |
-| Publication authorization / source push              | BLOCKED                  | No push performed; safe branch command documented                                   |
-| Actual GitHub Actions                                | IMPLEMENTED_NOT_VERIFIED | Workflow/local equivalent checked; remote execution NOT VERIFIED                    |
-| Public source/video access                           | BLOCKED                  | Human checks after authorized publication                                           |
-| Registration / eligibility / selected track          | BLOCKED                  | UNSPECIFIED; recommended Best Business Workflow, verify personally                  |
-| Event submission and receipt                         | NOT_STARTED              | Genuine human submission required; receipt absent                                   |
+| Deliverable / gate                                      | Status                    | Actual evidence / remaining dependency                                                                             |
+| ------------------------------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| Original sources / six acceptance cases                 | VERIFIED                  | Byte hashes unchanged; exact packet content checked                                                                |
+| Implementation and lockfile                             | VERIFIED                  | Evaluator f27d79c3ee58b6153868930ddd70e9206c652a7d; CI a2233ef9ae374a668c7ae5436d7f694786b35fe1; local branch only |
+| Main and fresh checkout                                 | VERIFIED                  | 117/117 each, zero failures/skips, 18 files                                                                        |
+| Seven specified CI job commands                         | VERIFIED LOCAL            | Actual redacted reports/provenance from isolated checkout; not GitHub Actions                                      |
+| Dependency audit                                        | VERIFIED                  | Zero reported vulnerabilities at execution time                                                                    |
+| Frozen acceptance-source isolation                      | VERIFIED                  | Defective 5/6 exit 1; corrected 6/6 exit 0; engineering only                                                       |
+| Docker / Switch / Mattermost                            | VERIFIED                  | Running/healthy loopback observations preserved                                                                    |
+| Real human room / named agent reply                     | VERIFIED                  | Actual 19:31 request, 19:33 failure reply and genuine screenshot                                                   |
+| Switch agent executes project CLI                       | FAILED                    | npm doctor exit 1 before project; live npm.cmd/direct-node retry needed                                            |
+| Criteria/test review                                    | BLOCKED                   | Actual human attestation absent; fresh request prepared                                                            |
+| Separate correction review                              | BLOCKED                   | Exact existing diff/fresh proposal prepared, not attested                                                          |
+| Full reviewed four-engine pair                          | BLOCKED                   | Diagnostic acceptance ERROR, other three FAIL→PASS                                                                 |
+| READY and separate final human decision                 | BLOCKED                   | Both actual assessments BLOCKED; zero decisions                                                                    |
+| Redacted evidence directory / ZIP                       | VERIFIED LOCAL            | 46 files plus manifest; 51054 bytes; hashes/round trip verified; not uploaded                                      |
+| README, architecture, notices, runbooks and demo script | PREPARED                  | Current results and limitations disclosed                                                                          |
+| Authentic full-workflow video                           | NOT TESTED / NOT RECORDED | Human records actual sequence after genuine reviews                                                                |
+| Source publication                                      | BLOCKED                   | No push; needs explicit authorization or human action                                                              |
+| Actual GitHub Actions                                   | NOT RUN                   | Remote collection has only main; evaluator workflow query returned zero runs                                       |
+| Actual submission form / registration                   | BLOCKED                   | Account access gate; exact labels/limits/team/track UNSPECIFIED                                                    |
+| Public links / final entry / receipt                    | NOT DONE                  | Human verifies and submits; no invented receipt                                                                    |
 
-GATE-SW-01, GATE-SW-02, GATE-CORE-01, GATE-HUMAN-01, GATE-DEMO-01 and GATE-DEMO-02 remain BLOCKED. GATE-CORE-02 and GATE-CORE-03 have scoped local evidence. **Not every P0 gate is satisfied.** Full requirement-level evidence and technical conformance limits remain in FINAL_ENGINEERING_AUDIT.md and REQUIREMENTS_TRACEABILITY.md; no requirement was removed to produce this checklist.
+| P0 gate       | Status   | Evidence / remaining dependency                                                                                         |
+| ------------- | -------- | ----------------------------------------------------------------------------------------------------------------------- |
+| GATE-SW-01    | VERIFIED | Genuine human request <PRIVATE_POST_ID> and agent reply <PRIVATE_POST_ID>; actual screenshot retained |
+| GATE-SW-02    | FAILED   | npm doctor exited 1, emitted no project JSON, run ID or artifacts; human-requested live retry required                  |
+| GATE-CORE-01  | BLOCKED  | Current AcceptanceRelay correctly refuses pending review                                                                |
+| GATE-CORE-02  | VERIFIED | All tested nonpassing cases BLOCK                                                                                       |
+| GATE-CORE-03  | VERIFIED | Byte/config/tool changes, unmanifested additions and observed restored edits rejected; cooperative scope                |
+| GATE-HUMAN-01 | BLOCKED  | Await actual human review; no approval fabricated                                                                       |
+| GATE-DEMO-01  | BLOCKED  | Full live reviewed bad/good sequence incomplete                                                                         |
+| GATE-DEMO-02  | BLOCKED  | Video, publication authorization and human submission missing                                                           |
 
-Protected rules PDF pp.18–20: Switch 30%, technical execution 25%, creativity/impact 25%, presentation 20%. Technical evidence is available, but live Switch collaboration and authentic presentation are still material judging risks. Repository, README and genuine demo video must be accessible and personally checked. No commercial-impact or competition-result claim is made.
+Full 37-row audit: FINAL_ENGINEERING_AUDIT.md. Exact ordered human actions: ACTION_REQUIRED_FROM_HUMAN.md. Prepared copy versus actual unknown form fields: SUBMISSION_FIELDS.md. Genuine recording instructions: docs/FINAL_DEMO_SCRIPT.md.
 
-Deadline **November 7, 2026, 23:59 IST**. Internal targets: freeze November 7, 17:00 IST; submit 20:00 IST. These are targets, not completed actions. Follow ACTION_REQUIRED_FROM_HUMAN.md for the distinct review, real room request, fresh verification, final decision, publication and submission steps.
+Recommended track Best Business Workflow, not an observed registration. Protected rules PDF pp.18–20: Switch 30%, technical 25%, creativity/impact 25%, presentation 20%. The failed project command, pending reviews and missing authentic video are material event risks. No prize or readiness claim. No private DBs, setup logs, protected source, binaries or credentials should be published.

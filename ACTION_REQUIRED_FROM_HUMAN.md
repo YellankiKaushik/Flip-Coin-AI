@@ -2,6 +2,12 @@
 
 Prepared November 6, 2026. This file records mandatory human gates; it does not issue approval. Work from the existing repository root. Do not run attest commands until you have personally reviewed the exact referenced content. Requests expire after 15 minutes; create a fresh request if expired. Do not edit the criteria status to APPROVED.
 
+## Current short-lived proposals
+
+As created at 2026-11-06T14:40:05.087Z: criteria `<DEMO_RECORD_ID>` expires `2026-11-06T14:55:04.275Z`; separate patch `<DEMO_RECORD_ID>` expires `2026-11-06T14:55:05.059Z`. Both are REQUESTED at Level 0, never attested by the assistant. Check expiry before using; the procedures below always generate a fresh request if needed. Current patch base is snapshot `<DEMO_RECORD_ID>`, digest `589a37dc749a3084b07377ea634ce80040b486727d475fe9d8b43b4236c9a502`. Earlier requests are historical and may be expired.
+
+The dependency order is real doctor retry and personal criteria review, then a fresh defective run, separate correction review, fresh corrected run and only then separate final release review. The two initial human actions can be done independently. No agent may type a human confirmation.
+
 ## 1. Criteria and acceptance test review
 
 Read HUMAN_REVIEW_PACKET.md, fixtures/scenarios/corrected/criteria/approved.json and apps/checkout-demo/tests/checkout.spec.ts. Review the six test cases and five criteria. At/after expiry rejects without changing total; one millisecond before expiry applies SAVE100 (100 cents, clamped to zero); malformed/missing UTC timestamps and invalid/unsafe integer cents reject. SAVE100, discount size, zero clamping and exact millisecond-Z format are implementation decisions requiring your agreement. Additional zero/unknown-coupon engineering tests do not add human-approved criteria.
@@ -9,10 +15,10 @@ Read HUMAN_REVIEW_PACKET.md, fixtures/scenarios/corrected/criteria/approved.json
 If correct, personally run in an interactive PowerShell terminal:
 
 ```powershell
-$review = npm --silent run sf -- criteria propose --file fixtures/scenarios/corrected/criteria/approved.json --json | ConvertFrom-Json
+$review = npm.cmd --silent run sf -- criteria propose --file fixtures/scenarios/corrected/criteria/approved.json --json | ConvertFrom-Json
 if ($LASTEXITCODE -ne 0 -or -not $review.ok) { throw 'Criteria proposal failed' }
 $review.data.content
-npm --silent run sf -- criteria attest --proposal $review.data.proposal.proposalId --json
+npm.cmd --silent run sf -- criteria attest --proposal $review.data.proposal.proposalId --json
 ```
 
 Enter your real reviewer reference and exactly `HUMAN REVIEWED <returned proposalId>` only after review. To reject, use the same command with `--reject` and type `REJECT`. This is Level 1 HUMAN_ATTESTED_FOR_DEMO; identity is not cryptographically verified. An ordinary chat response never updates the ledger. No agent may type this attestation for you.
@@ -23,15 +29,15 @@ Open the existing Mattermost room:
 
 SwitchForge room (private local reference)
 
-The dedicated Codex agent is `@switchforge-demo-agent`, configured to the original workspace. Keep the connectivity agent and room intact. Type and send this yourself:
+The genuine 19:31 IST human request and 19:33 agent response already exist. The initial npm doctor command exited 1 before SwitchForge started (MODULE_NOT_FOUND for npm-cli.js); no JSON/run/artifacts were emitted. Locally tested npm.cmd and direct Node succeed, but a new real room receipt is required. Type and send this yourself:
 
-> @switchforge-demo-agent In your configured SwitchForge project directory, read package.json and run npm --silent run sf -- doctor --json. Do not edit files or approve anything. Reply here with the actual working directory, exact command, process exit status and real JSON tool inventory. Do not substitute a greeting or earlier SETUP_OK evidence.
+> @switchforge-demo-agent Retry doctor using npm.cmd --silent run sf -- doctor --json. If npm bootstrap still fails, use node --import tsx apps/cli/src/main.ts doctor --json. Report the actual working directory, command, exit and full JSON here. Do not modify files or grant approval.
 
-A bot's automatic welcome message is not this proof. If the provider requires sign-in or mandatory permission, personally complete it without disabling protections. Capture the real same-room reply. The command may require a normal provider tool permission; do not enable Bypass permissions.
+Preserve the first failure; record every retry's actual command/exit separately. Keep Bypass permissions off. Personally handle any genuine provider authentication or permission prompt; do not disable protections. A local terminal probe cannot substitute for this real request/result.
 
 After the real criteria review is recorded, send:
 
-> @switchforge-demo-agent Prepare a fresh defective snapshot for candidate human-demo-20261106 using npm --silent run sf -- prepare --scenario defective --candidate human-demo-20261106 --json. Run the returned snapshot with a new idempotency key through the actual sf run command. Report exact command exits, snapshot/run IDs, candidate digest, all four statuses, ReleaseProof blockers and artifact references here. Verify the evidence. Do not attest or alter approval state.
+> @switchforge-demo-agent Prepare a fresh defective snapshot for candidate human-demo-20261106 using npm.cmd --silent run sf -- prepare --scenario defective --candidate human-demo-20261106 --json. Run the returned snapshot with a new idempotency key through the actual sf run command. Report exact command exits, snapshot/run IDs, candidate digest, all four statuses, ReleaseProof blockers and artifact references here. Verify the evidence. Do not attest or alter approval state.
 
 Use a different candidate name if that identifier has already been used for an unrelated demonstration. Keys must be new per payload.
 
@@ -56,11 +62,11 @@ Send that message only if its review statement is true.
 Only after the corrected run genuinely has four valid PASS results and current READY_FOR_HUMAN_APPROVAL:
 
 ```powershell
-$release = npm --silent run sf -- release-request --run <actual-corrected-runId> --json | ConvertFrom-Json
+$release = npm.cmd --silent run sf -- release-request --run <actual-corrected-runId> --json | ConvertFrom-Json
 if ($LASTEXITCODE -ne 0 -or -not $release.ok) { throw 'Release is blocked' }
 $release.data
-npm --silent run sf -- release-attest --proposal $release.data.proposalId --json
-npm --silent run sf -- report --run <actual-corrected-runId> --json
+npm.cmd --silent run sf -- release-attest --proposal $release.data.proposalId --json
+npm.cmd --silent run sf -- report --run <actual-corrected-runId> --json
 ```
 
 Review the exact candidate, assessment, policy and evidence. Enter the attestation yourself, or reject. This records synthetic readiness and never deploys. Readiness, criteria review, patch review and final decision are separate. Any source/tool/policy/evidence change requires new verification; expired or superseded proposals cannot be reused.

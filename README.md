@@ -2,7 +2,7 @@
 
 Human-supervised engineering release assurance for one synthetic local checkout, operated through a Switch room with Codex and Mattermost.
 
-**Current status:** local implementation and tests exist. Human criteria/test review is **PENDING**. The complete live Switch project workflow and final human readiness decision are **not verified**. This is not a production deployment or approval system. See [human review packet](HUMAN_REVIEW_PACKET.md).
+**Current status:** 117/117 automated tests pass in the main workspace and isolated checkout; all seven specified CI job commands pass locally. A real human request and same-room agent response are observed. The first agent npm doctor command failed before SwitchForge started; a successful live project command is pending. Human criteria/test review is **PENDING**, and both current diagnostic assessments remain **BLOCKED**. This is not a production deployment or approval system. See [human review packet](HUMAN_REVIEW_PACKET.md).
 
 Four engines check one frozen candidate:
 
@@ -113,6 +113,16 @@ Further documents: [architecture](docs/ARCHITECTURE.md), [testing](docs/TESTING.
 
 License: Apache-2.0 for project code; dependencies retain their own licenses. No competition win, production readiness, compliance certification or measured commercial impact is claimed.
 
-Finalization handoff: [engineering audit](FINAL_ENGINEERING_AUDIT.md), [required human actions](ACTION_REQUIRED_FROM_HUMAN.md), and [submission readiness](SUBMISSION_READINESS.md). The dedicated local room/agent now exist; authentic human command execution and all approval/submission gates remain separate and pending.
+Finalization handoff: [engineering audit](FINAL_ENGINEERING_AUDIT.md), [required human actions](ACTION_REQUIRED_FROM_HUMAN.md), and [submission readiness](SUBMISSION_READINESS.md). The real room interaction exists, but the first project command failed; successful project execution, human reviews and submission remain separate incomplete gates.
 
 The full exact recording sequence and separate human checkpoints are in [FINAL_DEMO_SCRIPT](docs/FINAL_DEMO_SCRIPT.md). Current final engineering evidence is BLOCKED; it is not a completed reviewed demonstration.
+
+## Latest verified delivery evidence
+
+Evaluator f27d79c; CI tooling a2233ef. Main and clean-checkout suites each passed 117/117 across 18 files with zero failures/skips. Standalone opposing frozen-source acceptance gave defective 5/6 (AC-001 fails), corrected 6/6; these grant no approval. Unit/integration/security/E2E groups total 117 distinct tests; the artifact-contract CI job repeats an 18-test subset. The 625 combinations are one generated test. Strict persistence boundaries, public package interfaces, dependency-cycle checks and actual adapter fault tests pass.
+
+Current diagnostic runs: defective <DEMO_RECORD_ID> and corrected <DEMO_RECORD_ID>. Acceptance ERROR/coverage 0 while review is pending; accessibility, contract and data FAIL→PASS; both ReleaseProof BLOCKED, evidence verified. These are local unreviewed diagnostics, not the final reviewed Switch demonstration. No actual GitHub Actions result or submission is claimed.
+
+Run `npm run docs:check` for tracked local Markdown destinations. `npm run ci:proof -- <job>` records actual job receipts, redacted reports and provenance; local runs are labelled LOCAL_ONLY. Seven job names are in .github/workflows/ci.yml. External URLs and Markdown heading anchors are outside the offline link check. [Submission copy](SUBMISSION_FIELDS.md) distinguishes prepared content from the authenticated form's unobserved fields.
+
+On the observed Windows agent npm bootstrap failure, preserve its actual error first. The same CLI can be invoked with `npm.cmd --silent run sf -- doctor --json`, or `node --import tsx apps/cli/src/main.ts doctor --json`. Both passed local probes; only an actual room-driven receipt can verify the live retry. Keep provider protections enabled.

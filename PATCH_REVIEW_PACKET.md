@@ -2,9 +2,9 @@
 
 Actual precommitted defective-to-corrected scenario diff; no human authorization or newly applied repair is claimed.
 
-Base snapshot <DEMO_RECORD_ID>; base candidate ce4484c1ac79cd73d0181eccebbf97ea1462805d96c20d8a2b11a2ab129c4e55.
+Base snapshot <DEMO_RECORD_ID>; base candidate 589a37dc749a3084b07377ea634ce80040b486727d475fe9d8b43b4236c9a502.
 
-Diff .local/review/corrected-scenario.patch: 3344 bytes; SHA-256 2344c847a48c1751ae7018acfa2da43cbee8f579a25f54f92cfe2f9fd54488ee. The earlier REQUESTED proposal <DEMO_RECORD_ID> has expired. Create a fresh request only after actual review using ACTION_REQUIRED_FROM_HUMAN.md.
+Diff .local/review/corrected-scenario.patch: 3344 bytes; SHA-256 2344c847a48c1751ae7018acfa2da43cbee8f579a25f54f92cfe2f9fd54488ee. Fresh proposal <DEMO_RECORD_ID> is REQUESTED, actor level 0, expires 2026-11-06T14:55:05.059Z. No human approval exists. Prior requests/different base snapshots are historical. If expired, generate a new request through ACTION_REQUIRED_FROM_HUMAN.md after inspecting the actual diff and base.
 
 Changes: strict coupon equality rejection; associated Email label; restored application/json totalAmount response contract; O-1002 ledger charge 1000 to 1500 cents. Selecting corrected fixtures must be disclosed and creates a new snapshot. Do not blindly apply this scenario-directory diff to a working app or frozen snapshot.
 

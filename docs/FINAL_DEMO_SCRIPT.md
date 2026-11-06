@@ -8,7 +8,7 @@ Show the actual Mattermost room switchforge-release-demo (private local referenc
 
 > @switchforge-demo-agent In your configured SwitchForge project directory, read package.json and run npm --silent run sf -- doctor --json. Do not edit files or approve anything. Reply here with the actual working directory, exact command, process exit status and real JSON tool inventory.
 
-Capture the real response and tool permission flow if one appears. A bot welcome or SETUP_OK is insufficient. Keep Bypass permissions off. Current services are on loopback ports 58821/58822, but verify after restarts.
+The original doctor request already has a genuine exit-1 npm bootstrap failure reply. Preserve it. A human now sends the npm.cmd/direct-node retry from ACTION_REQUIRED_FROM_HUMAN.md; capture its actual response and tool permission flow if one appears. A bot welcome or SETUP_OK is insufficient. Keep Bypass permissions off. Current services are on loopback ports 58821/58822, but verify after restarts.
 
 ## 2. Genuine criteria and test review
 
@@ -76,7 +76,7 @@ Human enters their real reference and exact requested confirmation, or rejects. 
 
 ## 7. Reproducibility, limits and submission
 
-Show actual Git SHA, documented fresh setup, 99-test report and six-case frozen-source proof. State that 625 combinations are one generated test. Explain cooperative same-account limits, selected axe rule, synthetic CSV scope, partial architecture conformance and unverified cases in FINAL_ENGINEERING_AUDIT.md. Do not claim production readiness, WCAG certification or measured commercial impact.
+Show actual Git SHA, documented fresh setup, 117-test report and six-case frozen-source proof. State that 625 combinations are one generated test. Explain cooperative same-account limits, selected axe rule, synthetic CSV scope, public acyclic package boundaries, strict evidence validation and retained security/provider limits in FINAL_ENGINEERING_AUDIT.md. Do not claim production readiness, WCAG certification or measured commercial impact.
 
 Export the actual recorded runs to a new local path; inspect the result before publication. Current prepared engineering archive is explicitly BLOCKED evidence, not the final approved recording. Never upload DBs, tokens, private setup logs or original protected reference files.
 

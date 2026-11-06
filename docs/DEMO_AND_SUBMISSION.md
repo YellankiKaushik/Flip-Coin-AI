@@ -21,3 +21,5 @@ Current missing evidence: dedicated project Switch command execution; actual hum
 ## Judge-facing package
 
 Repository, README, authentic video, exact versions, test results, architecture/limitations and redacted evidence. Business Workflow is the recommended track. Human verifies link access and completes portal submission. Private reference PDFs, setup logs, credentials, databases and unredacted runtime output must not be included.
+
+Current delivery observations: genuine human request/same-room agent failure are captured; the npm doctor attempt exited 1 before SwitchForge. A live retry and real reviews remain required. Main/isolated tests 117/117 and seven local CI jobs passed; no remote CI, final recording or submission exists. See SUBMISSION_FIELDS.md at the repository root for prepared copy and explicitly UNSPECIFIED authenticated form labels/limits.

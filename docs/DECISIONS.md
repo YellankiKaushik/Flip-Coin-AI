@@ -25,9 +25,9 @@ Configuration precedence is implemented and tested: committed settings, local ov
 
 Unresolved: real Switch command proof; positive human attestation and final readiness lifecycle; final video/submission; extensive crash/concurrent-process stress; remote audit/identity; broader accessibility/API/OS support. These remain incomplete rather than being removed from the source requirements.
 
-## Final-delivery boundary decisions � November 6, 2026
+## Final-delivery boundary decisions — November 6, 2026
 
-- Enforce �54.3 through abstract coordinator ports, CLI composition and declared source public entry points. A meaningful dependency-graph test rejects private cross-package imports and cycles.
+- Enforce §54.3 through abstract coordinator ports, CLI composition and declared source public entry points. A meaningful dependency-graph test rejects private cross-package imports and cycles.
 - Validate persisted evidence entities at both reads and writes, including indexed identities and canonical digest bindings. Reject invalid history rather than rewriting it. Keep the original SQL migration and all genuine records.
-- Retain separate �61.2 CI jobs and redacted provenance receipts. Offline docs-link checks cover tracked local destinations, not external reachability or heading anchors. Actual remote CI remains unverified until authorized publication.
+- Retain separate §61.2 CI jobs and redacted provenance receipts. Offline docs-link checks cover tracked local destinations, not external reachability or heading anchors. Actual remote CI remains unverified until authorized publication.
 - The actual Switch agent's first npm doctor attempt failed before the project CLI started. A locally tested npm.cmd/direct-node fallback is documented; a real human must request the live retry. No global launcher, provider permission or approval protection is changed.
