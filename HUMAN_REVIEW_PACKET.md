@@ -151,3 +151,7 @@ These are standalone corrected-fixture development tests, not an approved releas
 - Positive readiness cannot be demonstrated as a real approved release until this review is genuinely resolved. Independent engineering unit tests may use explicitly labelled synthetic state fixtures; they never create human decisions.
 
 The protected original architecture, rules PDF and PROJECT_ANALYSIS.md remain unchanged. No approval is inferred from this packet.
+
+## Final audit checkpoint
+
+Approval remains PENDING. Actual ledger inspection recorded zero criteria attestations and zero decisions. Criteria/test source hashes and all six assertions remain unchanged. The dedicated SwitchForge room/agent now exist, but actual human command proof is still missing. Expired REQUESTED proposal records are not approvals. Fresh supported procedures are in ACTION_REQUIRED_FROM_HUMAN.md. Separate engineering zero/unknown-coupon tests do not extend these proposed acceptance requirements.

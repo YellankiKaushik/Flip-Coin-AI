@@ -69,6 +69,11 @@ The terminal asks the reviewer for an actor reference and the exact confirmation
 After genuine review, prepare fresh defective and corrected snapshots and use new keys. Do not edit a prepared snapshot. Get returned IDs from actual output, never invent them:
 
 ```powershell
+# After genuine criteria/test review, run a FRESH defective snapshot too:
+$reviewedBad = npm --silent run sf -- prepare --scenario defective --candidate checkout-v2 --json | ConvertFrom-Json
+$stamp = [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
+$run = npm --silent run sf -- run --snapshot $reviewedBad.data.snapshotId --key "reviewed-defective-$stamp" --json | ConvertFrom-Json
+# Complete separate actual correction review before selecting corrected fixtures.
 $fixed = npm --silent run sf -- prepare --scenario corrected --candidate checkout-v2 --json | ConvertFrom-Json
 $after = npm --silent run sf -- run --snapshot $fixed.data.snapshotId --key demo-corrected-001 --json | ConvertFrom-Json
 npm --silent run sf -- report --run $after.data.run.runId --json
@@ -109,3 +114,5 @@ Further documents: [architecture](docs/ARCHITECTURE.md), [testing](docs/TESTING.
 License: Apache-2.0 for project code; dependencies retain their own licenses. No competition win, production readiness, compliance certification or measured commercial impact is claimed.
 
 Finalization handoff: [engineering audit](FINAL_ENGINEERING_AUDIT.md), [required human actions](ACTION_REQUIRED_FROM_HUMAN.md), and [submission readiness](SUBMISSION_READINESS.md). The dedicated local room/agent now exist; authentic human command execution and all approval/submission gates remain separate and pending.
+
+The full exact recording sequence and separate human checkpoints are in [FINAL_DEMO_SCRIPT](docs/FINAL_DEMO_SCRIPT.md). Current final engineering evidence is BLOCKED; it is not a completed reviewed demonstration.

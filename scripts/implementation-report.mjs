@@ -2,12 +2,25 @@ import fs from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
+// Preserve the earlier checkpoint generator for history; it must not replace current findings.
+if (!process.argv.includes("--historical-checkpoint-export")) {
+  console.error(
+    "Historical checkpoint generator retired. Read FINAL_ENGINEERING_AUDIT.md and REPORT_TO_CHATGPT.md. An explicit --historical-checkpoint-export writes labelled history only.",
+  );
+  process.exit(2);
+}
 const root = process.cwd();
 const read = (p) =>
   JSON.parse(
     fs.readFileSync(path.join(root, p), "utf8").replace(/^\ufeff/, ""),
   );
-const write = (p, s) => fs.writeFileSync(path.join(root, p), s + "\n");
+const write = (p, s) => {
+  fs.mkdirSync(path.join(root, ".local/history"), { recursive: true });
+  fs.writeFileSync(
+    path.join(root, ".local/history", "legacy-" + p),
+    "HISTORICAL GENERATOR OUTPUT — NOT CURRENT VERIFICATION\n\n" + s + "\n",
+  );
+};
 const tests = read(".local/verification/tests-all.json");
 const review = read(".local/verification/human-review-execution.json");
 const doctor = read(".local/verification/doctor.json");
