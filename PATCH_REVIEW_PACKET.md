@@ -1,12 +1,19 @@
 # Patch review packet — PENDING
 
-Actual precommitted defective-to-corrected scenario diff; no human authorization or newly applied repair is claimed.
+Updated 2026-11-06T18:14:44.933930+00:00. These are precommitted synthetic scenario corrections, not a newly authored or applied production fix. No patch approval exists and no fresh patch proposal has been created before its prerequisite fresh reviewed defective run.
 
-Base snapshot <DEMO_RECORD_ID>; base candidate 589a37dc749a3084b07377ea634ce80040b486727d475fe9d8b43b4236c9a502.
+## Defects, proposed correction and evidence
 
-Diff .local/review/corrected-scenario.patch: 3344 bytes; SHA-256 2344c847a48c1751ae7018acfa2da43cbee8f579a25f54f92cfe2f9fd54488ee. Fresh proposal <DEMO_RECORD_ID> is REQUESTED, actor level 0, expires 2026-11-06T14:55:05.059Z. No human approval exists. Prior requests/different base snapshots are historical. If expired, generate a new request through ACTION_REQUIRED_FROM_HUMAN.md after inspecting the actual diff and base.
+| Existing defect                                            | Precommitted corrected behavior                |
+| ---------------------------------------------------------- | ---------------------------------------------- |
+| Coupon accepts exactly at expiry (uses >)                  | Rejects now>=expiry (uses >=)                  |
+| Email input lacks an associated label                      | Adds label for=email                           |
+| Order response loses application/json totalAmount contract | Restores required integer totalAmount response |
+| O-1002 ledger1000 versus order1500 cents                   | Corrected scenario ledger charge1500 cents     |
 
-Changes: strict coupon equality rejection; associated Email label; restored application/json totalAmount response contract; O-1002 ledger charge 1000 to 1500 cents. Selecting corrected fixtures must be disclosed and creates a new snapshot. Do not blindly apply this scenario-directory diff to a working app or frozen snapshot.
+Historical engineering base snapshot `<DEMO_RECORD_ID>`, candidate digest `589a37dc749a3084b07377ea634ce80040b486727d475fe9d8b43b4236c9a502`, defective run<DEMO_RECORD_ID>. These identify existing evidence only; the reviewed demonstration must use a NEW defective snapshot after real criteria/test attestation. Its actual new identity is UNSPECIFIED until then. Current acceptance ERROR is missing review, not proof of an approved failing test; other three actual checks FAIL on this diagnostic base.
+
+Actual the local review procedure:3344 bytes, SHA256 `2344c847a48c1751ae7018acfa2da43cbee8f579a25f54f92cfe2f9fd54488ee`. Before/after diff remains unchanged:
 
 ```diff
 diff --git a/fixtures/scenarios/defective/api/candidate.yaml b/fixtures/scenarios/corrected/api/candidate.yaml
@@ -68,4 +75,8 @@ index 83745d6..6099c67 100644
 
 ```
 
-Real production evidence: three FAIL-to-PASS transitions; acceptance ERROR while review pending. Separate frozen engineering Vitest gives 5/6 defective, 6/6 corrected and grants no approval. Criteria, patch and release review remain separate and PENDING.
+## Supported separate human procedure
+
+After genuine criteria review and the fresh defective run, inspect this exact diff against that fresh base. Use ACTION_REQUIRED_FROM_HUMAN.md §5 to create a fresh PATCH_REVIEW request with the ACTUAL returned snapshot ID; inspect the returned base digest, patch digest, proposal ID and expiry, then personally run the unredirected interactive patch attest command and enter the exact real confirmation or reject. Do not reuse expired <DEMO_RECORD_ID> (expired2026-11-06T14:55:05.059Z). No proposal ID for the future fresh base is invented here.
+
+Selecting the corrected fixture is disclosed as selecting precommitted demo content. It creates a new snapshot and does not overwrite the frozen defective candidate. A scenario-directory diff is not a working-app production patch. A successful corrected run is expected only after actual execution of all four tools; failure/error or stale evidence must stay BLOCKED. Patch review, provider action authorization and final release review are separate. Human reference is Level1 demo attestation, not cryptographically verified identity or real deployment permission.

@@ -1,6 +1,6 @@
 # Human actions required — PENDING
 
-Updated November 6, 2026 after the workspace-local npm repair. These instructions prepare genuine human gates and issue no approval. The existing standalone Codex sandbox passed doctor through the copied npm 11.9.0 runtime. A successful human-requested Switch room command is still required. Criteria/test, patch and release decisions remain PENDING.
+Updated November 6, 2026 after the workspace-local npm repair. These instructions prepare genuine human gates and issue no approval. The existing standalone Codex sandbox passed doctor through the copied npm 11.9.0 runtime. The genuine human-requested Switch doctor is now VERIFIED. Criteria/test, patch and release decisions remain PENDING.
 
 ## 1. Verified manual CLI entry point
 
@@ -16,11 +16,11 @@ if ($LASTEXITCODE -ne 0) { throw 'Doctor failed; preserve the exact error' }
 
 This manual result is local evidence. It does not establish a Switch room execution. Keep Auto mode ON and Bypass permissions OFF; never change security controls to force a command through.
 
-## 2. Genuine Switch execution gate
+## 2. Genuine Switch execution gate — VERIFIED
 
-Use the single current human retry message prepared in the local REPORT_TO_CHATGPT.md and its private evidence directory. Send it personally in switchforge-release-demo (private local reference). The saved agent instructions name the exact Node executable and workspace-local npm CLI tested in the existing standalone sandbox. The agent remains restricted to its seven existing project subcommands.
+genuine successful room receipt (private local reference), November6 23:25 IST. Human request<PRIVATE_POST_ID>, agent response<PRIVATE_POST_ID>, real provider exit0/ok:true and correlation<DEMO_RECORD_ID>. Do not repeat solved doctor verification. No approval or run/snapshot identity is implied by doctor. Preserve earlier failures and normal provider protections.
 
-Preserve the genuine earlier failures. Capture the actual next command, cwd, exit and full JSON in that same room. Only a successful human-requested Switch invocation can close GATE-SW-02. This assistant has not sent the message. Any genuine provider permission or authentication prompt remains a human action; no bypass or impersonation.
+The next single human action is the criteria review in HUMAN_REVIEW_PACKET.md. On this configured workspace, the private human-started helper command is the local review procedure. It displays exact source, waits before creating a fresh15-minute request and leaves both attestation prompts to the real human. It was tested to deny noninteractive input before proposal creation. The complete manual CLI equivalent follows for transparency; the agent must not execute the helper or type confirmations.
 
 ## 3. Fresh criteria and acceptance-test review
 

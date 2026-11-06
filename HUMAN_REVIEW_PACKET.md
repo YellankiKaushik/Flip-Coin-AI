@@ -1,10 +1,17 @@
 # HUMAN REVIEW PACKET — PENDING
 
-No human approval has been recorded. The user explicitly withheld approval and requested this packet. Ordinary development tests grant no approval.
+Updated 2026-11-06T18:14:44.933930+00:00. No human criteria/test approval has been recorded. The real Switch doctor is now VERIFIED (genuine successful room receipt (private local reference)); this does not approve criteria, tests, correction or release. No new15-minute proposal was created early during preparation.
 
-## 1. Exact acceptance criteria
+# HUMAN ACTION REQUIRED
 
-fixtures/scenarios/corrected/criteria/approved.json. The filename follows the specification; its actual status is PENDING.
+1. Review the exact five criteria and six tests in this packet, including the disclosed SAVE100/100-cent, millisecond-Z UTC and zero-clamping choices.
+2. V2 §55.2 requires real criteria/test review before AcceptanceRelay may execute those tests as approved evidence; chat or doctor success grants no approval.
+3. In an ordinary interactive PowerShell terminal at the existing project root, run the local review procedure. Inspect the displayed files, create the fresh proposal only when ready, then personally enter your reviewer reference and the exact confirmation requested by the CLI if you approve; Ctrl+C cancels without approval.
+4. Success is CLI exit0/ok:true with a genuine matching Level1 HUMAN_ATTESTED_FOR_DEMO ledger record. Identity is not cryptographically verified; patch and release decisions remain separate and PENDING.
+
+## Exact proposed criteria
+
+Source: fixtures/scenarios/corrected/criteria/approved.json. Filename approved.json is not approval; actual status remains PENDING. Raw SHA256 `f69fc54fcc167163ba6a715c10fabd4e9a63d2aaef27b5dd31efb259266a1e7c`.
 
 ```json
 {
@@ -37,9 +44,9 @@ fixtures/scenarios/corrected/criteria/approved.json. The filename follows the sp
 }
 ```
 
-## 2. Actual test cases
+## Exact six acceptance tests — unchanged
 
-apps/checkout-demo/tests/checkout.spec.ts:
+Source: apps/checkout-demo/tests/checkout.spec.ts. Raw SHA256 `e62a5a42d226dbb351c8e532a3834a577c0cbaffca195695988944b4a6e99c2f`.
 
 ```typescript
 import { test, expect } from "vitest";
@@ -87,79 +94,28 @@ test("AC-005 invalid and unsafe integer cents reject", () => {
 });
 ```
 
-## 3. Expected behavior
+## Behavior and explicit choices to understand
 
-- At or after the strict UTC expiry timestamp: EXPIRED_COUPON and unchanged subtotal.
-- One millisecond before expiry: SAVE100 subtracts 100 integer cents, with minimum zero.
-- Invalid/missing/ill-formed UTC timestamps reject with INVALID_TIME; negative, fractional, nonfinite or unsafe integer subtotals reject with INVALID_AMOUNT.
-- No payment provider or real customer data is involved. Unknown coupon handling exists but is outside the five proposed criteria.
+| Behavior                                                        | Requirement / choice / coverage                                                                                                                                      |
+| --------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| At or after expiry reject and preserve subtotal                 | Required by V2 §55.2; AC-001 and AC-003                                                                                                                              |
+| Before expiry, eligible coupon applies a deterministic discount | Required by V2 §55.2; AC-002                                                                                                                                         |
+| SAVE100 and100 integer cents                                    | Existing implementation choice where the original architecture leaves coupon identity/discount amount UNSPECIFIED; AC-002 binds the displayed example                |
+| Minimum total zero                                              | Existing implementation choice, not a newly invented criterion; six displayed cases do not directly exercise the clamp, although separate engineering tests cover it |
+| Exact yyyy-MM-ddTHH:mm:ss.fffZ input                            | Existing parser choice; V2 requires UTC/unparsable-time rejection, but this exact accepted format is UNSPECIFIED there                                               |
+| Invalid or missing time values reject                           | Required behavior; the two AC-004 tests cover malformed/missing now and missing expiration                                                                           |
+| Negative/fractional/nonfinite/unsafe integer cents reject       | Required strict cents behavior; AC-005 includes -1,0.1,NaN,Infinity,MAX_SAFE_INTEGER+1                                                                               |
 
-## 4. Differences and explicit decisions
+The applyCoupon input object has four fields; its strict equality expiry behavior aligns with V2 §§55.2/56.1. Unknown-coupon behavior exists but is outside the five proposed criteria. No new acceptance criterion or assertion was added to make this packet. Review binds the exact displayed criteria and test hashes; prose does not silently add tests or authorize future revisions. No payment provider or real customer data is involved.
 
-- Expiry boundary, before/at/after checks, strict cents, malformed inputs and actual Vitest align with protected architecture sections 8.5 and 55.2.
-- SAVE100, fixed 100-cent discount and zero clamping fill UNSPECIFIED business details; they are implementation decisions awaiting review, not invented source requirements.
-- Requiring millisecond-Z UTC strings is a deterministic parser decision. A broader ISO-8601 format was not silently assumed.
-- Test AC-004 now also exercises undefined expiration and missing/invalid now. This strengthens the stated missing-time check; no assertion was weakened.
-- Illustrative APPROVED fixture text has been replaced by PENDING, and production AcceptanceRelay requires a real matching criteria/test review record.
+## Actual test execution evidence
 
-## 5. Actual execution results
+The unchanged six cases previously ran against frozen candidate source in the isolated checkout: defective5 PASS/1 FAIL (AC-001), exit1; corrected6 PASS/0 FAIL, exit0. Evidence: `<PRIVATE_RECEIPT_LOCATION>`. These are engineering executions, not human-reviewed release runs. The actual full evaluator suite previously reported117/117 in both main and isolated checkout, with zero failures/skips; it was not rerun merely to relabel this review.
 
-```json
-{
-  "executedAt": "2026-11-06T09:37:44.181Z",
-  "durationMs": 652,
-  "command": [
-    "node",
-    "<project>\\node_modules\\vitest\\vitest.mjs",
-    "run",
-    "--config",
-    "<project>\\.local\\snapshots\\<DEMO_RECORD_ID>\\vitest.candidate.ts",
-    "--reporter=json",
-    "--outputFile",
-    "<project>\\<PRIVATE_RECEIPT_LOCATION>"
-  ],
-  "exitStatus": 0,
-  "criteriaSha256": "f69fc54fcc167163ba6a715c10fabd4e9a63d2aaef27b5dd31efb259266a1e7c",
-  "testSha256": "e62a5a42d226dbb351c8e532a3834a577c0cbaffca195695988944b4a6e99c2f",
-  "snapshotId": "<DEMO_RECORD_ID>",
-  "candidateDigest": "4de5a32b7a395d68d2e85ad1d2e5a6404d928660bfc2459a5236464a37c086c7",
-  "source": "frozen corrected scenario fixtures/current/app/coupon.ts",
-  "couponSha256": "dc10a772b586ea895112d327cfed68e502869aa8fafd6d38a66551864f6f8768",
-  "total": 6,
-  "passed": 6,
-  "failed": 0,
-  "reportPath": "<PRIVATE_RECEIPT_LOCATION>"
-}
-```
+Current production diagnostic runs remain blocked: acceptance ERROR/zero coverage while review is PENDING; the other three engines demonstrate FAIL→PASS. Live doctor exit0 proves the agent execution path, not a positive AcceptanceRelay run. Actual ledger inspection in this completion phase found decisions0 and criteria attestations0.
 
-- AC-001 at expiry rejects and preserves total: **passed**.
-- AC-002 one millisecond before expiry applies discount: **passed**.
-- AC-003 after expiry rejects and preserves total: **passed**.
-- AC-004 malformed and missing times reject: **passed**.
-- AC-004 missing expiration and malformed or missing now reject: **passed**.
-- AC-005 invalid and unsafe integer cents reject: **passed**.
+## Review procedure and unresolved limits
 
-These are standalone corrected-fixture development tests, not an approved release. Earlier five-test engineering runs <DEMO_RECORD_ID> and <DEMO_RECORD_ID> observed four FAIL and four PASS respectively, but both assessments stayed BLOCKED. Those historical snapshots do not establish current verifier validity.
+The local human helper displays the exact source files, checks their hashes, and waits before creating a fresh15-minute criteria proposal. It then invokes the existing supported CLI without piping or redirecting attestation. The CLI itself asks the human for their reference and exact `HUMAN REVIEWED <actual proposalId>`; the helper does not supply either answer. Its noninteractive guard was tested and denied before creating any proposal or approval. It is a private convenience wrapper, not an agent-authorized command, new approval mechanism or cryptographic identity boundary. Manual equivalent and rejection procedure remain in ACTION_REQUIRED_FROM_HUMAN.md.
 
-## 6. Unresolved risks and inconsistencies
-
-- Criteria approval remains PENDING. No human attestation, patch approval or final release decision exists.
-- Zero subtotal, zero-clamping and unknown coupon behavior remain outside the six proposed acceptance tests; separate engineering tests in tests/unit/checkout-edge-decisions.test.ts exercise those decisions without creating or extending human approval.
-- The strict timestamp format and chosen discount require human agreement; they are not commercial checkout requirements.
-- Level 1 same-account attestation cannot authenticate the reviewer cryptographically. Level 2 isolation is not implemented.
-- Dedicated SwitchForge command execution, real human correction and final readiness decision remain unverified. See FINAL_ENGINEERING_AUDIT.md for current service and integration observations.
-- Positive readiness cannot be demonstrated as a real approved release until this review is genuinely resolved. Independent engineering unit tests may use explicitly labelled synthetic state fixtures; they never create human decisions.
-
-The protected original architecture, rules PDF and PROJECT_ANALYSIS.md remain unchanged. No approval is inferred from this packet.
-
-## Final audit checkpoint
-
-Approval remains PENDING. Actual ledger inspection recorded zero criteria attestations and zero decisions. Criteria/test source hashes and all six assertions remain unchanged. The real human request and agent response are now observed; the first npm command failed before SwitchForge started (exit 1, MODULE_NOT_FOUND for npm-cli.js). A genuine successful project command remains unverified. Expired REQUESTED proposal records are not approvals. Fresh supported procedures are in ACTION_REQUIRED_FROM_HUMAN.md. Separate engineering zero/unknown-coupon tests do not extend these proposed acceptance requirements.
-
-## Current delivery checkpoint — November 6, 2026
-
-The criteria and six tests embedded above were compared with the actual files and still match exactly. Their raw hashes are unchanged. Current isolated-checkout source f27d79c3ee58b6153868930ddd70e9206c652a7d independently reran the same frozen corrected six tests: 6 PASS, 0 FAIL, exit 0; frozen defective with opposing corrected mutable source gave 5 PASS and AC-001 FAIL, exit 1. These are standalone engineering experiments, never criteria approval. Actual reports and per-case outcomes are in <PRIVATE_RECEIPT_LOCATION>
-
-Fresh criteria proposal <DEMO_RECORD_ID> was created REQUESTED at Level 0, expires November 6, 2026, 20:25:04 IST. Resource digest afb2bcf8e881055ba3b3d4c26ede934d3f524d82b8ce53ca464ba67d72a046ed binds the exact criteria/test content. The earlier <DEMO_RECORD_ID> request expired without approval. If this fresh request expires, use ACTION_REQUIRED_FROM_HUMAN.md to generate another; never reuse an expired confirmation.
-
-Latest production diagnostic corrected run <DEMO_RECORD_ID> has acceptance ERROR, other three PASS and ReleaseProof BLOCKED. At the last ledger inspection there were zero decisions and zero criteria attestations. No acceptance assertion, criterion or protected architecture byte was altered during the delivery audit.
+Old <DEMO_RECORD_ID> expired at2026-11-06T14:55:04.275Z. Do not reuse it or any old confirmation. If the newly created request expires or content changes, regenerate and review again. This packet does not grant patch approval, final release approval or deployment authority. Level1 is HUMAN_ATTESTED_FOR_DEMO; a hostile same-account actor is not cryptographically excluded. All protected original documents remain unchanged.

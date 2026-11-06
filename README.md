@@ -2,7 +2,7 @@
 
 Human-supervised engineering release assurance for one synthetic local checkout, operated through a Switch room with Codex and Mattermost.
 
-**Current status:** 117/117 automated tests pass in the main workspace and isolated checkout; all seven specified CI job commands pass locally. A real human request and same-room agent response are observed. Earlier real agent commands failed at npm bootstrap, dependency-version validation or access to the user npm installation. A byte-verified workspace-local npm 11.9.0 copy now passes doctor in the existing standalone Codex sandbox, including Chromium and oasdiff execution; a successful human-requested live Switch command is still pending. Human criteria/test review is **PENDING**, and both current diagnostic assessments remain **BLOCKED**. This is not a production deployment or approval system. See [human review packet](HUMAN_REVIEW_PACKET.md).
+**Current status:** the latest executed automated-test baseline is 117/117 in the main workspace and isolated checkout, with all seven specified CI job commands passed locally; these were not rerun for the subsequent documentation-only completion updates. Earlier real agent commands failed at npm bootstrap, dependency-version validation or access to the user npm installation. A byte-verified workspace-local npm 11.9.0 copy now works in the existing Codex sandbox, including Chromium and oasdiff execution. The genuine human-requested live doctor command is now **VERIFIED** (exit0/ok:true, same-room response). Human criteria/test review is **PENDING**, and both existing diagnostic assessments remain **BLOCKED**. This is not a production deployment or approval system. See [human review packet](HUMAN_REVIEW_PACKET.md).
 
 Four engines check one frozen candidate:
 
@@ -113,7 +113,7 @@ Further documents: [architecture](docs/ARCHITECTURE.md), [testing](docs/TESTING.
 
 License: Apache-2.0 for project code; dependencies retain their own licenses. No competition win, production readiness, compliance certification or measured commercial impact is claimed.
 
-Finalization handoff: [engineering audit](FINAL_ENGINEERING_AUDIT.md), [required human actions](ACTION_REQUIRED_FROM_HUMAN.md), and [submission readiness](SUBMISSION_READINESS.md). The real room interaction exists, but the first project command failed; successful project execution, human reviews and submission remain separate incomplete gates.
+Finalization handoff: [engineering audit](FINAL_ENGINEERING_AUDIT.md), [required human actions](ACTION_REQUIRED_FROM_HUMAN.md), and [submission readiness](SUBMISSION_READINESS.md). Genuine room-driven doctor execution is now verified. Human criteria/test review, the reviewed four-engine run pair, separate correction/release decisions and submission remain incomplete.
 
 The full exact recording sequence and separate human checkpoints are in [FINAL_DEMO_SCRIPT](docs/FINAL_DEMO_SCRIPT.md). Current final engineering evidence is BLOCKED; it is not a completed reviewed demonstration.
 
@@ -125,4 +125,8 @@ Current diagnostic runs: defective <DEMO_RECORD_ID> and corrected <DEMO_RECORD_I
 
 Run `npm run docs:check` for tracked local Markdown destinations. `npm run ci:proof -- <job>` records actual job receipts, redacted reports and provenance; local runs are labelled LOCAL_ONLY. Seven job names are in .github/workflows/ci.yml. External URLs and Markdown heading anchors are outside the offline link check. [Submission copy](SUBMISSION_FIELDS.md) distinguishes prepared content from the authenticated form's unobserved fields.
 
-On the observed Windows agent npm bootstrap failure, preserve its actual error first. The same CLI can be invoked with `npm.cmd --silent run sf -- doctor --json`, or `node --import tsx apps/cli/src/main.ts doctor --json`. Both passed local probes; only an actual room-driven receipt can verify the live retry. Keep provider protections enabled.
+The existing Windows agent uses its exact installed Node executable plus the ignored workspace-local npm11.9.0 CLI, as documented in its runner instructions. The genuine human-requested doctor now passes in the actual room; previous bootstrap/version/access failures are preserved as history. Do not substitute a different launcher or disable provider protections.
+
+Live integration evidence: genuine successful room receipt (private local reference), November6 23:25 IST; human request<PRIVATE_POST_ID>, command exit0, JSON correlation<DEMO_RECORD_ID>. This proves the command path, not human approval or a completed reviewed release.
+
+The Mattermost loopback permalinks are local verification references, not public submission evidence links. A real public demo video, authorized source publication and final reviewed workflow are still required before claiming a complete submission.
