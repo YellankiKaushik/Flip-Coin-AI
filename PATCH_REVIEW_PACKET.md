@@ -1,5 +1,13 @@
 # Patch review packet — LIVE DEFECTIVE BASE / PENDING HUMAN PATCH REVIEW
 
+Current preflight repair: the full non-attesting path now passes in ordinary Windows PowerShell5.1 and bundled7, including profile-enabled5.1 started from user home. Two historical dependency failures are confirmed in the audit, but the exact failed dependency remains UNKNOWN. The private helper now captures complete native errors and exact child exit with an explicit project directory. Every validation remains mandatory. If a failure recurs, it stops before any proposal and prints a unique private diagnostic receipt. No system/toolchain/security settings changed.
+
+Use the SAME simple action from the existing project prompt:
+
+Use the tracked CLI commands documented in the repository. This historical example used a local review setup.
+
+You personally inspect the diff and enter READY/reviewer confirmation only if you approve. `-PreflightOnly` is a separate strictly non-attesting diagnostic mode: it cannot create a proposal or enter any human prompt. The default helper still refuses redirected/noninteractive use.
+
 Updated 2026-11-06T20:17:37.890430+00:00. Protected original V2 §§50–65 govern. Actual live room report (private local reference). Previous historical packet is archived privately; this packet binds the verified fresh base.
 
 ## Exact base and proposed change
@@ -117,7 +125,7 @@ Use the tracked CLI commands documented in the repository. This historical examp
 
 V2 §§52/57.1 require `baseCandidateDigest + patchDigest`. The implementation binds those as candidateDigest and resourceDigest in one proposal/decision, with evidenceRefs `[patch path, exact base snapshot ID]`. The canonical interactive transaction checks pending status, one-time nonce, expiry, current frozen manifest/current implementation, unchanged patch bytes and correct PATCH_REVIEW action. It writes a consumed Level1 decision atomically. It does not apply a patch, select a scenario or run a check. Release readiness remains a third separate action. No plaintext nonce or human confirmation is placed in the room.
 
-Prepared private helper: the local review procedure, SHA256 `be5f68464bdb0604ab251f5f58d8bc70085bd6c980780d38ba2a0672a28588ca`. Exact human launch from an ordinary interactive PowerShell terminal:
+Prepared private helper: the local review procedure, SHA256 `7b29c7ee69ce5123be1b2c82d4a4a872486a4cd3b9b12ada804a633a54777abb`. Exact human launch from an ordinary interactive PowerShell terminal:
 
 Use the tracked CLI commands documented in the repository. This historical example used a local review setup.
 
