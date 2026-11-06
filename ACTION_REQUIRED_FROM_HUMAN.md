@@ -1,82 +1,109 @@
 # Human actions required — PENDING
 
-Prepared November 6, 2026. This file records mandatory human gates; it does not issue approval. Work from the existing repository root. Do not run attest commands until you have personally reviewed the exact referenced content. Requests expire after 15 minutes; create a fresh request if expired. Do not edit the criteria status to APPROVED.
+Updated November 6, 2026 after the workspace-local npm repair. These instructions prepare genuine human gates and issue no approval. The existing standalone Codex sandbox passed doctor through the copied npm 11.9.0 runtime. A successful human-requested Switch room command is still required. Criteria/test, patch and release decisions remain PENDING.
 
-## Current short-lived proposals
+## 1. Verified manual CLI entry point
 
-As created at 2026-11-06T14:40:05.087Z: criteria `<DEMO_RECORD_ID>` expires `2026-11-06T14:55:04.275Z`; separate patch `<DEMO_RECORD_ID>` expires `2026-11-06T14:55:05.059Z`. Both are REQUESTED at Level 0, never attested by the assistant. Check expiry before using; the procedures below always generate a fresh request if needed. Current patch base is snapshot `<DEMO_RECORD_ID>`, digest `589a37dc749a3084b07377ea634ce80040b486727d475fe9d8b43b4236c9a502`. Earlier requests are historical and may be expired.
-
-The dependency order is real doctor retry and personal criteria review, then a fresh defective run, separate correction review, fresh corrected run and only then separate final release review. The two initial human actions can be done independently. No agent may type a human confirmation.
-
-## 1. Criteria and acceptance test review
-
-Read HUMAN_REVIEW_PACKET.md, fixtures/scenarios/corrected/criteria/approved.json and apps/checkout-demo/tests/checkout.spec.ts. Review the six test cases and five criteria. At/after expiry rejects without changing total; one millisecond before expiry applies SAVE100 (100 cents, clamped to zero); malformed/missing UTC timestamps and invalid/unsafe integer cents reject. SAVE100, discount size, zero clamping and exact millisecond-Z format are implementation decisions requiring your agreement. Additional zero/unknown-coupon engineering tests do not add human-approved criteria.
-
-If correct, personally run in an interactive PowerShell terminal:
+Open an ordinary interactive PowerShell terminal in the existing repository root. The private runner cache is ignored by Git and is not supplied by a fresh source checkout. On this configured machine:
 
 ```powershell
-$review = npm.cmd --silent run sf -- criteria propose --file fixtures/scenarios/corrected/criteria/approved.json --json | ConvertFrom-Json
-if ($LASTEXITCODE -ne 0 -or -not $review.ok) { throw 'Criteria proposal failed' }
-$review.data.content
-npm.cmd --silent run sf -- criteria attest --proposal $review.data.proposal.proposalId --json
+$nodeExe = 'C:\Program Files\nodejs\node.exe'
+$npmCli = Join-Path (Get-Location).Path '.local\switchforge-runner-tools\npm\bin\npm-cli.js'
+if (-not (Test-Path -LiteralPath $npmCli)) { throw 'Verified runner cache is absent; do not substitute another npm version' }
+& $nodeExe $npmCli --silent run sf -- doctor --json
+if ($LASTEXITCODE -ne 0) { throw 'Doctor failed; preserve the exact error' }
 ```
 
-Enter your real reviewer reference and exactly `HUMAN REVIEWED <returned proposalId>` only after review. To reject, use the same command with `--reject` and type `REJECT`. This is Level 1 HUMAN_ATTESTED_FOR_DEMO; identity is not cryptographically verified. An ordinary chat response never updates the ledger. No agent may type this attestation for you.
+This manual result is local evidence. It does not establish a Switch room execution. Keep Auto mode ON and Bypass permissions OFF; never change security controls to force a command through.
 
-## 2. Genuine Switch command proof
+## 2. Genuine Switch execution gate
 
-Open the existing Mattermost room:
+Use the single current human retry message prepared in the local REPORT_TO_CHATGPT.md and its private evidence directory. Send it personally in switchforge-release-demo (private local reference). The saved agent instructions name the exact Node executable and workspace-local npm CLI tested in the existing standalone sandbox. The agent remains restricted to its seven existing project subcommands.
 
-SwitchForge room (private local reference)
+Preserve the genuine earlier failures. Capture the actual next command, cwd, exit and full JSON in that same room. Only a successful human-requested Switch invocation can close GATE-SW-02. This assistant has not sent the message. Any genuine provider permission or authentication prompt remains a human action; no bypass or impersonation.
 
-The genuine 19:31 IST human request and 19:33 agent response already exist. The initial npm doctor command exited 1 before SwitchForge started (MODULE_NOT_FOUND for npm-cli.js); no JSON/run/artifacts were emitted. Locally tested npm.cmd and direct Node succeed, but a new real room receipt is required. Type and send this yourself:
+## 3. Fresh criteria and acceptance-test review
 
-> @switchforge-demo-agent Retry doctor using npm.cmd --silent run sf -- doctor --json. If npm bootstrap still fails, use node --import tsx apps/cli/src/main.ts doctor --json. Report the actual working directory, command, exit and full JSON here. Do not modify files or grant approval.
+Read HUMAN_REVIEW_PACKET.md, fixtures/scenarios/corrected/criteria/approved.json and apps/checkout-demo/tests/checkout.spec.ts personally. The criteria filename does not mean approval: its status remains PENDING. Review all six actual tests and five criteria, including exact millisecond-Z UTC input, expiry equality rejection, SAVE100's 100-cent discount, zero clamping and safe integer cents. Engineering tests do not grant approval.
 
-Preserve the first failure; record every retry's actual command/exit separately. Keep Bypass permissions off. Personally handle any genuine provider authentication or permission prompt; do not disable protections. A local terminal probe cannot substitute for this real request/result.
+The old criteria <DEMO_RECORD_ID> and patch <DEMO_RECORD_ID> proposals expired on November 6 at14:55 UTC. Do not reuse them. Generate a fresh 15-minute criteria request only when ready to review:
 
-After the real criteria review is recorded, send:
+```powershell
+$review = & $nodeExe $npmCli --silent run sf -- criteria propose --file fixtures/scenarios/corrected/criteria/approved.json --json | ConvertFrom-Json
+if ($LASTEXITCODE -ne 0 -or -not $review.ok) { throw 'Criteria proposal failed' }
+$review.data.content
+$review.data.proposal
+```
 
-> @switchforge-demo-agent Prepare a fresh defective snapshot for candidate human-demo-20261106 using npm.cmd --silent run sf -- prepare --scenario defective --candidate human-demo-20261106 --json. Run the returned snapshot with a new idempotency key through the actual sf run command. Report exact command exits, snapshot/run IDs, candidate digest, all four statuses, ReleaseProof blockers and artifact references here. Verify the evidence. Do not attest or alter approval state.
+Only after reviewing that exact content, personally run this separate command in the same interactive terminal:
 
-Use a different candidate name if that identifier has already been used for an unrelated demonstration. Keys must be new per payload.
+```powershell
+& $nodeExe $npmCli --silent run sf -- criteria attest --proposal $review.data.proposal.proposalId --json
+```
 
-## 3. Separate patch review
+Do not pipe or redirect the attestation, automate stdin, use an agent TTY or ask an agent to type. The implementation requires both stdin and stderr to be real TTYs. At the displayed prompts enter your real reviewer name/reference, then exactly `HUMAN REVIEWED <the returned proposalId>`. To reject, add `--reject` and enter your reference and `REJECT`. An expired proposal must be recreated and reviewed again. Do not edit the criteria JSON to APPROVED. This is Level 1 HUMAN_ATTESTED_FOR_DEMO; reviewer identity is not cryptographically authenticated.
 
-Have the agent explain the real failing artifacts and prepare a diff in a staging path, never edit a frozen snapshot. Review the actual diff. Precommitted corrected fixtures must be disclosed as such; changing the selected scenario is not proof of a newly authored patch. A ready-to-review scenario repair diff is prepared locally at the local review procedure if present in the final audit. It is a proposal only.
+No fresh request or human attestation was created during the sandbox repair. A chat statement, command request, passing test or doctor cannot grant criteria approval.
 
-For the actual defective snapshot returned in step 2:
+## 4. Fresh defective run after genuine review
+
+Once the real criteria/test review is recorded, request a fresh synthetic defective snapshot and run through the existing Switch agent. Use only returned snapshot/run IDs and a fresh candidate/idempotency key. For a manual fallback, the same commands in this interactive terminal are local evidence only:
+
+```powershell
+$stamp = [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
+$candidate = "human-demo-$stamp"
+$bad = & $nodeExe $npmCli --silent run sf -- prepare --scenario defective --candidate $candidate --json | ConvertFrom-Json
+if ($LASTEXITCODE -ne 0 -or -not $bad.ok) { throw 'Prepare failed' }
+$before = & $nodeExe $npmCli --silent run sf -- run --snapshot $bad.data.snapshotId --key "defective-$stamp" --json | ConvertFrom-Json
+if ($LASTEXITCODE -ne 0 -or -not $before.ok) { throw 'Run failed; inspect preserved evidence' }
+& $nodeExe $npmCli --silent run sf -- verify-evidence --run $before.data.run.runId --json
+& $nodeExe $npmCli --silent run sf -- report --run $before.data.run.runId --json
+```
+
+Inspect actual statuses and artifacts from all four engines; exit0 alone is not readiness. Do not describe unreviewed acceptance ERROR as a reviewed failing test. The existing diagnostic runs stay BLOCKED and cannot substitute for fresh reviewed runs.
+
+## 5. Separate correction review
+
+Review PATCH_REVIEW_PACKET.md and the exact the local review procedure, against the fresh defective snapshot. The proposed scenario correction is precommitted; selecting the corrected fixture is not proof of a newly authored application patch or permission to overwrite frozen snapshots.
 
 Use the tracked CLI commands documented in the repository. This historical example used a local review setup.
 
-The human enters their reference and exact confirmation. Agent-side application needs the corresponding genuine provider/human authorization; patch attestation does not automatically apply a diff. Do not apply a scenario-directory diff as though it were a working-app patch. These precommitted fixtures demonstrate the documented defects/corrections, with a new snapshot required for every recheck.
-
-Then personally request:
-
-> @switchforge-demo-agent I have reviewed the displayed correction through the separate supported review procedure. Disclose that we are selecting the precommitted corrected scenario. Prepare a fresh corrected snapshot for the same candidate, run all four engines with a new key, verify evidence, and compare it with the actual defective run. Cite both run IDs, different digests, tool receipts and assessment. Do not claim readiness unless ReleaseProof returns READY_FOR_HUMAN_APPROVAL. Do not record final release attestation yourself.
-
-Send that message only if its review statement is true.
-
-## 4. Separate final readiness decision
-
-Only after the corrected run genuinely has four valid PASS results and current READY_FOR_HUMAN_APPROVAL:
+After personally reviewing the exact diff and base digest, run without redirection:
 
 ```powershell
-$release = npm.cmd --silent run sf -- release-request --run <actual-corrected-runId> --json | ConvertFrom-Json
+& $nodeExe $npmCli --silent run sf -- patch attest --proposal $patch.data.proposalId --json
+```
+
+Enter the real human reference and exact returned-proposal confirmation, or reject. Patch attestation does not apply a diff or grant a separate provider action. Never apply a scenario-directory patch as if it were a working-app change. Then personally request a fresh corrected scenario for the same candidate, disclosing the precommitted fixtures.
+
+```powershell
+$fixed = & $nodeExe $npmCli --silent run sf -- prepare --scenario corrected --candidate $candidate --json | ConvertFrom-Json
+if ($LASTEXITCODE -ne 0 -or -not $fixed.ok) { throw 'Corrected prepare failed' }
+$after = & $nodeExe $npmCli --silent run sf -- run --snapshot $fixed.data.snapshotId --key "corrected-$stamp" --json | ConvertFrom-Json
+if ($LASTEXITCODE -ne 0 -or -not $after.ok) { throw 'Corrected run failed' }
+& $nodeExe $npmCli --silent run sf -- verify-evidence --run $after.data.run.runId --json
+& $nodeExe $npmCli --silent run sf -- compare --before $before.data.run.runId --after $after.data.run.runId --json
+& $nodeExe $npmCli --silent run sf -- assert-ready --run $after.data.run.runId --json
+```
+
+All four real engines, current matching evidence/reviews and actual ReleaseProof readiness must support the conclusion. Never force READY or reuse expired/stale approval.
+
+## 6. Separate final human decision
+
+Only after the fresh corrected run genuinely returns READY_FOR_HUMAN_APPROVAL:
+
+```powershell
+$release = & $nodeExe $npmCli --silent run sf -- release-request --run $after.data.run.runId --json | ConvertFrom-Json
 if ($LASTEXITCODE -ne 0 -or -not $release.ok) { throw 'Release is blocked' }
 $release.data
-npm.cmd --silent run sf -- release-attest --proposal $release.data.proposalId --json
-npm.cmd --silent run sf -- report --run <actual-corrected-runId> --json
+& $nodeExe $npmCli --silent run sf -- release-attest --proposal $release.data.proposalId --json
+& $nodeExe $npmCli --silent run sf -- report --run $after.data.run.runId --json
 ```
 
-Review the exact candidate, assessment, policy and evidence. Enter the attestation yourself, or reject. This records synthetic readiness and never deploys. Readiness, criteria review, patch review and final decision are separate. Any source/tool/policy/evidence change requires new verification; expired or superseded proposals cannot be reused.
+Personally inspect the exact candidate, assessment, policy and evidence and answer the interactive prompts, or reject. This records synthetic readiness only and never deploys. The assistant must not perform criteria, patch or release attestation.
 
-## 5. Publication, recording and actual submission
+## 7. Recording, publication and submission
 
-No GitHub push, video upload or hackathon submission has occurred. After inspecting the local branch and redacted export, explicitly authorize publication or perform it yourself:
+Follow docs/FINAL_DEMO_SCRIPT.md. Record the genuine human → Switch → agent → CLI → evidence sequence. If live execution or reviews remain incomplete, use its honest fallback: show standalone sandbox success, preserved real room failures, diagnostic FAIL→PASS for the other three engines, acceptance ERROR/PENDING and ReleaseProof BLOCKED. Do not fabricate a successful collaboration loop, reviewer approval or footage.
 
-```powershell
-git push -u origin codex/switchforge-implementation
-```
-
-Destination is the existing YellankiKaushik/Flip-Coin-AI repository. Inspect the actual GitHub Actions run and fix failures before claiming CI success. Record the genuine human → Switch → agent → CLI → evidence → reviewed correction → new run → human decision sequence. Inspect repo/video/evidence link access, credits and notices. Submit personally through the event interface and retain its actual receipt. Deadline November 7, 2026, 23:59 IST; internal targets freeze 17:00 IST, submit 20:00 IST.
+No push, video upload or submission has occurred. Inspect local source and redacted export before explicitly authorizing publication or performing it yourself. Destination remains YellankiKaushik/Flip-Coin-AI; after publication inspect actual GitHub Actions and public links. The prepared ZIP is evidence, not a completed entry. Personally sign in, confirm actual form labels/team/track/declarations, submit and retain its real receipt. These details remain UNSPECIFIED where no evidence exists. Deadline: November7,2026,23:59 IST; internal freeze17:00 IST and submit20:00 IST. Never publish `.local`, tool caches, private DBs or setup logs.

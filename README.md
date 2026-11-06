@@ -2,7 +2,7 @@
 
 Human-supervised engineering release assurance for one synthetic local checkout, operated through a Switch room with Codex and Mattermost.
 
-**Current status:** 117/117 automated tests pass in the main workspace and isolated checkout; all seven specified CI job commands pass locally. A real human request and same-room agent response are observed. The first agent npm doctor command failed before SwitchForge started; a successful live project command is pending. Human criteria/test review is **PENDING**, and both current diagnostic assessments remain **BLOCKED**. This is not a production deployment or approval system. See [human review packet](HUMAN_REVIEW_PACKET.md).
+**Current status:** 117/117 automated tests pass in the main workspace and isolated checkout; all seven specified CI job commands pass locally. A real human request and same-room agent response are observed. Earlier real agent commands failed at npm bootstrap, dependency-version validation or access to the user npm installation. A byte-verified workspace-local npm 11.9.0 copy now passes doctor in the existing standalone Codex sandbox, including Chromium and oasdiff execution; a successful human-requested live Switch command is still pending. Human criteria/test review is **PENDING**, and both current diagnostic assessments remain **BLOCKED**. This is not a production deployment or approval system. See [human review packet](HUMAN_REVIEW_PACKET.md).
 
 Four engines check one frozen candidate:
 

@@ -23,7 +23,7 @@ The [official schedule](https://www.wemakedevs.org/hackathons/switch/schedule) i
 
 SwitchForge helps a criteria owner, developer/QA reviewer and release reviewer inspect deterministic release evidence for one local synthetic checkout. It freezes source, criteria/tests, configuration, policy and tool identities into a candidate manifest. Vitest tests coupon expiry, Playwright/axe scans the checkout label, oasdiff compares API revisions, and a CSV worker reconciles order/ledger cents. ReleaseProof blocks on missing, failing, invalid, stale or unreviewed evidence. Readiness and a human decision are separate.
 
-Switch Console connects the dedicated Codex agent with the Mattermost room, where the human can request checks, inspect evidence and review corrections. Current observed collaboration includes a genuine human request and same-room agent report of an npm bootstrap failure. A successful Switch-driven project CLI run is still pending; do not advertise the full loop as complete until it actually succeeds.
+Switch Console connects the dedicated Codex agent with the Mattermost room, where the human can request checks, inspect evidence and review corrections. Current observed collaboration includes genuine human requests and same-room agent reports of bootstrap, version and access failures. The workspace-local npm route now passes the existing standalone Codex sandbox doctor, but that is not a live Switch room result. A successful Switch-driven project CLI run is still pending; do not advertise the full loop as complete until it actually succeeds.
 
 ## Prepared implementation and results disclosure
 
