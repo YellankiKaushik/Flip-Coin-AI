@@ -1,61 +1,21 @@
-# Submission readiness — BLOCKED ON GENUINE LIVE AND HUMAN GATES
+# Submission readiness — LOCAL PREPARATION READY / HUMAN GATES PENDING
 
-Current November7 patch-review checkpoint: actual live defective run `<DEMO_RECORD_ID>` is VERIFIED with fourFAIL/evidencevalidtrue/ReleaseProofBLOCKED. Patch review is PENDING; exact fresh base/diff and private human-only helper prepared. No corrected reviewed run or final release approval.18privatehelper tests and65review/securitytests passed; latest full baseline137/137unchanged. New24-file redacted defective export is local only. Agent execution commands plus a newly scoped fixed read-only patch inspector now suffice for independent verification; no application verifier edits or security-toggle changes. Next human action: read PATCH_REVIEW_PACKET.md and launch local review tooling personally. DeadlineNovember7,2026,23:59IST; no push/upload/remoteCI/video/submission. Earlier readiness text below is historical.
+Deadline November7,2026,23:59IST, confirmed by the [official schedule](https://www.wemakedevs.org/hackathons/switch/schedule). Updated2026-11-06T22:42:58.728308+00:00. No push, upload, video fabrication or submission occurred.
 
-## Earlier readiness history
+| Deliverable/gate                      | Actual state                                                                                                                                         |
+| ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Frozen environment/browser            | Exact existing Chromium reused; explicit per-process helper cache;9positive verifier launches; exact human window still needs read-only confirmation |
+| Full current tests                    | 137/137PASS,19files,0fail/skipped; private safety tests also pass                                                                                    |
+| Genuine criteria review               | VERIFIED Level1, proposal9afe6866                                                                                                                    |
+| Genuine reviewed defective Switch run | VERIFIED5bd5c74e;4FAIL,valid evidence,ReleaseProofBLOCKED                                                                                            |
+| Patch review                          | PENDING; exact3344-byte diff and fresh base binding preserved; helper ready                                                                          |
+| Corrected reviewed Switch run         | NOT EXECUTED; conditional message prepared                                                                                                           |
+| Final readiness/human decision        | PENDING; third separate helper prepared and negative gates tested                                                                                    |
+| README/source integrity/traceability  | Refreshed; original37rows retained; no protected edits                                                                                               |
+| GitHub Actions                        | Seven-job pinned workflow prepared; no actual remote result claimed                                                                                  |
+| Source/redacted evidence ZIP          | Local, hash/CRC verified at packaging; private caches/DB/keys/original references excluded                                                           |
+| Recording                             | Authentic source receipts and conditional script ready; final video absent                                                                           |
+| Submission description/checklist      | Prepared; authenticated field limits/team/registrationUNSPECIFIED                                                                                    |
+| Publication/upload/submission receipt | NOT DONE; explicit human authorization/actions required                                                                                              |
 
-Updated November 7: genuine criteria/test review `<DEMO_RECORD_ID>` is independently VERIFIED at Level 1 using canonical CLI inspection locally and in the provider-equivalent sandbox. Agent policy was narrowly updated, saved and reopened with exact persisted text; Auto ON / Bypass OFF unchanged. Main suite 137/137 PASS. Next is the real human's fresh defective-run Switch request in REPORT_TO_CHATGPT.md; no such new run has yet been observed. Patch/release approvals, reviewed corrected run, actual remote CI/video/publication/submission remain incomplete. Previous source ZIPs are historical and do not contain this repair. No push, upload or submission occurred. Deadline November 7, 2026, 23:59 IST remains unchanged.
-
-## Historical readiness checkpoint
-
-The earlier audit below is retained. Its criteria-pending statuses and baseline counts describe the pre-review state; the update above supersedes those statuses without asserting completion of other gates.
-
-## Sandbox dependency repair
-
-The existing Codex workspace sandbox (`kaushik\codexsandboxoffline`) can read and execute the ignored workspace-local npm11.9.0 copy through installed Node24.16.0. Actual doctor exits0 with structured ok:true and validates every frozen dependency. It also executes oasdiff1.35.0 and launches Chromium158.0.8127.18 with the same pinned hashes as ordinary local doctor. SQLite3.53.4 loads, and both existing diagnostic evidence sets verify inside that sandbox. No Chromium/oasdiff copy, extra read grant, global install, manual ACL edit or permission bypass was required.
-
-The npm copy contains1592 selected runtime/bundled-dependency files,8365198 bytes, identical source/copy hashes, unchanged original source and160 retained license/notice files. The package's validated builtin npmrc is part of npm; no user npm configuration, credentials or unrelated AppData files were copied. All .local tools remain ignored/untracked. A later genuine human-requested live doctor now closes GATE-SW-02; it does not grant human review.
-
-## Current P0 gates
-
-| P0 gate       | Current status    | Evidence / remaining dependency                                                                                                                                                                            |
-| ------------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| GATE-SW-01    | VERIFIED          | Genuine human room requests and named-agent replies preserved                                                                                                                                              |
-| GATE-SW-02    | VERIFIED          | Human <PRIVATE_POST_ID> → agent <PRIVATE_POST_ID>, November6 23:25 IST; actual provider doctor exit0/ok:true, correlation<DEMO_RECORD_ID>; no human approval implied |
-| GATE-CORE-01  | BLOCKED           | AcceptanceRelay requires genuine matching criteria/test review                                                                                                                                             |
-| GATE-CORE-02  | VERIFIED BASELINE | Existing negative/nonpassing cases block; source unchanged                                                                                                                                                 |
-| GATE-CORE-03  | VERIFIED BASELINE | Existing source/config/tool/evidence binding tests retained; cooperative security scope unchanged                                                                                                          |
-| GATE-HUMAN-01 | PENDING           | Zero actual decisions and zero criteria attestations; all three human decisions separate                                                                                                                   |
-| GATE-DEMO-01  | BLOCKED           | Genuine reviewed bad/good live lifecycle incomplete; honest fallback instructions prepared                                                                                                                 |
-| GATE-DEMO-02  | BLOCKED           | Authentic recording, authorized publication, public links and human submission receipt missing                                                                                                             |
-
-## Independent deliverables
-
-| Deliverable                                                              | Actual status                                                                                                                                                                                    |
-| ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Architecture, rules PDF, original analysis and six acceptance assertions | Frozen hashes unchanged; integrity rechecked during targeted repair                                                                                                                              |
-| Application evaluator                                                    | f27d79c3ee58b6153868930ddd70e9206c652a7d unchanged; no application code changes                                                                                                                  |
-| Full automated suite                                                     | Historical117/117 main and isolated checkout; not rerun or claimed anew for docs/cache changes                                                                                                   |
-| CI implementation                                                        | Seven job commands previously passed locally; no evaluator GitHub Actions success claimed                                                                                                        |
-| Typecheck / formatting / documentation checks                            | Targeted current results recorded in REPORT_TO_CHATGPT.md and repair evidence                                                                                                                    |
-| Criteria review packet                                                   | Exact criteria and test source embedded; status PENDING; no weakened tests                                                                                                                       |
-| Fresh interactive procedure                                              | ACTION_REQUIRED_FROM_HUMAN.md regenerates a15-minute request only when the human is ready; unpiped stdin/stderr TTY required; assistant never attests                                            |
-| Separate patch review                                                    | PATCH_REVIEW_PACKET.md and existing scenario diff preserved; no actual patch decision                                                                                                            |
-| Diagnostic evidence pair                                                 | Defective <DEMO_RECORD_ID> and corrected9b0c403f-e29d-40fc-b150-2d583522467e both verify in standalone sandbox; both remain BLOCKED                                          |
-| Redacted export/ZIP                                                      | Existing46-file export hash-verified; known local-path/token/private-key patterns absent;51054-byte archive SHA2561a3581e27930f2110a2a1f180e4ca63bfb420fbc64911ad7e3a08dccecc52fc2; not uploaded |
-| Demo instructions                                                        | Updated exact manual npm route and honest fallback; no footage created or claimed                                                                                                                |
-| GitHub                                                                   | Read-only remote observation: main66bd0b90a33e31a067acf8b7dd435120472e330b; no codex/switchforge-implementation remote head returned; no push                                                    |
-| Actual remote Actions                                                    | No success for this unpublished evaluator verified; PR-only connector query scope disclosed in current report                                                                                    |
-| Video / public evidence links                                            | Not recorded/published/verified                                                                                                                                                                  |
-| Registration/team/track/authenticated form                               | UNSPECIFIED; prepared submission copy is not an observed completed form                                                                                                                          |
-| Submission / receipt                                                     | NOT DONE; human must submit personally after genuine reviews and explicit publication authorization                                                                                              |
-
-## Review and demonstration boundaries
-
-No criteria, patch or release attestation was performed. Existing diagnostic acceptance is ERROR/zero coverage because review remains pending; the other three checks demonstrate FAIL→PASS. Neither diagnostic assessment is READY_FOR_HUMAN_APPROVAL. Fresh defective and corrected reviewed snapshots will be run only after genuine matching review exists; no fresh unreviewed run was made merely to repeat the audit.
-
-The fallback in docs/FINAL_DEMO_SCRIPT.md shows the genuine later live doctor success and preserves earlier failures as history, separately from pending human decisions. It does not invent approval or recording. The next single human action is criteria/test review in HUMAN_REVIEW_PACKET.md. Publication/submission remain separate authorized human steps. Keep Auto ON, Bypass OFF; never publish .local, private DBs, source originals or tool caches.
-
-Full37-row historical audit remains FINAL_ENGINEERING_AUDIT.md; these current statuses take precedence for the repaired execution path. Human procedure: ACTION_REQUIRED_FROM_HUMAN.md. Prepared form copy: SUBMISSION_FIELDS.md. Authentic/fallback recording plan: docs/FINAL_DEMO_SCRIPT.md.
-
-Current live milestone: genuine successful room receipt (private local reference); SW-02 VERIFIED. Next mandatory human action: inspect the exact review packet and start its interactive criteria review; no fresh proposal was created early. No publication, video or submission was performed.
+See FINAL_SUBMISSION_CHECKLIST.md, PUBLICATION_PACKET.md and SUBMISSION_FIELDS.md. Older ZIPs/reports remain historical. Current technical uncertainty is the original session-specific discovery cause, not an observed failing verified binary. The one exact current action is the read-only same-window preflight, before personal patch approval. Never convert this preparation into a final delivery claim.

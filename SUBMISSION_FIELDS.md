@@ -1,5 +1,13 @@
 # Submission copy and observed fields — NOT SUBMITTED
 
+Current November7 update: the public registration surface currently renders loading content; exact authenticated form fields/limits/team/eligibility remain UNSPECIFIED. No login or submission occurred. Genuine criteria review and reviewed defective Switch run5bd5c74e are verified; all4enginesFAIL, valid evidence, ReleaseProofBLOCKED. Patch/corrected/final decisions remain pending. Fresh current main suite137/137; exact browser and helper discovery verified without source changes. Updated accurate draft below; older checkpoint wording is historical.
+
+Prepared current results paragraph: A genuine human request in the existing Switch/Mattermost room reached the dedicated Codex agent, which froze candidate76c34400 and ran all four real engines. Acceptance5/6, the missing email label, removed JSON media type and500-cent discrepancy produced fourFAIL; evidence hashes verified and ReleaseProof correctly BLOCKED. A separate human correction review is prepared against an exact precommitted scenario diff. No corrected reviewed PASS, final human release approval, remote CI result, completed video or submission is claimed. Level1 reviewer identity is not cryptographically verified.
+
+The final source/redacted ZIP manifests are local only. Recommended track remains Best Business Workflow, with actual selection UNSPECIFIED. See FINAL_SUBMISSION_CHECKLIST.md and PUBLICATION_PACKET.md before authorized publication and personal authenticated submission.
+
+## Historical draft checkpoint
+
 Checked November 6, 2026. The actual [official event page](https://www.wemakedevs.org/hackathons/switch) displays an account-access gate, with Sign in and Create an account. The authenticated submission form is not visible. **Exact form field names, required markers, character limits, upload constraints and submission URL are UNSPECIFIED.** No account creation, login, terms acceptance, upload or submission was performed. This file supplies prepared content to map only after the real human opens the actual form.
 
 The [official schedule](https://www.wemakedevs.org/hackathons/switch/schedule) identifies repository, README and demo video deliverables; deadline November 7, 2026, 23:59 IST. The authentic public demo video is still missing.
