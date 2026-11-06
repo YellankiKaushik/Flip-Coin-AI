@@ -166,6 +166,20 @@ test("valid pending exact-digest nonce accepted by pure state validator", () =>
   expect(() =>
     validateDecision(p(), sha256("assessment"), "unit-nonce"),
   ).not.toThrow());
+test("malformed proposal expiry cannot establish an effective release decision", () => {
+  const proposal = p();
+  proposal.expiresAt = "not-a-timestamp";
+  const assessment = {
+    readiness: "READY_FOR_HUMAN_APPROVAL",
+    assessmentDigest: proposal.assessmentDigest,
+    candidateDigest: proposal.candidateDigest,
+    policyDigest: proposal.policyDigest,
+  } as Assessment;
+  expect(effectiveReleaseDecision(proposal, assessment)).toBe("EXPIRED");
+  expect(() =>
+    validateDecision(proposal, proposal.resourceDigest, "unit-nonce"),
+  ).toThrow();
+});
 test.each(["expired", "replayed", "wrong-digest", "wrong-nonce"])(
   "UT-APP-003 %s denied",
   (fault) => {

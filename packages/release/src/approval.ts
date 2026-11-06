@@ -38,7 +38,8 @@ export function effectiveReleaseDecision(
   a: Assessment,
   at = Date.now(),
 ): Proposal["decision"] {
-  if (Date.parse(p.expiresAt) <= at) return "EXPIRED";
+  const expiry = Date.parse(p.expiresAt);
+  if (!Number.isFinite(expiry) || expiry <= at) return "EXPIRED";
   if (
     a.readiness !== "READY_FOR_HUMAN_APPROVAL" ||
     p.assessmentDigest !== a.assessmentDigest ||
