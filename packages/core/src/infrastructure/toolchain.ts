@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { chromium } from "playwright";
-import { sha256 } from "../../../evidence/src/canonical-json.ts";
+import { sha256 } from "../domain/canonical-json.ts";
 import { runProcess } from "./process-runner.ts";
 import { invariant, SfError, type ToolchainEntry } from "../domain/models.ts";
 import { oasdiffPath, validateEnvironment } from "./configuration.ts";

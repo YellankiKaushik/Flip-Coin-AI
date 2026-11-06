@@ -1,11 +1,17 @@
 import Database from "better-sqlite3";
 import fs from "node:fs";
-import { sanitizedJson } from "../../core/src/infrastructure/redaction.ts";
+import { sanitizedJson } from "../../core/src/public/infrastructure.ts";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
-import { canonical } from "./canonical-json.ts";
-import { confined } from "../../core/src/infrastructure/filesystem-guard.ts";
-import { databasePath } from "../../core/src/infrastructure/configuration.ts";
+import { z } from "zod";
+import {
+  snapshotSchema,
+  proposalSchema,
+  assessmentSchema,
+} from "../../core/src/public/domain.ts";
+import { canonical, hashObject } from "./canonical-json.ts";
+import { confined } from "../../core/src/public/infrastructure.ts";
+import { databasePath } from "../../core/src/public/infrastructure.ts";
 import {
   now,
   invariant,
@@ -16,7 +22,23 @@ import {
   type CheckResult,
   type Proposal,
   type Assessment,
-} from "../../core/src/domain/models.ts";
+} from "../../core/src/public/domain.ts";
+function decode<T>(schema: z.ZodType<T>, input: unknown, json = false): T {
+  let value = input;
+  try {
+    if (json) value = JSON.parse(input as string);
+  } catch {
+    invariant(false, "EVIDENCE_CORRUPT", "Malformed persisted JSON", 6);
+  }
+  const parsed = schema.safeParse(value);
+  invariant(
+    parsed.success,
+    "EVIDENCE_CORRUPT",
+    "Malformed persisted entity",
+    6,
+  );
+  return parsed.data;
+}
 export class Ledger {
   readonly db: Database.Database;
   constructor(readonly root: string) {
@@ -67,7 +89,46 @@ export class Ledger {
       .run(event.eventId, runId, canonical(sanitizedJson(event)));
     return event;
   }
-  putSnapshot(s: Snapshot) {
+  private validateSnapshot(input: Snapshot): Snapshot {
+    const s = decode(snapshotSchema, input);
+    invariant(
+      s.candidateId === s.manifest.candidateId &&
+        hashObject(s.manifest) === s.candidateDigest,
+      "EVIDENCE_CORRUPT",
+      "Snapshot manifest binding mismatch",
+      6,
+    );
+    try {
+      const expected = confined(this.root, ".local/snapshots/" + s.snapshotId);
+      invariant(
+        fs.realpathSync(s.root) === fs.realpathSync(expected),
+        "EVIDENCE_CORRUPT",
+        "Snapshot root outside registry",
+        6,
+      );
+    } catch {
+      invariant(
+        false,
+        "EVIDENCE_CORRUPT",
+        "Snapshot root unavailable or outside registry",
+        6,
+      );
+    }
+    return s;
+  }
+  auditJsonLines(runId: string): string {
+    const rows = this.db
+      .prepare("SELECT data FROM audit_events WHERE run_id=? ORDER BY rowid")
+      .all(runId) as { data: string }[];
+    return rows.map((r) => r.data).join("\n");
+  }
+  artifactRows(runId: string): { path: string; data: string }[] {
+    return this.db
+      .prepare("SELECT path,data FROM artifacts WHERE run_id=? ORDER BY path")
+      .all(runId) as { path: string; data: string }[];
+  }
+  putSnapshot(input: Snapshot) {
+    const s = this.validateSnapshot(input);
     this.transaction(() => {
       this.db
         .prepare("INSERT OR IGNORE INTO candidates VALUES(?)")
@@ -79,31 +140,24 @@ export class Ledger {
   }
   getSnapshot(id: string): Snapshot {
     const row = this.db
-      .prepare("SELECT data FROM snapshots WHERE id=?")
-      .get(id) as { data: string } | undefined;
+      .prepare("SELECT candidate_id,data FROM snapshots WHERE id=?")
+      .get(id) as { candidate_id: string; data: string } | undefined;
     invariant(row, "INVALID_INPUT", "Unknown snapshot");
-    const snapshot = JSON.parse(row.data) as Snapshot;
+    const s = this.validateSnapshot(decode(snapshotSchema, row.data, true));
     invariant(
-      snapshot.snapshotId === id && /^[a-f0-9-]{36}$/.test(id),
+      s.snapshotId === id && s.candidateId === row.candidate_id,
       "EVIDENCE_CORRUPT",
-      "Invalid snapshot identity",
+      "Snapshot contradicts indexed identity",
       6,
     );
-    const expected = confined(this.root, ".local/snapshots/" + id);
-    invariant(
-      fs.realpathSync(snapshot.root) === fs.realpathSync(expected),
-      "EVIDENCE_CORRUPT",
-      "Snapshot root outside registry",
-      6,
-    );
-    return snapshot;
+    return s;
   }
   snapshots(): Snapshot[] {
     return (
-      this.db.prepare("SELECT data FROM snapshots ORDER BY rowid").all() as {
-        data: string;
+      this.db.prepare("SELECT id FROM snapshots ORDER BY rowid").all() as {
+        id: string;
       }[]
-    ).map((r) => JSON.parse(r.data));
+    ).map((r) => this.getSnapshot(r.id));
   }
   getRun(id: string): Run {
     const row = this.db.prepare("SELECT * FROM runs WHERE id=?").get(id) as
@@ -118,9 +172,7 @@ export class Ledger {
         }
       | undefined;
     invariant(row, "INVALID_INPUT", "Unknown run");
-    const parsed = runSchema.safeParse(JSON.parse(row.data));
-    invariant(parsed.success, "EVIDENCE_CORRUPT", "Malformed persisted run", 6);
-    const r = parsed.data;
+    const r = decode(runSchema, row.data, true);
     invariant(
       r.runId === row.id &&
         r.candidateId === row.candidate_id &&
@@ -143,21 +195,27 @@ export class Ledger {
   }
   findRun(candidate: string, key: string): Run | undefined {
     const row = this.db
-      .prepare(
-        "SELECT data FROM runs WHERE candidate_id=? AND idempotency_key=?",
-      )
-      .get(candidate, key) as { data: string } | undefined;
-    return row ? this.getRun(JSON.parse(row.data).runId) : undefined;
+      .prepare("SELECT id FROM runs WHERE candidate_id=? AND idempotency_key=?")
+      .get(candidate, key) as { id: string } | undefined;
+    return row ? this.getRun(row.id) : undefined;
   }
   insertRun(run: Run) {
-    runSchema.parse(run);
+    decode(runSchema, run);
+    const snapshot = this.getSnapshot(run.snapshotId);
+    invariant(
+      run.candidateId === snapshot.candidateId &&
+        run.candidateDigest === snapshot.candidateDigest,
+      "EVIDENCE_CORRUPT",
+      "Run snapshot binding mismatch",
+      6,
+    );
     const previousRuns = this.listRuns()
       .filter((r) => r.candidateId === run.candidateId)
       .map((r) => r.runId);
     for (const row of this.db
-      .prepare("SELECT data FROM approval_requests")
-      .all() as { data: string }[]) {
-      const p = JSON.parse(row.data) as Proposal;
+      .prepare("SELECT id FROM approval_requests")
+      .all() as { id: string }[]) {
+      const p = this.getProposal(row.id);
       if (
         p.actionType === "RELEASE_READINESS" &&
         previousRuns.includes(p.evidenceRefs[0]) &&
@@ -186,21 +244,54 @@ export class Ledger {
     this.audit("RunCreated", run.runId);
   }
   updateRun(run: Run) {
-    runSchema.parse(run);
+    decode(runSchema, run);
     const previous = this.getRun(run.runId);
     invariant(
       !["COMPLETED", "INTERRUPTED"].includes(previous.status),
       "INVALID_INPUT",
       "Terminal run is immutable",
     );
+    const {
+      status: _oldStatus,
+      finishedAt: _oldFinished,
+      ...oldIdentity
+    } = previous;
+    const {
+      status: _newStatus,
+      finishedAt: _newFinished,
+      ...newIdentity
+    } = run;
+    invariant(
+      hashObject(oldIdentity) === hashObject(newIdentity),
+      "EVIDENCE_CORRUPT",
+      "Run identity is immutable",
+      6,
+    );
+    const allowed: Record<string, string[]> = {
+      CREATED: ["VALIDATING", "INTERRUPTED"],
+      VALIDATING: ["RUNNING", "INTERRUPTED"],
+      RUNNING: ["COMPLETED", "INTERRUPTED"],
+    };
+    invariant(
+      allowed[previous.status]?.includes(run.status),
+      "INVALID_INPUT",
+      "Invalid run state transition",
+    );
     this.db
       .prepare("UPDATE runs SET status=?,data=? WHERE id=?")
       .run(run.status, canonical(run), run.runId);
   }
   putResult(result: CheckResult) {
-    resultSchema.parse(result);
+    decode(resultSchema, result);
+    const run = this.getRun(result.runId);
     invariant(
-      this.getRun(result.runId).status === "RUNNING",
+      result.candidateDigest === run.candidateDigest,
+      "EVIDENCE_CORRUPT",
+      "Result candidate binding mismatch",
+      6,
+    );
+    invariant(
+      run.status === "RUNNING",
       "INVALID_INPUT",
       "Results require an active run",
     );
@@ -225,20 +316,49 @@ export class Ledger {
         data: string;
       }[]
     ).map((r) => {
-      const parsed = resultSchema.safeParse(JSON.parse(r.data));
+      const result = decode(resultSchema, r.data, true);
       invariant(
-        parsed.success &&
-          parsed.data.runId === r.run_id &&
-          parsed.data.checkId === r.check_id &&
-          parsed.data.attempt === r.attempt,
+        result.runId === r.run_id &&
+          result.checkId === r.check_id &&
+          result.attempt === r.attempt &&
+          result.candidateDigest === this.getRun(id).candidateDigest,
         "EVIDENCE_CORRUPT",
         "Malformed or misindexed check result",
         6,
       );
-      return parsed.data;
+      return result;
     });
   }
-  putAssessment(a: Assessment) {
+  private validateAssessment(input: Assessment): Assessment {
+    const a = decode(assessmentSchema, input);
+    const { assessmentDigest, ...payload } = a;
+    invariant(
+      hashObject(payload) === assessmentDigest &&
+        this.getRun(a.runId).candidateDigest === a.candidateDigest,
+      "EVIDENCE_CORRUPT",
+      "Assessment digest or candidate binding mismatch",
+      6,
+    );
+    return a;
+  }
+  latestAssessment(runId: string): Assessment | undefined {
+    const row = this.db
+      .prepare(
+        "SELECT id,run_id,data FROM assessments WHERE run_id=? ORDER BY rowid DESC LIMIT 1",
+      )
+      .get(runId) as { id: string; run_id: string; data: string } | undefined;
+    if (!row) return undefined;
+    const a = this.validateAssessment(decode(assessmentSchema, row.data, true));
+    invariant(
+      a.assessmentId === row.id && a.runId === row.run_id,
+      "EVIDENCE_CORRUPT",
+      "Assessment contradicts indexed identity",
+      6,
+    );
+    return a;
+  }
+  putAssessment(input: Assessment) {
+    const a = this.validateAssessment(input);
     this.db
       .prepare("INSERT INTO assessments VALUES(?,?,?)")
       .run(a.assessmentId, a.runId, canonical(a));
@@ -247,7 +367,8 @@ export class Ledger {
       readiness: a.readiness,
     });
   }
-  proposal(p: Proposal) {
+  proposal(input: Proposal) {
+    const p = decode(proposalSchema, input);
     this.db
       .prepare("INSERT INTO approval_requests VALUES(?,?)")
       .run(p.proposalId, canonical(p));
@@ -261,7 +382,13 @@ export class Ledger {
       .prepare("SELECT data FROM approval_requests WHERE id=?")
       .get(id) as { data: string } | undefined;
     invariant(row, "APPROVAL_STALE", "Unknown proposal", 8);
-    const p = JSON.parse(row.data) as Proposal;
+    const p = decode(proposalSchema, row.data, true);
+    invariant(
+      p.proposalId === id,
+      "EVIDENCE_CORRUPT",
+      "Proposal contradicts indexed identity",
+      6,
+    );
     if (p.decision === "REQUESTED" && Date.parse(p.expiresAt) <= Date.now()) {
       p.decision = "EXPIRED";
       this.updateProposal(p);
@@ -269,7 +396,36 @@ export class Ledger {
     }
     return p;
   }
-  updateProposal(p: Proposal) {
+  proposals(): Proposal[] {
+    return (
+      this.db
+        .prepare("SELECT id FROM approval_requests ORDER BY rowid")
+        .all() as { id: string }[]
+    ).map((row) => this.getProposal(row.id));
+  }
+  updateProposal(input: Proposal) {
+    const p = decode(proposalSchema, input);
+    const row = this.db
+      .prepare("SELECT data FROM approval_requests WHERE id=?")
+      .get(p.proposalId) as { data: string } | undefined;
+    invariant(row, "APPROVAL_STALE", "Unknown proposal", 8);
+    const prior = decode(proposalSchema, row.data, true);
+    const scope = (value: Proposal) => {
+      const {
+        decision,
+        consumedAt,
+        humanActorRef,
+        actorVerificationLevel,
+        ...binding
+      } = value;
+      return binding;
+    };
+    invariant(
+      hashObject(scope(prior)) === hashObject(scope(p)),
+      "EVIDENCE_CORRUPT",
+      "Proposal scope is immutable",
+      6,
+    );
     this.db
       .prepare("UPDATE approval_requests SET data=? WHERE id=?")
       .run(canonical(p), p.proposalId);

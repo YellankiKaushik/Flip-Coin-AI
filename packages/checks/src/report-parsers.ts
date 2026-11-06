@@ -1,4 +1,4 @@
-import { invariant } from "../../core/src/domain/models.ts";
+import { invariant } from "../../core/src/public/domain.ts";
 export function parseOasdiffReport(value: unknown, exitCode: number | null) {
   invariant(
     Array.isArray(value) &&

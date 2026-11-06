@@ -3,7 +3,7 @@ import {
   resultSchema,
   type CheckResult,
   type Run,
-} from "../../core/src/domain/models.ts";
+} from "../../core/src/public/domain.ts";
 export function blockersFor(
   run: Run,
   results: CheckResult[],

@@ -1,7 +1,7 @@
 import { parse } from "csv-parse/sync";
-import { sha256 } from "../../evidence/src/canonical-json.ts";
-import { utf8 } from "../../core/src/infrastructure/filesystem-guard.ts";
-import { invariant } from "../../core/src/domain/models.ts";
+import { sha256 } from "../../evidence/src/index.ts";
+import { utf8 } from "../../core/src/public/infrastructure.ts";
+import { invariant } from "../../core/src/public/domain.ts";
 export interface DataFinding {
   code: string;
   severity: "ERROR";

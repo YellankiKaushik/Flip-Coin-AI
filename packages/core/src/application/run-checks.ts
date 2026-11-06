@@ -2,9 +2,12 @@ import fs from "node:fs";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
 import { execFileSync } from "node:child_process";
-import { Ledger } from "../../../evidence/src/ledger.ts";
-import { ArtifactStore } from "../../../evidence/src/artifact-store.ts";
-import { canonical, hashObject } from "../../../evidence/src/canonical-json.ts";
+import type {
+  CoordinatorLedger,
+  ArtifactSink,
+  CoordinatorServices,
+} from "./ports.ts";
+import { canonical, hashObject } from "../domain/canonical-json.ts";
 import {
   checksSchema,
   ids,
@@ -17,14 +20,7 @@ import {
 import { readJson, safeId } from "../infrastructure/filesystem-guard.ts";
 import { validateManifest } from "../infrastructure/hash-manifest.ts";
 import { inventory } from "../infrastructure/toolchain.ts";
-import { registeredChecks } from "../../../checks/src/index.ts";
 import { watchSnapshot } from "../infrastructure/snapshot-watch.ts";
-import {
-  assess,
-  assessBeforeFinalization,
-  currentImplementationMatches,
-  hasCriteriaReview,
-} from "../../../release/src/assessment.ts";
 function assertOperationalCompletion(results: CheckResult[], runId: string) {
   const codes = results.flatMap((r) => r.errors.map((e) => e.code));
   if (codes.includes("DEPENDENCY_UNAVAILABLE"))
@@ -44,11 +40,13 @@ function assertOperationalCompletion(results: CheckResult[], runId: string) {
 }
 export async function runChecks(
   root: string,
-  ledger: Ledger,
-  store: ArtifactStore,
+  ledger: CoordinatorLedger,
+  store: ArtifactSink,
   snapshotId: string,
   key: string,
+  services: CoordinatorServices,
 ) {
+  const { currentImplementationMatches } = services;
   safeId(key);
   const snapshot = ledger.getSnapshot(snapshotId);
   const requestDigest = hashObject({
@@ -67,7 +65,7 @@ export async function runChecks(
     return {
       run: existing,
       results: ledger.results(existing.runId),
-      assessment: await assess(root, ledger, store, existing.runId, false),
+      assessment: await services.assess(existing.runId),
       reused: true,
     };
   }
@@ -170,13 +168,13 @@ export async function runChecks(
         6,
       );
       ledger.audit("CheckStarted", run.runId, { checkId: id });
-      const result = await registeredChecks[id].run({
+      const result = await services.checks[id].run({
         root,
         snapshot,
         runId: run.runId,
         store,
         deadlineEpochMs,
-        criteriaReviewed: hasCriteriaReview(ledger, snapshot),
+        criteriaReviewed: services.hasCriteriaReview(snapshot),
         abortSignal: abort.signal,
       });
       invariant(
@@ -208,12 +206,7 @@ export async function runChecks(
     run.finishedAt = now();
     ledger.updateRun(run);
     store.put(run.runId, "run.json", canonical(run));
-    const assessment = await assessBeforeFinalization(
-      root,
-      ledger,
-      store,
-      run.runId,
-    );
+    const assessment = await services.assessBeforeFinalization(run.runId);
     invariant(
       !snapshotWatch.changed(),
       "CANDIDATE_CHANGED",
@@ -221,29 +214,18 @@ export async function runChecks(
       6,
     );
     store.put(run.runId, "assessment.json", canonical(assessment));
-    const events = ledger.db
-      .prepare("SELECT data FROM audit_events WHERE run_id=? ORDER BY rowid")
-      .all(run.runId) as { data: string }[];
     store.put(
       run.runId,
       "audit-events.jsonl",
-      events.map((e) => e.data).join("\n"),
+      ledger.auditJsonLines(run.runId),
       "application/x-ndjson",
     );
     store.put(
       run.runId,
       "evidence-index.json",
-      canonical(
-        ledger.db
-          .prepare(
-            "SELECT path,data FROM artifacts WHERE run_id=? ORDER BY path",
-          )
-          .all(run.runId),
-      ),
+      canonical(ledger.artifactRows(run.runId)),
     );
-    const artifactRows = ledger.db
-      .prepare("SELECT data FROM artifacts WHERE run_id=? ORDER BY path")
-      .all(run.runId) as { data: string }[];
+    const artifactRows = ledger.artifactRows(run.runId);
     store.put(
       run.runId,
       "completion.json",

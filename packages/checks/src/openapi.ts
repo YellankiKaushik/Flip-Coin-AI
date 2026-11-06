@@ -1,6 +1,6 @@
 import { parseDocument } from "yaml";
-import { invariant } from "../../core/src/domain/models.ts";
-import { utf8 } from "../../core/src/infrastructure/filesystem-guard.ts";
+import { invariant } from "../../core/src/public/domain.ts";
+import { utf8 } from "../../core/src/public/infrastructure.ts";
 export function validateLocalSpec(bytes: Uint8Array): unknown {
   const doc = parseDocument(utf8(bytes), {
     uniqueKeys: true,

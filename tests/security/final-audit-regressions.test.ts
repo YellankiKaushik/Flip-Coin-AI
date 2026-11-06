@@ -1,3 +1,4 @@
+import { testSnapshot, testRun } from "../helpers/ledger-fixture.ts";
 import { test, expect, vi } from "vitest";
 import fs from "node:fs";
 import path from "node:path";
@@ -107,26 +108,9 @@ test("audit: an arriving artifact writer cannot overwrite existing bytes", () =>
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "sf-audit-race-")),
     db = new Ledger(root),
     store = new ArtifactStore(root, db);
-  const snapshot = {
-    snapshotId: randomUUID(),
-    candidateId: "audit-test-only",
-    candidateDigest: sha256("test-only"),
-    root,
-    manifest: {},
-    createdAt: timestamp,
-  } as Snapshot;
+  const snapshot = testSnapshot(root, "test-only");
   db.putSnapshot(snapshot);
-  const run = {
-    runId: randomUUID(),
-    snapshotId: snapshot.snapshotId,
-    candidateId: snapshot.candidateId,
-    candidateDigest: snapshot.candidateDigest,
-    key: "audit-test",
-    requestDigest: sha256("request"),
-    status: "RUNNING",
-    createdAt: timestamp,
-    gitSha: null,
-  } as Run;
+  const run = testRun(snapshot, {});
   db.insertRun(run);
   const ref = store.put(run.runId, "original.json", '{"original":true}');
   const file = path.join(store.directory(run.runId), ref.relativePath);
@@ -148,26 +132,9 @@ test("audit: a result without durable run finalization cannot establish valid ev
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "sf-audit-finalization-")),
     db = new Ledger(root),
     store = new ArtifactStore(root, db);
-  const s = {
-    snapshotId: randomUUID(),
-    candidateId: "test-only-finalization",
-    candidateDigest: sha256("test-only"),
-    root,
-    manifest: {},
-    createdAt: timestamp,
-  } as Snapshot;
+  const s = testSnapshot(root, "test-only");
   db.putSnapshot(s);
-  const run = {
-    runId: randomUUID(),
-    snapshotId: s.snapshotId,
-    candidateId: s.candidateId,
-    candidateDigest: s.candidateDigest,
-    key: "test-only",
-    requestDigest: sha256("request"),
-    status: "RUNNING",
-    createdAt: timestamp,
-    gitSha: null,
-  } as Run;
+  const run = testRun(s, {});
   db.insertRun(run);
   const r = result("data");
   r.runId = run.runId;

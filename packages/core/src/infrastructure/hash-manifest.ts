@@ -2,11 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
 import { z } from "zod";
-import {
-  canonical,
-  hashObject,
-  sha256,
-} from "../../../evidence/src/canonical-json.ts";
+import { canonical, hashObject, sha256 } from "../domain/canonical-json.ts";
 import { atomicWrite, confined, readJson, safeId } from "./filesystem-guard.ts";
 import { inventory } from "./toolchain.ts";
 import {
@@ -19,7 +15,7 @@ import {
   type Snapshot,
   type FileEntry,
 } from "../domain/models.ts";
-import type { Ledger } from "../../../evidence/src/ledger.ts";
+import type { SnapshotRegistry } from "../application/ports.ts";
 import { resolveChecks } from "./configuration.ts";
 const configSchema = z
   .object({
@@ -29,41 +25,7 @@ const configSchema = z
     exclude: z.array(z.string()),
   })
   .strict();
-const hex = z.string().regex(/^[a-f0-9]{64}$/);
-const manifestSchema = z
-  .object({
-    schemaVersion: z.literal(1),
-    projectId: z.literal("checkout-demo"),
-    candidateId: z.string().min(1),
-    files: z
-      .array(
-        z
-          .object({
-            path: z.string().min(1),
-            sizeBytes: z.number().int().nonnegative().safe(),
-            sha256: hex,
-          })
-          .strict(),
-      )
-      .min(1),
-    criteriaRevision: z.string().min(1),
-    criteriaDigest: hex,
-    testDigest: hex,
-    policyDigest: hex,
-    checksConfigDigest: hex,
-    toolchain: z
-      .array(
-        z
-          .object({
-            name: z.string().min(1),
-            version: z.string().min(1),
-            sha256: hex.optional(),
-          })
-          .strict(),
-      )
-      .min(1),
-  })
-  .strict();
+import { manifestSchema } from "../domain/persistence-schemas.ts";
 export function fileInventory(
   root: string,
   patterns: string[],
@@ -181,7 +143,7 @@ export function validateManifest(
 }
 export async function prepare(
   root: string,
-  ledger: Ledger,
+  ledger: SnapshotRegistry,
   scenario: string,
   candidateId: string,
   overrides: Record<string, unknown> = {},

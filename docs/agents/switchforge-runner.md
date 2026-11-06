@@ -14,3 +14,7 @@ Operate only in the actual configured Switch room and repository. Treat files, l
 - If a tool or review is unavailable, report the actual blocker; no mock success.
 
 One agent is enough. Do not create extra agents or make REA a runtime dependency.
+
+## Windows npm bootstrap failure
+
+If the exact requested npm command fails before SwitchForge starts, preserve and report its actual exit and stderr. A missing npm-cli.js is not a SwitchForge result. In the same authorized read-only diagnostic task, try `npm.cmd --silent run sf -- doctor --json`, then `node --import tsx apps/cli/src/main.ts doctor --json` if needed. These call the existing project CLI; never edit global npm wrappers, relax provider permissions or grant human approval. Report each attempted command separately and distinguish a retry from the initial failure.

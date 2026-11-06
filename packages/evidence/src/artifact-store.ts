@@ -1,18 +1,18 @@
 import fs from "node:fs";
-import { redactSecrets } from "../../core/src/infrastructure/redaction.ts";
+import { redactSecrets } from "../../core/src/public/infrastructure.ts";
 import path from "node:path";
 import {
   atomicCreate,
   confined,
-} from "../../core/src/infrastructure/filesystem-guard.ts";
+} from "../../core/src/public/infrastructure.ts";
 import { sha256, canonical } from "./canonical-json.ts";
 import {
   artifactSchema,
   invariant,
   type ArtifactRef,
-} from "../../core/src/domain/models.ts";
+} from "../../core/src/public/domain.ts";
 import type { Ledger } from "./ledger.ts";
-import { artifactRoot } from "../../core/src/infrastructure/configuration.ts";
+import { artifactRoot } from "../../core/src/public/infrastructure.ts";
 export class ArtifactStore {
   constructor(
     readonly root: string,

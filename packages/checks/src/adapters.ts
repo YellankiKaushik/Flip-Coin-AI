@@ -1,16 +1,13 @@
 import fs from "node:fs";
-import { sanitizedJson } from "../../core/src/infrastructure/redaction.ts";
+import { sanitizedJson } from "../../core/src/public/infrastructure.ts";
 import path from "node:path";
 import { z } from "zod";
 import {
   runProcess,
   type RunnerResult,
-} from "../../core/src/infrastructure/process-runner.ts";
-import {
-  readJson,
-  confined,
-} from "../../core/src/infrastructure/filesystem-guard.ts";
-import { canonical } from "../../evidence/src/canonical-json.ts";
+} from "../../core/src/public/infrastructure.ts";
+import { readJson, confined } from "../../core/src/public/infrastructure.ts";
+import { canonical } from "../../evidence/src/index.ts";
 import {
   checksSchema,
   criteriaSchema,
@@ -20,11 +17,11 @@ import {
   type CheckId,
   type CheckResult,
   type ArtifactRef,
-} from "../../core/src/domain/models.ts";
+} from "../../core/src/public/domain.ts";
 import type { CheckContext } from "./check-runner.ts";
 import { validateLocalSpec } from "./openapi.ts";
 import { parseVitestReport, parseOasdiffReport } from "./report-parsers.ts";
-import { oasdiffPath } from "../../core/src/infrastructure/configuration.ts";
+import { oasdiffPath } from "../../core/src/public/infrastructure.ts";
 const workerSchema = z
   .object({
     schemaVersion: z.literal(1),

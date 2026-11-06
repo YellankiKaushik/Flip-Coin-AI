@@ -1,5 +1,5 @@
 import type { Browser } from "playwright";
-import { invariant } from "../../core/src/domain/models.ts";
+import { invariant } from "../../core/src/public/domain.ts";
 export async function localBrowserContext(
   browser: Browser,
   allowedOrigin: string,

@@ -1,49 +1,51 @@
+import { registeredChecks } from "../../../packages/checks/src/index.ts";
+import { assessBeforeFinalization } from "../../../packages/release/src/index.ts";
 import fs from "node:fs";
 import path from "node:path";
 import os from "node:os";
 import { parseArgs } from "node:util";
 import { randomUUID } from "node:crypto";
-import { Ledger } from "../../../packages/evidence/src/ledger.ts";
-import { ArtifactStore } from "../../../packages/evidence/src/artifact-store.ts";
+import { Ledger } from "../../../packages/evidence/src/index.ts";
+import { ArtifactStore } from "../../../packages/evidence/src/index.ts";
 import {
   canonical,
   hashObject,
   sha256,
-} from "../../../packages/evidence/src/canonical-json.ts";
+} from "../../../packages/evidence/src/index.ts";
 import {
   prepare,
   validateManifest,
-} from "../../../packages/core/src/infrastructure/hash-manifest.ts";
-import { inventory } from "../../../packages/core/src/infrastructure/toolchain.ts";
+} from "../../../packages/core/src/public/infrastructure.ts";
+import { inventory } from "../../../packages/core/src/public/infrastructure.ts";
 import {
   resolveChecks,
   validateEnvironment,
-} from "../../../packages/core/src/infrastructure/configuration.ts";
-import { runChecks } from "../../../packages/core/src/application/run-checks.ts";
+} from "../../../packages/core/src/public/infrastructure.ts";
+import { runChecks } from "../../../packages/core/src/public/coordinator.ts";
 import {
   confined,
   readJson,
   atomicWrite,
   safeId,
-} from "../../../packages/core/src/infrastructure/filesystem-guard.ts";
+} from "../../../packages/core/src/public/infrastructure.ts";
 import {
   SfError,
   invariant,
   criteriaSchema,
   now,
-} from "../../../packages/core/src/domain/models.ts";
+} from "../../../packages/core/src/public/domain.ts";
 import {
   assess,
   verifyResults,
   currentImplementationMatches,
   hasCriteriaReview,
-} from "../../../packages/release/src/assessment.ts";
+} from "../../../packages/release/src/index.ts";
 import {
   createProposal,
   releaseRequest,
   interactiveAttest,
   effectiveReleaseDecision,
-} from "../../../packages/release/src/approval.ts";
+} from "../../../packages/release/src/index.ts";
 const root = fs.realpathSync(process.cwd());
 const correlationId = randomUUID();
 const originalArgs = process.argv.slice(2);
@@ -179,17 +181,20 @@ async function main() {
       );
     }
     case "run":
-      return runChecks(root, ledger, store, arg("snapshot"), arg("key"));
+      return runChecks(root, ledger, store, arg("snapshot"), arg("key"), {
+        checks: registeredChecks,
+        assess: (id) => assess(root, ledger!, store, id, false),
+        assessBeforeFinalization: (id) =>
+          assessBeforeFinalization(root, ledger!, store, id),
+        currentImplementationMatches,
+        hasCriteriaReview: (snapshot) => hasCriteriaReview(ledger!, snapshot),
+      });
     case "report": {
       const id = arg("run");
       const run = ledger.getRun(id);
       const assessment = await assess(root, ledger, store, id, false);
-      const decisions = (
-        ledger.db.prepare("SELECT data FROM approval_requests").all() as {
-          data: string;
-        }[]
-      )
-        .map((row) => JSON.parse(row.data))
+      const decisions = ledger
+        .proposals()
         .filter(
           (p) =>
             p.actionType === "RELEASE_READINESS" && p.evidenceRefs[0] === id,

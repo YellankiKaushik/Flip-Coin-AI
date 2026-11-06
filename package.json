@@ -22,7 +22,9 @@
     "test:security": "vitest run tests/security",
     "test:e2e:local": "vitest run tests/e2e",
     "doctor": "tsx apps/cli/src/main.ts doctor --json",
-    "integrity": "node scripts/source-integrity.mjs"
+    "integrity": "node scripts/source-integrity.mjs",
+    "docs:check": "node scripts/check-doc-links.mjs",
+    "ci:proof": "node scripts/ci-proof.mjs"
   },
   "dependencies": {
     "@axe-core/playwright": "4.14.0",

@@ -1,31 +1,24 @@
 import fs from "node:fs";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
-import {
-  hashObject,
-  canonical,
-  sha256,
-} from "../../evidence/src/canonical-json.ts";
+import { hashObject, canonical, sha256 } from "../../evidence/src/index.ts";
 import {
   validateManifest,
   fileInventory,
-} from "../../core/src/infrastructure/hash-manifest.ts";
-import { inventory } from "../../core/src/infrastructure/toolchain.ts";
-import {
-  confined,
-  readJson,
-} from "../../core/src/infrastructure/filesystem-guard.ts";
+} from "../../core/src/public/infrastructure.ts";
+import { inventory } from "../../core/src/public/infrastructure.ts";
+import { confined, readJson } from "../../core/src/public/infrastructure.ts";
 import {
   policySchema,
   now,
   type Assessment,
   type CheckResult,
   type Snapshot,
-} from "../../core/src/domain/models.ts";
-import type { Ledger } from "../../evidence/src/ledger.ts";
-import type { ArtifactStore } from "../../evidence/src/artifact-store.ts";
+} from "../../core/src/public/domain.ts";
+import type { Ledger } from "../../evidence/src/index.ts";
+import type { ArtifactStore } from "../../evidence/src/index.ts";
 import { blockersFor } from "./policy.ts";
-import { resolveChecks } from "../../core/src/infrastructure/configuration.ts";
+import { resolveChecks } from "../../core/src/public/infrastructure.ts";
 export function hasCriteriaReview(ledger: Ledger, s: Snapshot): boolean {
   const row = ledger.db
     .prepare("SELECT data FROM criteria_revisions WHERE id=?")
@@ -260,13 +253,9 @@ async function computeAssessment(
     blockers: [...new Set(blockers)].sort(),
     resultDigests: results.map((r) => hashObject(r)).sort(),
   };
-  const prior = ledger.db
-    .prepare(
-      "SELECT data FROM assessments WHERE run_id=? ORDER BY rowid DESC LIMIT 1",
-    )
-    .get(runId) as { data: string } | undefined;
+  const prior = ledger.latestAssessment(runId);
   if (prior) {
-    const value = JSON.parse(prior.data) as Assessment;
+    const value = prior;
     const { assessmentId, assessmentDigest, computedAt, ...previousStable } =
       value;
     if (

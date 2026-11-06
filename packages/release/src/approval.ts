@@ -7,32 +7,25 @@ import {
   timingSafeEqual,
 } from "node:crypto";
 import { createInterface } from "node:readline/promises";
-import {
-  confined,
-  readJson,
-} from "../../core/src/infrastructure/filesystem-guard.ts";
-import {
-  canonical,
-  hashObject,
-  sha256,
-} from "../../evidence/src/canonical-json.ts";
+import { confined, readJson } from "../../core/src/public/infrastructure.ts";
+import { canonical, hashObject, sha256 } from "../../evidence/src/index.ts";
 import {
   invariant,
   now,
   type Proposal,
   type Action,
   type Assessment,
-} from "../../core/src/domain/models.ts";
-import type { Ledger } from "../../evidence/src/ledger.ts";
-import type { ArtifactStore } from "../../evidence/src/artifact-store.ts";
+} from "../../core/src/public/domain.ts";
+import type { Ledger } from "../../evidence/src/index.ts";
+import type { ArtifactStore } from "../../evidence/src/index.ts";
 import {
   assess,
   verifyResults,
   currentImplementationMatches,
   hasCriteriaReview,
 } from "./assessment.ts";
-import { validateManifest } from "../../core/src/infrastructure/hash-manifest.ts";
-import { toolchainStillMatches } from "../../core/src/infrastructure/toolchain.ts";
+import { validateManifest } from "../../core/src/public/infrastructure.ts";
+import { toolchainStillMatches } from "../../core/src/public/infrastructure.ts";
 export function effectiveReleaseDecision(
   p: Proposal,
   a: Assessment,

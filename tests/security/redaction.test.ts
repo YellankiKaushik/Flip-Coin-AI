@@ -1,3 +1,4 @@
+import { testSnapshot, testRun } from "../helpers/ledger-fixture.ts";
 import { test, expect } from "vitest";
 import fs from "node:fs";
 import path from "node:path";
@@ -21,26 +22,9 @@ test("synthetic secret markers do not persist in text evidence or audit events",
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "sf-redact-"));
   const ledger = new Ledger(root),
     store = new ArtifactStore(root, ledger);
-  const snapshot = {
-    snapshotId: randomUUID(),
-    candidateId: "test-only",
-    candidateDigest: sha256("test-only"),
-    root,
-    manifest: {},
-    createdAt: new Date().toISOString(),
-  } as Snapshot;
+  const snapshot = testSnapshot(root, "test-only");
   ledger.putSnapshot(snapshot);
-  const run: Run = {
-    runId: randomUUID(),
-    snapshotId: snapshot.snapshotId,
-    candidateId: "test-only",
-    candidateDigest: snapshot.candidateDigest,
-    key: "test-only",
-    requestDigest: sha256("test"),
-    status: "RUNNING",
-    createdAt: snapshot.createdAt,
-    gitSha: null,
-  };
+  const run = testRun(snapshot, {});
   ledger.insertRun(run);
   const ref = store.put(
     run.runId,

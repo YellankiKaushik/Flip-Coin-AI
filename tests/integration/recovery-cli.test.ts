@@ -1,3 +1,4 @@
+import { testSnapshot, testRun } from "../helpers/ledger-fixture.ts";
 import { pathToFileURL } from "node:url";
 import { test, expect } from "vitest";
 import fs from "node:fs";
@@ -13,28 +14,9 @@ test("operator CLI recovery marks a test-only crashed run interrupted and denies
   const db = new Ledger(root);
   const snapshotId = randomUUID(),
     runId = randomUUID();
-  const snapshotRoot = path.join(root, ".local/snapshots", snapshotId);
-  fs.mkdirSync(snapshotRoot, { recursive: true });
-  const snapshot = {
-    snapshotId,
-    candidateId: "TEST_ONLY_CRASH_FIXTURE",
-    candidateDigest: sha256("test-only"),
-    root: snapshotRoot,
-    manifest: {},
-    createdAt: new Date().toISOString(),
-  } as Snapshot;
+  const snapshot = testSnapshot(root, "TEST_ONLY_CRASH_FIXTURE", snapshotId);
   db.putSnapshot(snapshot);
-  const run: Run = {
-    runId,
-    snapshotId,
-    candidateId: snapshot.candidateId,
-    candidateDigest: snapshot.candidateDigest,
-    key: "test-only",
-    requestDigest: sha256("test-only-request"),
-    status: "RUNNING",
-    createdAt: snapshot.createdAt,
-    gitSha: null,
-  };
+  const run = testRun(snapshot, { runId, key: "test-only" });
   db.insertRun(run);
   db.close();
   const cli = path.join(process.cwd(), "apps/cli/src/main.ts");

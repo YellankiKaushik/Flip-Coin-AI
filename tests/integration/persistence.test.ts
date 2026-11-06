@@ -1,3 +1,4 @@
+import { testSnapshot, testRun } from "../helpers/ledger-fixture.ts";
 import { test, expect } from "vitest";
 import fs from "node:fs";
 import path from "node:path";
@@ -14,26 +15,9 @@ import { blockersFor } from "../../packages/release/src/policy.ts";
 function setup() {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "sf-ledger-"));
   const ledger = new Ledger(root);
-  const snapshot = {
-    snapshotId: randomUUID(),
-    candidateId: "test",
-    candidateDigest: sha256("fixture"),
-    root,
-    manifest: {},
-    createdAt: new Date().toISOString(),
-  } as Snapshot;
+  const snapshot = testSnapshot(root, "test");
   ledger.putSnapshot(snapshot);
-  const run: Run = {
-    runId: randomUUID(),
-    snapshotId: snapshot.snapshotId,
-    candidateId: "test",
-    candidateDigest: snapshot.candidateDigest,
-    key: "same-key",
-    requestDigest: sha256("request"),
-    status: "RUNNING",
-    createdAt: snapshot.createdAt,
-    gitSha: null,
-  };
+  const run = testRun(snapshot, { key: "same-key" });
   ledger.insertRun(run);
   return { root, ledger, run, store: new ArtifactStore(root, ledger) };
 }
