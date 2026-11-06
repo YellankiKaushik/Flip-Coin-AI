@@ -50,7 +50,7 @@ export function parseVitestReport(
       cases.some(
         (c: any) =>
           typeof c.fullName === "string" &&
-          c.fullName.includes(id) &&
+          c.fullName.split(/\s+/).includes(id) &&
           ["passed", "failed"].includes(c.status),
       ),
       "INVALID_INPUT",

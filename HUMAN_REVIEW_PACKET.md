@@ -6,7 +6,7 @@ No human approval has been recorded. The user explicitly withheld approval and r
 
 fixtures/scenarios/corrected/criteria/approved.json. The filename follows the specification; its actual status is PENDING.
 
-~~~json
+```json
 {
   "schemaVersion": 1,
   "criteriaId": "checkout-coupon-v1",
@@ -35,13 +35,13 @@ fixtures/scenarios/corrected/criteria/approved.json. The filename follows the sp
     }
   ]
 }
-~~~
+```
 
 ## 2. Actual test cases
 
 apps/checkout-demo/tests/checkout.spec.ts:
 
-~~~typescript
+```typescript
 import { test, expect } from "vitest";
 import { applyCoupon } from "../../../fixtures/current/app/coupon.ts";
 const base = {
@@ -85,14 +85,14 @@ test("AC-005 invalid and unsafe integer cents reject", () => {
       "INVALID_AMOUNT",
     );
 });
-~~~
+```
 
 ## 3. Expected behavior
 
 - At or after the strict UTC expiry timestamp: EXPIRED_COUPON and unchanged subtotal.
 - One millisecond before expiry: SAVE100 subtracts 100 integer cents, with minimum zero.
 - Invalid/missing/ill-formed UTC timestamps reject with INVALID_TIME; negative, fractional, nonfinite or unsafe integer subtotals reject with INVALID_AMOUNT.
-- No payment provider or real customer data is involved. Unknown coupon handling exists but is outside the five approved-criteria proposals.
+- No payment provider or real customer data is involved. Unknown coupon handling exists but is outside the five proposed criteria.
 
 ## 4. Differences and explicit decisions
 
@@ -104,29 +104,33 @@ test("AC-005 invalid and unsafe integer cents reject", () => {
 
 ## 5. Actual execution results
 
-~~~json
+```json
 {
-  "executedAt": "2026-11-06T08:14:39.726Z",
-  "durationMs": 595,
+  "executedAt": "2026-11-06T09:37:44.181Z",
+  "durationMs": 652,
   "command": [
     "node",
-    "node_modules/vitest/vitest.mjs",
+    "<project>\\node_modules\\vitest\\vitest.mjs",
     "run",
     "--config",
-    "vitest.candidate.ts",
+    "<project>\\.local\\snapshots\\<DEMO_RECORD_ID>\\vitest.candidate.ts",
     "--reporter=json",
     "--outputFile",
-    "<PRIVATE_RECEIPT_LOCATION>"
+    "<project>\\<PRIVATE_RECEIPT_LOCATION>"
   ],
   "exitStatus": 0,
   "criteriaSha256": "f69fc54fcc167163ba6a715c10fabd4e9a63d2aaef27b5dd31efb259266a1e7c",
   "testSha256": "e62a5a42d226dbb351c8e532a3834a577c0cbaffca195695988944b4a6e99c2f",
+  "snapshotId": "<DEMO_RECORD_ID>",
+  "candidateDigest": "4de5a32b7a395d68d2e85ad1d2e5a6404d928660bfc2459a5236464a37c086c7",
+  "source": "frozen corrected scenario fixtures/current/app/coupon.ts",
+  "couponSha256": "dc10a772b586ea895112d327cfed68e502869aa8fafd6d38a66551864f6f8768",
   "total": 6,
   "passed": 6,
   "failed": 0,
   "reportPath": "<PRIVATE_RECEIPT_LOCATION>"
 }
-~~~
+```
 
 - AC-001 at expiry rejects and preserves total: **passed**.
 - AC-002 one millisecond before expiry applies discount: **passed**.
@@ -140,10 +144,10 @@ These are standalone corrected-fixture development tests, not an approved releas
 ## 6. Unresolved risks and inconsistencies
 
 - Criteria approval remains PENDING. No human attestation, patch approval or final release decision exists.
-- Zero subtotal, zero-clamping and unknown coupon behavior have no dedicated assertion in this proposed acceptance test file. No broader coverage is claimed.
+- Zero subtotal, zero-clamping and unknown coupon behavior remain outside the six proposed acceptance tests; separate engineering tests in tests/unit/checkout-edge-decisions.test.ts exercise those decisions without creating or extending human approval.
 - The strict timestamp format and chosen discount require human agreement; they are not commercial checkout requirements.
 - Level 1 same-account attestation cannot authenticate the reviewer cryptographically. Level 2 isolation is not implemented.
-- Dedicated SwitchForge command execution, real human correction and final readiness decision remain unverified. The desktop helper returned Escape-stopped after the resume attempt.
+- Dedicated SwitchForge command execution, real human correction and final readiness decision remain unverified. See FINAL_ENGINEERING_AUDIT.md for current service and integration observations.
 - Positive readiness cannot be demonstrated as a real approved release until this review is genuinely resolved. Independent engineering unit tests may use explicitly labelled synthetic state fixtures; they never create human decisions.
 
 The protected original architecture, rules PDF and PROJECT_ANALYSIS.md remain unchanged. No approval is inferred from this packet.

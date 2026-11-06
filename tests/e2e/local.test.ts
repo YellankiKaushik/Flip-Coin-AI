@@ -2,13 +2,26 @@ import { test, expect } from "vitest";
 import fs from "node:fs";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
+import { randomUUID } from "node:crypto";
 const root = process.cwd(),
   cli = path.join(root, "apps/cli/src/main.ts");
+const isolationId = randomUUID();
+const isolatedEnv = {
+  ...process.env,
+  SF_DB_PATH: ".local/tests/" + isolationId + "/ledger.sqlite",
+  SF_ARTIFACT_ROOT: "artifacts/tests/" + isolationId,
+};
 function sf(...args: string[]) {
   const r = spawnSync(
     process.execPath,
     ["--import", "tsx", cli, ...args, "--json"],
-    { cwd: root, encoding: "utf8", timeout: 120000, windowsHide: true },
+    {
+      cwd: root,
+      env: isolatedEnv,
+      encoding: "utf8",
+      timeout: 120000,
+      windowsHide: true,
+    },
   );
   expect(r.error).toBeUndefined();
   expect(r.stdout.trim().split("\n")).toHaveLength(1);

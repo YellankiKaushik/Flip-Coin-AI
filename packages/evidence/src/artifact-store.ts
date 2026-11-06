@@ -2,7 +2,7 @@ import fs from "node:fs";
 import { redactSecrets } from "../../core/src/infrastructure/redaction.ts";
 import path from "node:path";
 import {
-  atomicWrite,
+  atomicCreate,
   confined,
 } from "../../core/src/infrastructure/filesystem-guard.ts";
 import { sha256, canonical } from "./canonical-json.ts";
@@ -53,7 +53,7 @@ export class ArtifactStore {
               ? bytes
               : Buffer.from(bytes).toString("utf8"),
           );
-    atomicWrite(file, persistedBytes);
+    atomicCreate(file, persistedBytes);
     const persisted = fs.readFileSync(file);
     const ref = artifactSchema.parse({
       relativePath,

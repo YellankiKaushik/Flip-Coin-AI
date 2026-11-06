@@ -42,6 +42,7 @@ import {
   createProposal,
   releaseRequest,
   interactiveAttest,
+  effectiveReleaseDecision,
 } from "../../../packages/release/src/approval.ts";
 const root = fs.realpathSync(process.cwd());
 const correlationId = randomUUID();
@@ -195,11 +196,7 @@ async function main() {
         )
         .map((p) => ({
           ...p,
-          effectiveDecision:
-            assessment.readiness === "READY_FOR_HUMAN_APPROVAL" &&
-            p.assessmentDigest === assessment.assessmentDigest
-              ? p.decision
-              : "SUPERSEDED",
+          effectiveDecision: effectiveReleaseDecision(p, assessment),
         }));
       return {
         run,

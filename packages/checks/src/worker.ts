@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { chromium } from "playwright";
+import { chromium, type Browser } from "playwright";
 import AxeBuilder from "@axe-core/playwright";
 import { startCheckout } from "../../../apps/checkout-demo/src/server.ts";
 import { reconcile } from "./data.ts";
@@ -12,6 +12,12 @@ const config = JSON.parse(rawConfig);
 let response: unknown;
 try {
   if (engine === "data") {
+    for (const name of ["orders", "ledger"])
+      if (
+        fs.statSync(confined(root, "fixtures/current/data/" + name + ".csv"))
+          .size > config.maxCsvBytes
+      )
+        throw new Error("CSV_TOO_LARGE");
     response = reconcile(
       fs.readFileSync(confined(root, "fixtures/current/data/orders.csv")),
       fs.readFileSync(confined(root, "fixtures/current/data/ledger.csv")),
@@ -24,11 +30,12 @@ try {
       digest,
       Number(new URL(config.sampleUrl).port),
     );
-    const browser = await chromium.launch({
-      headless: true,
-      executablePath: browserExecutable(),
-    });
+    let browser: Browser | undefined;
     try {
+      browser = await chromium.launch({
+        headless: true,
+        executablePath: browserExecutable(),
+      });
       const guarded = await localBrowserContext(browser, target.url);
       const context = guarded.context;
       const page = await context.newPage();
@@ -69,8 +76,11 @@ try {
         blockedExternalRequests: guarded.blockedCount(),
       };
     } finally {
-      await browser.close();
-      await target.close();
+      try {
+        await browser?.close();
+      } finally {
+        await target.close();
+      }
     }
   } else throw new Error("Unknown worker");
   process.stdout.write(JSON.stringify(response));

@@ -18,18 +18,38 @@ const before = {
 const reportPath =
   ".local/verification/human-review-vitest-" + randomUUID() + ".json";
 fs.mkdirSync(path.join(root, ".local/verification"), { recursive: true });
+const prepared = spawnSync(
+  process.execPath,
+  [
+    "--import",
+    "tsx",
+    "apps/cli/src/main.ts",
+    "prepare",
+    "--scenario",
+    "corrected",
+    "--candidate",
+    "human-review-" + randomUUID(),
+    "--json",
+  ],
+  { cwd: root, encoding: "utf8", windowsHide: true, timeout: 60000 },
+);
+if (prepared.error || prepared.status !== 0)
+  throw new Error(
+    "Review snapshot preparation failed: " + prepared.stderr + prepared.stdout,
+  );
+const snapshot = JSON.parse(prepared.stdout).data;
 const argv = [
-  "node_modules/vitest/vitest.mjs",
+  path.join(root, "node_modules/vitest/vitest.mjs"),
   "run",
   "--config",
-  "vitest.candidate.ts",
+  path.join(snapshot.root, "vitest.candidate.ts"),
   "--reporter=json",
   "--outputFile",
-  reportPath,
+  path.join(root, reportPath),
 ];
 const start = Date.now();
 const result = spawnSync(process.execPath, argv, {
-  cwd: root,
+  cwd: snapshot.root,
   encoding: "utf8",
   windowsHide: true,
   timeout: 60000,
@@ -51,6 +71,16 @@ const execution = {
   command: ["node", ...argv],
   exitStatus: result.status,
   ...before,
+  snapshotId: snapshot.snapshotId,
+  candidateDigest: snapshot.candidateDigest,
+  source: "frozen corrected scenario fixtures/current/app/coupon.ts",
+  couponSha256: createHash("sha256")
+    .update(
+      fs.readFileSync(
+        path.join(snapshot.root, "fixtures/current/app/coupon.ts"),
+      ),
+    )
+    .digest("hex"),
   total: report.numTotalTests,
   passed: report.numPassedTests,
   failed: report.numFailedTests,
@@ -85,7 +115,7 @@ const packet = [
   "- At or after the strict UTC expiry timestamp: EXPIRED_COUPON and unchanged subtotal.",
   "- One millisecond before expiry: SAVE100 subtracts 100 integer cents, with minimum zero.",
   "- Invalid/missing/ill-formed UTC timestamps reject with INVALID_TIME; negative, fractional, nonfinite or unsafe integer subtotals reject with INVALID_AMOUNT.",
-  "- No payment provider or real customer data is involved. Unknown coupon handling exists but is outside the five approved-criteria proposals.",
+  "- No payment provider or real customer data is involved. Unknown coupon handling exists but is outside the five proposed criteria.",
   "",
   "## 4. Differences and explicit decisions",
   "",
@@ -97,7 +127,19 @@ const packet = [
   "",
   "## 5. Actual execution results",
   "",
-  fence("json", JSON.stringify(execution, null, 2)),
+  fence(
+    "json",
+    JSON.stringify(
+      {
+        ...execution,
+        command: execution.command.map((arg) =>
+          arg.replaceAll(root, "<project>"),
+        ),
+      },
+      null,
+      2,
+    ),
+  ),
   "",
   ...cases.map((c) => "- " + c.fullName + ": **" + c.status + "**."),
   "",
@@ -106,10 +148,10 @@ const packet = [
   "## 6. Unresolved risks and inconsistencies",
   "",
   "- Criteria approval remains PENDING. No human attestation, patch approval or final release decision exists.",
-  "- Zero subtotal, zero-clamping and unknown coupon behavior have no dedicated assertion in this proposed acceptance test file. No broader coverage is claimed.",
+  "- Zero subtotal, zero-clamping and unknown coupon behavior remain outside the six proposed acceptance tests; separate engineering tests in tests/unit/checkout-edge-decisions.test.ts exercise those decisions without creating or extending human approval.",
   "- The strict timestamp format and chosen discount require human agreement; they are not commercial checkout requirements.",
   "- Level 1 same-account attestation cannot authenticate the reviewer cryptographically. Level 2 isolation is not implemented.",
-  "- Dedicated SwitchForge command execution, real human correction and final readiness decision remain unverified. The desktop helper returned Escape-stopped after the resume attempt.",
+  "- Dedicated SwitchForge command execution, real human correction and final readiness decision remain unverified. See FINAL_ENGINEERING_AUDIT.md for current service and integration observations.",
   "- Positive readiness cannot be demonstrated as a real approved release until this review is genuinely resolved. Independent engineering unit tests may use explicitly labelled synthetic state fixtures; they never create human decisions.",
   "",
   "The protected original architecture, rules PDF and PROJECT_ANALYSIS.md remain unchanged. No approval is inferred from this packet.",

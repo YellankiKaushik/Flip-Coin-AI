@@ -11,17 +11,20 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 24.16.0
-      - name: Pinned dependency install
-        run: |
-          npm install --global npm@11.9.0
-          npm ci
+      - name: Pinned npm install
+        run: npm install --global npm@11.9.0
+      - name: Locked dependency install
+        run: npm ci
       - name: Real browser and OpenAPI tools
         shell: pwsh
-        run: |
-          npx playwright install chromium
-          ./scripts/install-oasdiff.ps1
+        run: npx playwright install chromium
+      - name: Pinned OpenAPI tool
+        shell: pwsh
+        run: ./scripts/install-oasdiff.ps1
       - name: Type checking
         run: npm run typecheck
+      - name: Formatting
+        run: npm run format:check
       - name: Unit, integration, security and artifact contracts
         run: npm test
       - name: Dependency vulnerability check

@@ -6,12 +6,12 @@ Human-supervised engineering release assurance for one synthetic local checkout,
 
 Four engines check one frozen candidate:
 
-| Engine | Actual tool | Seeded defect |
-|---|---|---|
-| AcceptanceRelay | Vitest | Coupon incorrectly accepted exactly at expiry |
-| A11yRelay | Playwright/Chromium + axe | Checkout email input lacks an accessible label |
-| ContractGuardian | oasdiff | Existing response media type removed |
-| DataRescue | csv-parse + deterministic rules | 1500-cent order versus 1000-cent ledger charge |
+| Engine           | Actual tool                     | Seeded defect                                  |
+| ---------------- | ------------------------------- | ---------------------------------------------- |
+| AcceptanceRelay  | Vitest                          | Coupon incorrectly accepted exactly at expiry  |
+| A11yRelay        | Playwright/Chromium + axe       | Checkout email input lacks an accessible label |
+| ContractGuardian | oasdiff                         | Existing response media type removed           |
+| DataRescue       | csv-parse + deterministic rules | 1500-cent order versus 1000-cent ledger charge |
 
 ReleaseProof accepts four distinct PASS results only when candidate, tools, policy, reviewed criteria/tests and evidence all match. A missing/error/stale/tampered result blocks. READY_FOR_HUMAN_APPROVAL is separate from human attestation.
 
@@ -25,19 +25,20 @@ Switch is installed separately. Existing setup used Switch Console 0.40.1, Core 
 
 From the repository root in PowerShell:
 
-~~~powershell
+```powershell
 node --version
 npm --version
 npm ci
 npx playwright install chromium
 powershell -NoProfile -File scripts/install-oasdiff.ps1
 npm run typecheck
+npm run format:check
 npm run test:unit
 npm run test:integration
 npm run test:security
 npm run test:e2e:local
 npm --silent run sf -- doctor --json
-~~~
+```
 
 The native better-sqlite3 package must load. No fallback ledger is silently substituted. The oasdiff installer downloads the pinned official Windows release and checks both archive and executable SHA-256 before execution. It uses the system tar command.
 
@@ -45,35 +46,35 @@ The native better-sqlite3 package must load. No fallback ledger is silently subs
 
 ## Prepare and run
 
-~~~powershell
+```powershell
 $prepared = npm --silent run sf -- prepare --scenario defective --candidate checkout-v2 --json | ConvertFrom-Json
 if (-not $prepared.ok) { throw $prepared.error.message }
 $run = npm --silent run sf -- run --snapshot $prepared.data.snapshotId --key demo-defective-001 --json | ConvertFrom-Json
 $run.data.results | Select-Object checkId,status,coverage
 $run.data.assessment
-~~~
+```
 
 While review is pending, AcceptanceRelay correctly reports ERROR before production test execution, and ReleaseProof remains BLOCKED. The other engines still execute independently. Direct standalone fixture tests are development verification, not approved release evidence.
 
 Review [HUMAN_REVIEW_PACKET.md](HUMAN_REVIEW_PACKET.md) before recording anything. The agent must not perform the following human attestation itself:
 
-~~~powershell
+```powershell
 $proposal = npm --silent run sf -- criteria propose --file fixtures/scenarios/corrected/criteria/approved.json --json | ConvertFrom-Json
 # A real human reviews the exact criteria AND test source, then in an interactive terminal:
 npm --silent run sf -- criteria attest --proposal $proposal.data.proposal.proposalId --json
-~~~
+```
 
 The terminal asks the reviewer for an actor reference and the exact confirmation. Request TTL is 15 minutes. Noninteractive calls are denied. This is **Level 1 HUMAN_ATTESTED_FOR_DEMO**, not cryptographic identity verification. A same-account agent remains a cooperative participant, not a separately isolated principal. Ordinary chat approval does not alter the ledger.
 
 After genuine review, prepare fresh defective and corrected snapshots and use new keys. Do not edit a prepared snapshot. Get returned IDs from actual output, never invent them:
 
-~~~powershell
+```powershell
 $fixed = npm --silent run sf -- prepare --scenario corrected --candidate checkout-v2 --json | ConvertFrom-Json
 $after = npm --silent run sf -- run --snapshot $fixed.data.snapshotId --key demo-corrected-001 --json | ConvertFrom-Json
 npm --silent run sf -- report --run $after.data.run.runId --json
 npm --silent run sf -- verify-evidence --run $after.data.run.runId --json
 npm --silent run sf -- compare --before $run.data.run.runId --after $after.data.run.runId --json
-~~~
+```
 
 A command exit 0 means the check operation completed; it does not mean release readiness. Use the JSON assessment. `assert-ready --run ID --json` is a separate policy gate returning nonzero when blocked.
 
@@ -106,3 +107,5 @@ For a new export directory inside the repository, use `export-demo --runs ID,ID 
 Further documents: [architecture](docs/ARCHITECTURE.md), [testing](docs/TESTING.md), [operations](docs/RUNBOOKS.md), [decisions](docs/DECISIONS.md), [demo/submission](docs/DEMO_AND_SUBMISSION.md), and [third-party notices](THIRD_PARTY_NOTICES.md).
 
 License: Apache-2.0 for project code; dependencies retain their own licenses. No competition win, production readiness, compliance certification or measured commercial impact is claimed.
+
+Finalization handoff: [engineering audit](FINAL_ENGINEERING_AUDIT.md), [required human actions](ACTION_REQUIRED_FROM_HUMAN.md), and [submission readiness](SUBMISSION_READINESS.md). The dedicated local room/agent now exist; authentic human command execution and all approval/submission gates remain separate and pending.

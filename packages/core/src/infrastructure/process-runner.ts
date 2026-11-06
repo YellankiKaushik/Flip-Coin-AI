@@ -1,5 +1,6 @@
 import { spawn } from "node:child_process";
 import path from "node:path";
+import { StringDecoder } from "node:string_decoder";
 import { invariant } from "../domain/models.ts";
 export interface RunnerResult {
   exitCode: number | null;
@@ -28,6 +29,8 @@ export async function runProcess(
   );
   return new Promise((resolve) => {
     const started = Date.now();
+    const stdoutDecoder = new StringDecoder("utf8"),
+      stderrDecoder = new StringDecoder("utf8");
     let stdout = "",
       stderr = "",
       total = 0,
@@ -96,7 +99,9 @@ export async function runProcess(
     const consume = (b: Buffer, channel: "stdout" | "stderr") => {
       const remaining = maxOutputBytes - total;
       total += b.length;
-      const text = b.subarray(0, Math.max(0, remaining)).toString("utf8");
+      const text = (channel === "stdout" ? stdoutDecoder : stderrDecoder).write(
+        b.subarray(0, Math.max(0, remaining)),
+      );
       if (channel === "stdout") stdout += text;
       else stderr += text;
       if (total > maxOutputBytes && !outputTruncated) {
@@ -116,6 +121,10 @@ export async function runProcess(
       abortSignal?.removeEventListener("abort", onAbort);
       clearTimeout(timer);
       if (force) clearTimeout(force);
+      if (!outputTruncated) {
+        stdout += stdoutDecoder.end();
+        stderr += stderrDecoder.end();
+      }
       resolve({
         exitCode,
         signal,

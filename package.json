@@ -15,6 +15,7 @@
     "demo:start": "tsx apps/checkout-demo/src/server.ts",
     "typecheck": "tsc --noEmit -p tsconfig.base.json",
     "lint": "tsc --noEmit -p tsconfig.base.json",
+    "format:check": "prettier --check apps packages tests scripts config .github docs README.md HUMAN_REVIEW_PACKET.md package.json package-lock.json tsconfig.base.json vitest.config.ts vitest.candidate.ts",
     "test": "vitest run",
     "test:unit": "vitest run tests/unit",
     "test:integration": "vitest run tests/integration",

@@ -35,6 +35,11 @@ export function hasCriteriaReview(ledger: Ledger, s: Snapshot): boolean {
   try {
     const review = JSON.parse(row.data);
     const p = ledger.getProposal(review.proposalId);
+    const proposed = ledger.db
+      .prepare("SELECT data FROM criteria_revisions WHERE id=?")
+      .get("proposal:" + p.proposalId) as { data: string } | undefined;
+    if (!proposed) return false;
+    const content = JSON.parse(proposed.data);
     const decision = ledger.db
       .prepare("SELECT data FROM decisions WHERE proposal_id=?")
       .get(p.proposalId) as { data: string } | undefined;
@@ -44,6 +49,10 @@ export function hasCriteriaReview(ledger: Ledger, s: Snapshot): boolean {
       typeof review.actorRef === "string" &&
       review.actorRef.length > 0 &&
       p.actionType === "CRITERIA_REVIEW" &&
+      content.criteriaDigest === s.manifest.criteriaDigest &&
+      content.testDigest === s.manifest.testDigest &&
+      hashObject(content) === p.resourceDigest &&
+      p.humanActorRef === review.actorRef &&
       p.decision === "HUMAN_ATTESTED_FOR_DEMO" &&
       !!p.consumedAt &&
       !!decision &&
@@ -60,10 +69,12 @@ export function currentImplementationMatches(
   try {
     const inputs = readJson(confined(root, "config/candidate-inputs.json")) as {
       include: string[];
+      exclude: string[];
     };
     const current = fileInventory(
       root,
       inputs.include.filter((p) => !p.startsWith("fixtures/current/")),
+      inputs.exclude,
     );
     const effective = canonical(resolveChecks(root, s.configOverrides || {}));
     const effectiveIndex = current.findIndex(
@@ -84,7 +95,7 @@ export function currentImplementationMatches(
     return false;
   }
 }
-export function verifyResults(
+function verifyCheckEvidence(
   runId: string,
   results: CheckResult[],
   store: ArtifactStore,
@@ -115,12 +126,74 @@ export function verifyResults(
     return false;
   }
 }
+// Completion is published last. Database COMPLETED alone never establishes evidence durability.
+export function verifyResults(
+  runId: string,
+  results: CheckResult[],
+  store: ArtifactStore,
+): boolean {
+  try {
+    if (!verifyCheckEvidence(runId, results, store)) return false;
+    const rows = store.ledger.db
+      .prepare("SELECT data FROM artifacts WHERE run_id=? ORDER BY path")
+      .all(runId) as { data: string }[];
+    const refs = rows.map((r) => JSON.parse(r.data));
+    const marker = refs.find((r) => r.relativePath === "completion.json");
+    if (!marker || !store.verify(runId, marker)) return false;
+    const completion = readJson(
+      confined(store.directory(runId), marker.relativePath),
+    ) as { schemaVersion: number; runId: string; artifacts: unknown[] };
+    if (
+      completion.schemaVersion !== 1 ||
+      completion.runId !== runId ||
+      canonical(completion.artifacts) !==
+        canonical(refs.filter((r) => r.relativePath !== "completion.json"))
+    )
+      return false;
+    const required = [
+      "candidate-manifest.json",
+      "run.json",
+      "assessment.json",
+      "audit-events.jsonl",
+      "evidence-index.json",
+      ...["acceptance", "accessibility", "contract", "data"].map(
+        (id) => "checks/" + id + "/result.json",
+      ),
+    ];
+    return (
+      required.every((p) => refs.some((r) => r.relativePath === p)) &&
+      canonical(readJson(confined(store.directory(runId), "run.json"))) ===
+        canonical(store.ledger.getRun(runId))
+    );
+  } catch {
+    return false;
+  }
+}
 export async function assess(
   root: string,
   ledger: Ledger,
   store: ArtifactStore,
   runId: string,
   persist = true,
+): Promise<Assessment> {
+  return computeAssessment(root, ledger, store, runId, persist, false);
+}
+// Coordinator-only provisional calculation, never exposed as a CLI or human-review override.
+export async function assessBeforeFinalization(
+  root: string,
+  ledger: Ledger,
+  store: ArtifactStore,
+  runId: string,
+): Promise<Assessment> {
+  return computeAssessment(root, ledger, store, runId, true, true);
+}
+async function computeAssessment(
+  root: string,
+  ledger: Ledger,
+  store: ArtifactStore,
+  runId: string,
+  persist: boolean,
+  finalizing: boolean,
 ): Promise<Assessment> {
   const run = ledger.getRun(runId),
     snapshot = ledger.getSnapshot(run.snapshotId),
@@ -135,6 +208,11 @@ export async function assess(
     policyVersion = p.version;
     valid =
       hashObject(p) === policyDigest &&
+      run.candidateDigest === snapshot.candidateDigest &&
+      run.candidateId === snapshot.candidateId &&
+      run.criteriaRevision === snapshot.manifest.criteriaRevision &&
+      run.policyDigest === policyDigest &&
+      run.toolchainDigest === hashObject(snapshot.manifest.toolchain) &&
       validateManifest(
         snapshot.manifest,
         snapshot.candidateDigest,
@@ -149,7 +227,9 @@ export async function assess(
   const blockers = blockersFor(
     run,
     results,
-    verifyResults(runId, results, store),
+    finalizing
+      ? verifyCheckEvidence(runId, results, store)
+      : verifyResults(runId, results, store),
     valid,
     hasCriteriaReview(ledger, snapshot),
   );

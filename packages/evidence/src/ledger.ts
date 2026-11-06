@@ -10,6 +10,7 @@ import {
   now,
   invariant,
   resultSchema,
+  runSchema,
   type Run,
   type Snapshot,
   type CheckResult,
@@ -105,17 +106,40 @@ export class Ledger {
     ).map((r) => JSON.parse(r.data));
   }
   getRun(id: string): Run {
-    const row = this.db.prepare("SELECT data FROM runs WHERE id=?").get(id) as
-      { data: string } | undefined;
+    const row = this.db.prepare("SELECT * FROM runs WHERE id=?").get(id) as
+      | {
+          id: string;
+          candidate_id: string;
+          snapshot_id: string;
+          idempotency_key: string;
+          request_digest: string;
+          status: string;
+          data: string;
+        }
+      | undefined;
     invariant(row, "INVALID_INPUT", "Unknown run");
-    return JSON.parse(row.data);
+    const parsed = runSchema.safeParse(JSON.parse(row.data));
+    invariant(parsed.success, "EVIDENCE_CORRUPT", "Malformed persisted run", 6);
+    const r = parsed.data;
+    invariant(
+      r.runId === row.id &&
+        r.candidateId === row.candidate_id &&
+        r.snapshotId === row.snapshot_id &&
+        r.key === row.idempotency_key &&
+        r.requestDigest === row.request_digest &&
+        r.status === row.status,
+      "EVIDENCE_CORRUPT",
+      "Run payload contradicts indexed identity",
+      6,
+    );
+    return r;
   }
   listRuns(): Run[] {
     return (
-      this.db.prepare("SELECT data FROM runs ORDER BY rowid").all() as {
-        data: string;
+      this.db.prepare("SELECT id FROM runs ORDER BY rowid").all() as {
+        id: string;
       }[]
-    ).map((r) => JSON.parse(r.data));
+    ).map((r) => this.getRun(r.id));
   }
   findRun(candidate: string, key: string): Run | undefined {
     const row = this.db
@@ -123,9 +147,10 @@ export class Ledger {
         "SELECT data FROM runs WHERE candidate_id=? AND idempotency_key=?",
       )
       .get(candidate, key) as { data: string } | undefined;
-    return row ? JSON.parse(row.data) : undefined;
+    return row ? this.getRun(JSON.parse(row.data).runId) : undefined;
   }
   insertRun(run: Run) {
+    runSchema.parse(run);
     const previousRuns = this.listRuns()
       .filter((r) => r.candidateId === run.candidateId)
       .map((r) => r.runId);
@@ -161,6 +186,7 @@ export class Ledger {
     this.audit("RunCreated", run.runId);
   }
   updateRun(run: Run) {
+    runSchema.parse(run);
     const previous = this.getRun(run.runId);
     invariant(
       !["COMPLETED", "INTERRUPTED"].includes(previous.status),
@@ -190,10 +216,27 @@ export class Ledger {
     return (
       this.db
         .prepare(
-          "SELECT data FROM check_results WHERE run_id=? ORDER BY check_id,attempt",
+          "SELECT run_id,check_id,attempt,data FROM check_results WHERE run_id=? ORDER BY check_id,attempt",
         )
-        .all(id) as { data: string }[]
-    ).map((r) => JSON.parse(r.data));
+        .all(id) as {
+        run_id: string;
+        check_id: string;
+        attempt: number;
+        data: string;
+      }[]
+    ).map((r) => {
+      const parsed = resultSchema.safeParse(JSON.parse(r.data));
+      invariant(
+        parsed.success &&
+          parsed.data.runId === r.run_id &&
+          parsed.data.checkId === r.check_id &&
+          parsed.data.attempt === r.attempt,
+        "EVIDENCE_CORRUPT",
+        "Malformed or misindexed check result",
+        6,
+      );
+      return parsed.data;
+    });
   }
   putAssessment(a: Assessment) {
     this.db

@@ -73,3 +73,24 @@ export function atomicWrite(file: string, bytes: string | Uint8Array): void {
   }
   fs.renameSync(tmp, file);
 }
+/** Atomic same-filesystem publication that cannot replace an arriving writer. */
+export function atomicCreate(file: string, bytes: string | Uint8Array): void {
+  fs.mkdirSync(path.dirname(file), { recursive: true });
+  const tmp = file + "." + crypto.randomUUID() + ".tmp";
+  const fd = fs.openSync(tmp, "wx", 0o600);
+  try {
+    fs.writeFileSync(fd, bytes);
+    fs.fsyncSync(fd);
+  } finally {
+    fs.closeSync(fd);
+  }
+  try {
+    fs.linkSync(tmp, file);
+  } catch (e) {
+    if ((e as NodeJS.ErrnoException).code === "EEXIST")
+      invariant(false, "EVIDENCE_CORRUPT", "Evidence overwrite forbidden", 6);
+    throw e;
+  } finally {
+    fs.unlinkSync(tmp);
+  }
+}

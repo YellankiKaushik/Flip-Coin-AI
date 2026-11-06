@@ -1,6 +1,12 @@
 import { z } from "zod";
 export const ids = ["acceptance", "accessibility", "contract", "data"] as const;
 export type CheckId = (typeof ids)[number];
+export const engineTools: Record<CheckId, string> = {
+  acceptance: "vitest",
+  accessibility: "axe-core",
+  contract: "oasdiff",
+  data: "csv-parse",
+};
 export const digestSchema = z.string().regex(/^[a-f0-9]{64}$/);
 export const artifactSchema = z
   .object({
@@ -41,7 +47,31 @@ export const resultSchema = z
     ),
     coverage: z.number().int().nonnegative(),
   })
-  .strict();
+  .strict()
+  .superRefine((r, ctx) => {
+    const invalid = (message: string) =>
+      ctx.addIssue({ code: "custom", message });
+    if (r.tool.name !== engineTools[r.checkId])
+      invalid("Tool identity does not match check");
+    if (Date.parse(r.finishedAt) < Date.parse(r.startedAt))
+      invalid("Check timestamps are reversed");
+    if (
+      r.status === "PASS" &&
+      (r.errors.length > 0 ||
+        r.findings.some((f) => ["ERROR", "CRITICAL"].includes(f.severity)) ||
+        r.coverage <= 0 ||
+        r.evidence.length === 0 ||
+        r.tool.version === "UNKNOWN")
+    )
+      invalid("PASS contradicts errors, findings, coverage or tool identity");
+    if (
+      r.status === "FAIL" &&
+      (r.findings.length === 0 || r.coverage <= 0 || r.errors.length > 0)
+    )
+      invalid("FAIL requires completed evidence of a finding");
+    if (r.status === "ERROR" && r.errors.length === 0)
+      invalid("ERROR requires an explicit execution error");
+  });
 export type CheckResult = z.infer<typeof resultSchema>;
 export type ArtifactRef = z.infer<typeof artifactSchema>;
 export const criteriaSchema = z
@@ -142,7 +172,37 @@ export interface Run {
   finishedAt?: string;
   supersedesRunId?: string;
   gitSha: string | null;
+  criteriaRevision?: string;
+  policyDigest?: string;
+  toolchainDigest?: string;
 }
+export const runSchema = z
+  .object({
+    runId: z.uuid(),
+    snapshotId: z.uuid(),
+    candidateId: z.string().min(1),
+    candidateDigest: digestSchema,
+    key: z.string().min(1),
+    requestDigest: digestSchema,
+    status: z.enum([
+      "CREATED",
+      "VALIDATING",
+      "RUNNING",
+      "COMPLETED",
+      "INTERRUPTED",
+    ]),
+    createdAt: z.iso.datetime(),
+    finishedAt: z.iso.datetime().optional(),
+    supersedesRunId: z.uuid().optional(),
+    gitSha: z
+      .string()
+      .regex(/^[a-f0-9]{40}$/)
+      .nullable(),
+    criteriaRevision: z.string().min(1).optional(),
+    policyDigest: digestSchema.optional(),
+    toolchainDigest: digestSchema.optional(),
+  })
+  .strict();
 export interface Assessment {
   schemaVersion: 1;
   assessmentId: string;

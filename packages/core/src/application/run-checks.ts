@@ -18,8 +18,10 @@ import { readJson, safeId } from "../infrastructure/filesystem-guard.ts";
 import { validateManifest } from "../infrastructure/hash-manifest.ts";
 import { inventory } from "../infrastructure/toolchain.ts";
 import { registeredChecks } from "../../../checks/src/index.ts";
+import { watchSnapshot } from "../infrastructure/snapshot-watch.ts";
 import {
   assess,
+  assessBeforeFinalization,
   currentImplementationMatches,
   hasCriteriaReview,
 } from "../../../release/src/assessment.ts";
@@ -84,10 +86,19 @@ export async function runChecks(
   fs.writeFileSync(fd, canonical(lease));
   fs.closeSync(fd);
   let run: Run | undefined;
+  let snapshotWatch: ReturnType<typeof watchSnapshot> | undefined;
   const abort = new AbortController();
   const onInterrupt = () => abort.abort();
   process.once("SIGINT", onInterrupt);
   try {
+    const inputPatterns = readJson(
+      path.join(snapshot.root, "config/candidate-inputs.json"),
+    ) as { include: string[]; exclude: string[] };
+    snapshotWatch = watchSnapshot(
+      snapshot.root,
+      inputPatterns.include,
+      inputPatterns.exclude,
+    );
     invariant(
       validateManifest(
         snapshot.manifest,
@@ -130,6 +141,9 @@ export async function runChecks(
       status: "CREATED",
       createdAt: now(),
       gitSha,
+      criteriaRevision: snapshot.manifest.criteriaRevision,
+      policyDigest: snapshot.manifest.policyDigest,
+      toolchainDigest: hashObject(snapshot.manifest.toolchain),
       ...(previous ? { supersedesRunId: previous.runId } : {}),
     };
     ledger.transaction(() => ledger.insertRun(run!));
@@ -145,11 +159,12 @@ export async function runChecks(
     const deadlineEpochMs = Date.now() + cfg.overallTimeoutMs;
     for (const id of ids) {
       invariant(
-        validateManifest(
-          snapshot.manifest,
-          snapshot.candidateDigest,
-          snapshot.root,
-        ),
+        !snapshotWatch.changed() &&
+          validateManifest(
+            snapshot.manifest,
+            snapshot.candidateDigest,
+            snapshot.root,
+          ),
         "CANDIDATE_CHANGED",
         "Snapshot changed before check",
         6,
@@ -171,22 +186,40 @@ export async function runChecks(
         130,
       );
       invariant(
-        validateManifest(
-          snapshot.manifest,
-          snapshot.candidateDigest,
-          snapshot.root,
-        ),
+        !snapshotWatch.changed() &&
+          validateManifest(
+            snapshot.manifest,
+            snapshot.candidateDigest,
+            snapshot.root,
+          ),
         "CANDIDATE_CHANGED",
         "Snapshot changed during check",
         6,
       );
       ledger.putResult(result);
     }
+    invariant(
+      !snapshotWatch.changed(),
+      "CANDIDATE_CHANGED",
+      "Snapshot changed during run",
+      6,
+    );
     run.status = "COMPLETED";
     run.finishedAt = now();
     ledger.updateRun(run);
     store.put(run.runId, "run.json", canonical(run));
-    const assessment = await assess(root, ledger, store, run.runId);
+    const assessment = await assessBeforeFinalization(
+      root,
+      ledger,
+      store,
+      run.runId,
+    );
+    invariant(
+      !snapshotWatch.changed(),
+      "CANDIDATE_CHANGED",
+      "Snapshot changed during final assessment",
+      6,
+    );
     store.put(run.runId, "assessment.json", canonical(assessment));
     const events = ledger.db
       .prepare("SELECT data FROM audit_events WHERE run_id=? ORDER BY rowid")
@@ -208,6 +241,18 @@ export async function runChecks(
           .all(run.runId),
       ),
     );
+    const artifactRows = ledger.db
+      .prepare("SELECT data FROM artifacts WHERE run_id=? ORDER BY path")
+      .all(run.runId) as { data: string }[];
+    store.put(
+      run.runId,
+      "completion.json",
+      canonical({
+        schemaVersion: 1,
+        runId: run.runId,
+        artifacts: artifactRows.map((r) => JSON.parse(r.data)),
+      }),
+    );
     assertOperationalCompletion(ledger.results(run.runId), run.runId);
     return {
       run,
@@ -227,6 +272,7 @@ export async function runChecks(
     throw e;
   } finally {
     process.removeListener("SIGINT", onInterrupt);
+    snapshotWatch?.close();
     try {
       const owner = readJson(lock) as typeof lease;
       if (owner.leaseId === lease.leaseId) fs.unlinkSync(lock);

@@ -21,6 +21,7 @@ import {
   now,
   type Proposal,
   type Action,
+  type Assessment,
 } from "../../core/src/domain/models.ts";
 import type { Ledger } from "../../evidence/src/ledger.ts";
 import type { ArtifactStore } from "../../evidence/src/artifact-store.ts";
@@ -31,6 +32,22 @@ import {
   hasCriteriaReview,
 } from "./assessment.ts";
 import { validateManifest } from "../../core/src/infrastructure/hash-manifest.ts";
+import { toolchainStillMatches } from "../../core/src/infrastructure/toolchain.ts";
+export function effectiveReleaseDecision(
+  p: Proposal,
+  a: Assessment,
+  at = Date.now(),
+): Proposal["decision"] {
+  if (Date.parse(p.expiresAt) <= at) return "EXPIRED";
+  if (
+    a.readiness !== "READY_FOR_HUMAN_APPROVAL" ||
+    p.assessmentDigest !== a.assessmentDigest ||
+    p.candidateDigest !== a.candidateDigest ||
+    p.policyDigest !== a.policyDigest
+  )
+    return "SUPERSEDED";
+  return p.decision;
+}
 function nonce(root: string, id: string) {
   const file = path.join(root, ".local/attestation.key");
   if (!fs.existsSync(file)) {
@@ -192,12 +209,17 @@ export async function interactiveAttest(
         snapshot = ledger.getSnapshot(run.snapshotId);
       invariant(
         run.status === "COMPLETED" &&
+          run.candidateDigest === p.candidateDigest &&
+          snapshot.candidateDigest === p.candidateDigest &&
+          snapshot.manifest.policyDigest === p.policyDigest &&
+          p.assessmentDigest === currentDigest &&
           validateManifest(
             snapshot.manifest,
             snapshot.candidateDigest,
             snapshot.root,
           ) &&
           currentImplementationMatches(root, snapshot) &&
+          toolchainStillMatches(root, snapshot.manifest.toolchain) &&
           verifyResults(run.runId, ledger.results(run.runId), store) &&
           hasCriteriaReview(ledger, snapshot),
         "APPROVAL_STALE",
@@ -269,6 +291,7 @@ export async function interactiveAttest(
         8,
       );
     }
+    validateDecision(p, currentDigest, nonce(root, proposalId));
     p.decision = reject ? "REJECTED" : "HUMAN_ATTESTED_FOR_DEMO";
     p.humanActorRef = actor.trim();
     p.actorVerificationLevel = 1;

@@ -64,7 +64,11 @@ const manifestSchema = z
       .min(1),
   })
   .strict();
-export function fileInventory(root: string, patterns: string[]): FileEntry[] {
+export function fileInventory(
+  root: string,
+  patterns: string[],
+  exclude: string[] = [],
+): FileEntry[] {
   const entries = new Map<string, FileEntry>();
   const collision = new Set<string>();
   for (const pattern of patterns) {
@@ -76,7 +80,7 @@ export function fileInventory(root: string, patterns: string[]): FileEntry[] {
       "Unsafe input pattern",
     );
     const files = fs
-      .globSync(pattern, { cwd: root })
+      .globSync(pattern, { cwd: root, exclude })
       .filter((p) => fs.statSync(path.join(root, p)).isFile());
     invariant(
       files.length,
@@ -94,6 +98,11 @@ export function fileInventory(root: string, patterns: string[]): FileEntry[] {
       );
       collision.add(lower);
       const absolute = confined(root, normalized);
+      invariant(
+        fs.statSync(absolute).size <= 8 * 1024 * 1024,
+        "INVALID_INPUT",
+        "Candidate input exceeds 8 MiB resource cap",
+      );
       const bytes = fs.readFileSync(absolute);
       entries.set(normalized, {
         path: normalized,
@@ -151,7 +160,7 @@ export function validateManifest(
         readJson(confined(root, "config/candidate-inputs.json")),
       );
       invariant(
-        hashObject(fileInventory(root, inputs.include)) ===
+        hashObject(fileInventory(root, inputs.include, inputs.exclude)) ===
           hashObject(manifest.files),
         "CANDIDATE_CHANGED",
         "Snapshot file inventory changed",
@@ -196,7 +205,7 @@ export async function prepare(
   for (const pattern of config.include.filter(
     (p) => !p.startsWith("fixtures/current/"),
   )) {
-    const files = fileInventory(root, [pattern]);
+    const files = fileInventory(root, [pattern], config.exclude);
     for (const entry of files) {
       const destination = path.join(target, entry.path);
       fs.mkdirSync(path.dirname(destination), { recursive: true });
@@ -224,7 +233,7 @@ export async function prepare(
     schemaVersion: 1,
     projectId: "checkout-demo",
     candidateId,
-    files: fileInventory(target, config.include),
+    files: fileInventory(target, config.include, config.exclude),
     criteriaRevision: String(criteria.revision),
     criteriaDigest: hashObject(criteria),
     testDigest: sha256(

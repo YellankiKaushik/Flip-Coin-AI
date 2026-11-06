@@ -1,13 +1,18 @@
 import { test, expect } from "vitest";
 import { randomUUID } from "node:crypto";
 import { blockersFor } from "../../packages/release/src/policy.ts";
-import { validateDecision } from "../../packages/release/src/approval.ts";
+import {
+  validateDecision,
+  effectiveReleaseDecision,
+} from "../../packages/release/src/approval.ts";
 import { sha256 } from "../../packages/evidence/src/canonical-json.ts";
 import {
   ids,
+  engineTools,
   type CheckResult,
   type Run,
   type Proposal,
+  type Assessment,
 } from "../../packages/core/src/domain/models.ts";
 const run: Run = {
   runId: randomUUID(),
@@ -30,13 +35,22 @@ function result(
     checkId: id,
     attempt: 1,
     candidateDigest: run.candidateDigest,
-    tool: { name: "unit-fixture", version: "1" },
+    tool: { name: engineTools[id], version: "1" },
     status,
     startedAt: run.createdAt,
     finishedAt: run.createdAt,
     durationMs: 0,
     summary: "Explicit unit-test data; not real tool evidence",
-    findings: [],
+    findings:
+      status === "FAIL"
+        ? [
+            {
+              code: "TEST_ONLY_FINDING",
+              severity: "ERROR",
+              message: "Synthetic unit fixture",
+            },
+          ]
+        : [],
     evidence: [
       {
         relativePath: "unit-only.json",
@@ -45,7 +59,10 @@ function result(
         mediaType: "application/json",
       },
     ],
-    errors: [],
+    errors:
+      status === "ERROR"
+        ? [{ code: "TEST_ONLY_ERROR", message: "Synthetic unit fixture" }]
+        : [],
     coverage: 1,
   };
 }
@@ -110,6 +127,40 @@ const p = (): Proposal => ({
   nonceDigest: sha256("unit-nonce"),
   decision: "REQUESTED",
   evidenceRefs: [],
+});
+test("displayed release decisions recheck expiry and all bound identities", () => {
+  const proposal = p();
+  const a = {
+    readiness: "READY_FOR_HUMAN_APPROVAL",
+    assessmentDigest: proposal.assessmentDigest,
+    candidateDigest: proposal.candidateDigest,
+    policyDigest: proposal.policyDigest,
+  } as Assessment;
+  expect(
+    effectiveReleaseDecision(proposal, a, Date.parse(proposal.createdAt)),
+  ).toBe("REQUESTED");
+  expect(
+    effectiveReleaseDecision(proposal, a, Date.parse(proposal.expiresAt)),
+  ).toBe("EXPIRED");
+  for (const field of [
+    "assessmentDigest",
+    "candidateDigest",
+    "policyDigest",
+  ] as const)
+    expect(
+      effectiveReleaseDecision(
+        proposal,
+        { ...a, [field]: sha256("changed") },
+        Date.parse(proposal.createdAt),
+      ),
+    ).toBe("SUPERSEDED");
+  expect(
+    effectiveReleaseDecision(
+      proposal,
+      { ...a, readiness: "BLOCKED" },
+      Date.parse(proposal.createdAt),
+    ),
+  ).toBe("SUPERSEDED");
 });
 test("valid pending exact-digest nonce accepted by pure state validator", () =>
   expect(() =>

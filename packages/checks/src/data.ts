@@ -23,9 +23,18 @@ export function reconcile(
       location: id,
       message,
       issueId: sha256(
-        code + "|" + id + "|" + sha256(orderBytes) + "|" + sha256(ledgerBytes),
+        code +
+          "|" +
+          id +
+          "|" +
+          message +
+          "|" +
+          sha256(orderBytes) +
+          "|" +
+          sha256(ledgerBytes),
       ),
     });
+  const counts: Record<string, number> = {};
   function rows(bytes: Uint8Array, headers: string[], kind: string) {
     invariant(
       bytes.byteLength <= maxBytes,
@@ -48,6 +57,7 @@ export function reconcile(
       "CSV headers must match exact declared order",
     );
     const result = new Map<string, { amount: number; state: string }>();
+    counts[kind] = data.length - 1;
     for (const [i, row] of data.slice(1).entries()) {
       invariant(row.length === 3, "INVALID_INPUT", "Invalid field count");
       const id = row[0].trim();
@@ -141,11 +151,11 @@ export function reconcile(
   return {
     schemaVersion: 1,
     status: findings.length ? "FAIL" : "PASS",
-    coverage: orders.size + ledger.size,
+    coverage: counts.orders + counts.ledger,
     findings,
     counts: {
-      orders: orders.size,
-      ledger: ledger.size,
+      orders: counts.orders,
+      ledger: counts.ledger,
       issues: findings.length,
     },
     proposedCorrections: corrections,

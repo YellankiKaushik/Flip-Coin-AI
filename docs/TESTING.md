@@ -6,9 +6,9 @@ Integration suites use actual SQLite and oasdiff. Security tests use bounded rea
 
 Standalone coupon verification:
 
-~~~powershell
+```powershell
 npx vitest run --config vitest.candidate.ts
-~~~
+```
 
 This command is development testing and grants no approval. The reviewed acceptance test source and raw machine report are linked by HUMAN_REVIEW_PACKET.md.
 
@@ -19,3 +19,11 @@ Evidence under .local/verification and artifacts/runs is private local runtime o
 Not established by local tests: genuine Switch project execution, human review/attestation, complete accessibility, runtime consumer compatibility, hostile same-account isolation, cross-platform support or production readiness.
 
 A checksum-pinned Windows GitHub Actions workflow is prepared in .github/workflows/ci.yml. It has not been pushed or run. Its local engine tests deliberately retain the pending human gate and cannot prove live Switch collaboration or final approval.
+
+## Final audit verification additions
+
+The audit regression file covers contradictory PASS payloads, engine identity, exact criterion IDs, split UTF-8 process output, concurrent artifact overwrite denial, missing finalization and duplicate CSV rows. Snapshot monitoring tests include an edit restored before validation and an excluded runtime file. The zero/unknown-coupon tests are engineering tests of explicit implementation decisions; the six proposed acceptance tests remain unchanged.
+
+Run `npm run format:check` for the actual Prettier check. Upstream license text is excluded from formatting. E2E commands use a fresh isolated test ledger/artifact root and never read or create real human review records. The 625 state combinations are exercised inside one reported unit test.
+
+`node scripts/review-packet.mjs` prepares a new corrected frozen snapshot, runs the actual Vitest executable from that snapshot and records hashes, IDs and execution data in HUMAN_REVIEW_PACKET.md. It grants no approval. The local finalization report records the separate opposing-source experiment and clean-checkout results; remote CI remains a separate verification gate.

@@ -41,7 +41,11 @@ const workerSchema = z
         .passthrough(),
     ),
   })
-  .passthrough();
+  .passthrough()
+  .refine(
+    (r) => (r.status === "PASS") === (r.findings.length === 0),
+    "Worker status contradicts findings",
+  );
 function completed(r: RunnerResult) {
   invariant(
     !r.spawnErrorCode,
