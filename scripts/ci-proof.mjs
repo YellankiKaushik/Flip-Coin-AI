@@ -118,7 +118,45 @@ try {
 } catch {
   failed = true;
 }
-for (const [i, args] of jobs[job].entries()) run(args, "command-" + i);
+for (const [i, configuredArgs] of jobs[job].entries()) {
+  const args = [...configuredArgs];
+  const rawReport = ".local/ci-raw/" + job + "-" + i + ".json";
+  const hasReport = args.includes("--reporter=json");
+  if (hasReport) {
+    fs.mkdirSync(path.dirname(rawReport), { recursive: true });
+    args.push("--outputFile", rawReport);
+  }
+  run(args, "command-" + i);
+  if (hasReport) {
+    try {
+      const bytes = fs.readFileSync(rawReport);
+      const report = JSON.parse(bytes.toString("utf8"));
+      const published = redact(bytes.toString("utf8"));
+      fs.writeFileSync(path.join(directory, "tests-" + i + ".json"), published);
+      receipts.at(-1).testSummary = {
+        total: report.numTotalTests,
+        passed: report.numPassedTests,
+        failed: report.numFailedTests,
+        skipped: report.numPendingTests,
+        originalSha256: createHash("sha256").update(bytes).digest("hex"),
+        publishedSha256: createHash("sha256").update(published).digest("hex"),
+      };
+      if (
+        !report.success ||
+        !(report.numTotalTests > 0) ||
+        report.numFailedTests !== 0 ||
+        report.numPendingTests !== 0
+      )
+        failed = true;
+    } catch (error) {
+      failed = true;
+      fs.writeFileSync(
+        path.join(directory, "report-error-" + i + ".json"),
+        JSON.stringify({ error: redact(error.message) }),
+      );
+    }
+  }
+}
 const metadata = {
   schemaVersion: 1,
   scope:

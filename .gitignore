@@ -3,6 +3,7 @@ node_modules/
 artifacts/
 dist/
 coverage/
+.vitest/
 *.log
 .env
 .env.*
