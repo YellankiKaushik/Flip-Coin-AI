@@ -41,14 +41,21 @@ function decode<T>(schema: z.ZodType<T>, input: unknown, json = false): T {
 }
 export class Ledger {
   readonly db: Database.Database;
-  constructor(readonly root: string) {
+  constructor(
+    readonly root: string,
+    readonly readOnly = false,
+  ) {
     confined(root, ".local", false);
-    fs.mkdirSync(path.join(root, ".local"), { recursive: true });
+    if (!readOnly) fs.mkdirSync(path.join(root, ".local"), { recursive: true });
     const database = databasePath(root);
-    fs.mkdirSync(path.dirname(database), { recursive: true });
-    this.db = new Database(database);
+    if (!readOnly) fs.mkdirSync(path.dirname(database), { recursive: true });
+    this.db = new Database(database, {
+      readonly: readOnly,
+      fileMustExist: readOnly,
+    });
     this.db.pragma("foreign_keys=ON");
     this.db.pragma("busy_timeout=5000");
+    if (readOnly) return;
     this.db.pragma("journal_mode=WAL");
     this.db.pragma("synchronous=FULL");
     this.db
@@ -377,7 +384,7 @@ export class Ledger {
       actionType: p.actionType,
     });
   }
-  getProposal(id: string): Proposal {
+  getProposal(id: string, expire = true): Proposal {
     const row = this.db
       .prepare("SELECT data FROM approval_requests WHERE id=?")
       .get(id) as { data: string } | undefined;
@@ -389,7 +396,12 @@ export class Ledger {
       "Proposal contradicts indexed identity",
       6,
     );
-    if (p.decision === "REQUESTED" && Date.parse(p.expiresAt) <= Date.now()) {
+    if (
+      !this.readOnly &&
+      expire &&
+      p.decision === "REQUESTED" &&
+      Date.parse(p.expiresAt) <= Date.now()
+    ) {
       p.decision = "EXPIRED";
       this.updateProposal(p);
       this.audit("ApprovalExpired", null, { proposalId: p.proposalId });

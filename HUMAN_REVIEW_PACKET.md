@@ -1,8 +1,10 @@
-# HUMAN REVIEW PACKET — PENDING
+# HUMAN REVIEW PACKET — CRITERIA REVIEW VERIFIED
 
-Updated 2026-11-06T18:14:44.933930+00:00. No human criteria/test approval has been recorded. The real Switch doctor is now VERIFIED (genuine successful room receipt (private local reference)); this does not approve criteria, tests, correction or release. No new15-minute proposal was created early during preparation.
+Updated November 7, 2026 IST. Human criteria/test proposal `<DEMO_RECORD_ID>` was consumed at `2026-11-06T19:28:04.476Z` with HUMAN_ATTESTED_FOR_DEMO, Level 1. Independent canonical inspection in ordinary PowerShell and the existing Codex workspace sandbox returned exit 0, `data.valid:true`, and all twelve checks true. Current criteria digest `51c39baba13fee5d5cd52078f3adab301566588b29dc1b405b5eff7706818eb7` and test SHA256 `e62a5a42d226dbb351c8e532a3834a577c0cbaffca195695988944b4a6e99c2f` match. No assistant attestation was performed. Raw file metadata stays PENDING by design; eligibility is the independent ledger record. Patch and final release approvals remain PENDING. Exact criteria/tests below are unchanged. Full main suite now 137/137, including 20 new inspection safety cases; no fresh reviewed Switch run has occurred in this repair.
 
-# HUMAN ACTION REQUIRED
+# Historical review procedure — already completed for these digests
+
+Do not repeat attestation solely because the proposal's decision-entry TTL has elapsed: recorded consumption was timely and remains valid for identical criteria/tests. The next human action is the fresh Switch room request in the current repair report. The original procedure remains below for future content changes.
 
 1. Review the exact five criteria and six tests in this packet, including the disclosed SAVE100/100-cent, millisecond-Z UTC and zero-clamping choices.
 2. V2 §55.2 requires real criteria/test review before AcceptanceRelay may execute those tests as approved evidence; chat or doctor success grants no approval.
@@ -112,7 +114,7 @@ The applyCoupon input object has four fields; its strict equality expiry behavio
 
 The unchanged six cases previously ran against frozen candidate source in the isolated checkout: defective5 PASS/1 FAIL (AC-001), exit1; corrected6 PASS/0 FAIL, exit0. Evidence: `<PRIVATE_RECEIPT_LOCATION>`. These are engineering executions, not human-reviewed release runs. The actual full evaluator suite previously reported117/117 in both main and isolated checkout, with zero failures/skips; it was not rerun merely to relabel this review.
 
-Current production diagnostic runs remain blocked: acceptance ERROR/zero coverage while review is PENDING; the other three engines demonstrate FAIL→PASS. Live doctor exit0 proves the agent execution path, not a positive AcceptanceRelay run. Actual ledger inspection in this completion phase found decisions0 and criteria attestations0.
+Historical production diagnostics remain BLOCKED as originally recorded: acceptance ERROR/zero coverage because review was absent at execution; the other three engines demonstrate FAIL→PASS. The earlier checkpoint found decisions0/criteria attestations0. The current independent canonical inspection now verifies the human's consumed criteria/test decision. These historical runs are not upgraded retrospectively. A fresh reviewed Switch run is still required; live doctor exit0 alone does not prove positive AcceptanceRelay execution. Current main suite is 137/137 across 19 files, including 20 new read-only inspection/safety cases; the isolated 117/117 baseline remains historical.
 
 ## Review procedure and unresolved limits
 

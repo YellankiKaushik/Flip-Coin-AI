@@ -1,6 +1,10 @@
 # Submission readiness — BLOCKED ON GENUINE LIVE AND HUMAN GATES
 
-Updated 2026-11-06T17:38:10.694467+00:00. Deadline November7,2026,23:59 IST. Internal freeze17:00 IST / submit20:00 IST. No push, video upload or actual submission has occurred. This is current targeted readiness, not a repeat of the full engineering audit.
+Updated November 7: genuine criteria/test review `<DEMO_RECORD_ID>` is independently VERIFIED at Level 1 using canonical CLI inspection locally and in the provider-equivalent sandbox. Agent policy was narrowly updated, saved and reopened with exact persisted text; Auto ON / Bypass OFF unchanged. Main suite 137/137 PASS. Next is the real human's fresh defective-run Switch request in REPORT_TO_CHATGPT.md; no such new run has yet been observed. Patch/release approvals, reviewed corrected run, actual remote CI/video/publication/submission remain incomplete. Previous source ZIPs are historical and do not contain this repair. No push, upload or submission occurred. Deadline November 7, 2026, 23:59 IST remains unchanged.
+
+## Historical readiness checkpoint
+
+The earlier audit below is retained. Its criteria-pending statuses and baseline counts describe the pre-review state; the update above supersedes those statuses without asserting completion of other gates.
 
 ## Sandbox dependency repair
 

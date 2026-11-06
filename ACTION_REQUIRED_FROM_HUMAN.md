@@ -1,6 +1,6 @@
 # Human actions required — PENDING
 
-Updated November 6, 2026 after the workspace-local npm repair. These instructions prepare genuine human gates and issue no approval. The existing standalone Codex sandbox passed doctor through the copied npm 11.9.0 runtime. The genuine human-requested Switch doctor is now VERIFIED. Criteria/test, patch and release decisions remain PENDING.
+Current update — November 7: criteria/test review is independently VERIFIED for proposal `<DEMO_RECORD_ID>`. Do not repeat sections 2–3's earlier criteria-review procedure for unchanged content. The next action is to send the single prepared request in REPORT_TO_CHATGPT.md to `switchforge-release-demo`, asking the agent to inspect the recorded review, prepare one fresh defective snapshot, run all four engines, verify evidence and report actual results. Saved policy permits the narrow read-only inspection; Auto remains ON and Bypass OFF. No fresh reviewed Switch run exists yet. Patch and final release approvals remain separate and PENDING. Earlier procedures below are retained for reference.
 
 ## 1. Verified manual CLI entry point
 

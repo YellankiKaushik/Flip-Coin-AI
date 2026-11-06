@@ -39,6 +39,7 @@ import {
   verifyResults,
   currentImplementationMatches,
   hasCriteriaReview,
+  inspectCriteriaReview,
 } from "../../../packages/release/src/index.ts";
 import {
   createProposal,
@@ -107,6 +108,7 @@ async function main() {
       "sample-url",
     ],
     "criteria show": ["candidate"],
+    "criteria inspect": ["proposal", "file"],
     "criteria propose": ["file"],
     "criteria attest": ["proposal", "reject"],
     "patch propose": ["file", "snapshot"],
@@ -152,7 +154,7 @@ async function main() {
         "Human actor identity is not cryptographically verified; real Switch execution remains a separate manual gate.",
     };
   }
-  ledger = new Ledger(root);
+  ledger = new Ledger(root, command === "criteria inspect");
   const store = new ArtifactStore(root, ledger);
   switch (command) {
     case "prepare": {
@@ -250,6 +252,20 @@ async function main() {
           }),
         ),
       };
+    }
+    case "criteria inspect": {
+      const criteria = criteriaSchema.parse(
+        readJson(confined(root, arg("file"))),
+      );
+      const test = confined(root, "apps/checkout-demo/tests/checkout.spec.ts");
+      return ledger.db.transaction(() =>
+        inspectCriteriaReview(
+          ledger!,
+          hashObject(criteria),
+          sha256(fs.readFileSync(test)),
+          arg("proposal"),
+        ),
+      )();
     }
     case "criteria show": {
       const snapshots = ledger

@@ -20,40 +20,117 @@ import type { ArtifactStore } from "../../evidence/src/index.ts";
 import { blockersFor } from "./policy.ts";
 import { resolveChecks } from "../../core/src/public/infrastructure.ts";
 export function hasCriteriaReview(ledger: Ledger, s: Snapshot): boolean {
+  return inspectCriteriaReview(
+    ledger,
+    s.manifest.criteriaDigest,
+    s.manifest.testDigest,
+  ).valid;
+}
+/** Read-only canonical eligibility check; no nonce/key material or actor identity is returned. */
+export function inspectCriteriaReview(
+  ledger: Ledger,
+  criteriaDigest: string,
+  testDigest: string,
+  expectedProposalId?: string,
+) {
+  const checks = {
+    reviewRecorded: false,
+    proposalMatches: false,
+    actionMatches: false,
+    levelOne: false,
+    decisionConsumed: false,
+    consumedWithinLifetime: false,
+    criteriaMatches: false,
+    testsMatch: false,
+    resourceMatches: false,
+    actorMatches: false,
+    decisionRecordMatches: false,
+    nonceRecordMatches: false,
+  };
+  let proposal:
+    | {
+        proposalId: string;
+        actionType: string;
+        decision: string;
+        actorVerificationLevel: number;
+        createdAt: string;
+        expiresAt: string;
+        consumedAt?: string;
+      }
+    | undefined;
+  const result = () => ({
+    valid: Object.values(checks).every(Boolean),
+    approvalStatus: Object.values(checks).every(Boolean)
+      ? "HUMAN_ATTESTED_FOR_DEMO"
+      : "PENDING",
+    proposalId: expectedProposalId || proposal?.proposalId || null,
+    criteriaDigest,
+    testDigest,
+    proposal: proposal || null,
+    checks,
+    notice:
+      "Level 1 manual demo attestation, not cryptographically verified human identity. No nonce/key is disclosed. Proposal TTL limits decision entry; a valid consumed criteria/test review remains reusable for identical digests.",
+  });
   const row = ledger.db
     .prepare("SELECT data FROM criteria_revisions WHERE id=?")
-    .get(s.manifest.criteriaDigest + ":" + s.manifest.testDigest) as
-    { data: string } | undefined;
-  if (!row) return false;
+    .get(criteriaDigest + ":" + testDigest) as { data: string } | undefined;
   try {
-    const review = JSON.parse(row.data);
-    const p = ledger.getProposal(review.proposalId);
+    const review = row ? JSON.parse(row.data) : null;
+    const id = expectedProposalId || review?.proposalId;
+    if (!id) return result();
+    const p = ledger.getProposal(id, false);
+    proposal = {
+      proposalId: p.proposalId,
+      actionType: p.actionType,
+      decision: p.decision,
+      actorVerificationLevel: p.actorVerificationLevel,
+      createdAt: p.createdAt,
+      expiresAt: p.expiresAt,
+      consumedAt: p.consumedAt,
+    };
+    checks.reviewRecorded =
+      !!review && review.decision === "HUMAN_ATTESTED_FOR_DEMO";
+    checks.proposalMatches = !!review && review.proposalId === p.proposalId;
+    checks.actionMatches = p.actionType === "CRITERIA_REVIEW";
+    checks.levelOne =
+      !!review &&
+      review.actorVerificationLevel === 1 &&
+      p.actorVerificationLevel === 1;
+    checks.decisionConsumed =
+      p.decision === "HUMAN_ATTESTED_FOR_DEMO" && !!p.consumedAt;
+    checks.consumedWithinLifetime =
+      !!p.consumedAt &&
+      Date.parse(p.consumedAt) >= Date.parse(p.createdAt) &&
+      Date.parse(p.consumedAt) < Date.parse(p.expiresAt);
+    checks.actorMatches =
+      !!review &&
+      typeof review.actorRef === "string" &&
+      review.actorRef.trim().length > 0 &&
+      p.humanActorRef === review.actorRef;
     const proposed = ledger.db
       .prepare("SELECT data FROM criteria_revisions WHERE id=?")
       .get("proposal:" + p.proposalId) as { data: string } | undefined;
-    if (!proposed) return false;
+    if (!proposed) return result();
     const content = JSON.parse(proposed.data);
     const decision = ledger.db
       .prepare("SELECT data FROM decisions WHERE proposal_id=?")
       .get(p.proposalId) as { data: string } | undefined;
-    return (
-      review.decision === "HUMAN_ATTESTED_FOR_DEMO" &&
-      review.actorVerificationLevel === 1 &&
-      typeof review.actorRef === "string" &&
-      review.actorRef.length > 0 &&
-      p.actionType === "CRITERIA_REVIEW" &&
-      content.criteriaDigest === s.manifest.criteriaDigest &&
-      content.testDigest === s.manifest.testDigest &&
-      hashObject(content) === p.resourceDigest &&
-      p.humanActorRef === review.actorRef &&
-      p.decision === "HUMAN_ATTESTED_FOR_DEMO" &&
-      !!p.consumedAt &&
-      !!decision &&
-      hashObject(JSON.parse(decision.data)) === hashObject(p)
-    );
+    checks.criteriaMatches =
+      content.criteriaDigest === criteriaDigest &&
+      hashObject(content.criteria) === criteriaDigest;
+    checks.testsMatch = content.testDigest === testDigest;
+    checks.resourceMatches = hashObject(content) === p.resourceDigest;
+    const recorded = decision ? JSON.parse(decision.data) : null;
+    checks.decisionRecordMatches =
+      !!recorded && hashObject(recorded) === hashObject(p);
+    checks.nonceRecordMatches =
+      !!recorded &&
+      recorded.nonceDigest === p.nonceDigest &&
+      recorded.proposalId === p.proposalId;
   } catch {
-    return false;
+    // Missing/corrupt/wrong-scope records cannot establish eligibility.
   }
+  return result();
 }
 export function currentImplementationMatches(
   root: string,

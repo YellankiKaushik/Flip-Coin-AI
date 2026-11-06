@@ -1,6 +1,10 @@
 # FINAL ENGINEERING AUDIT — SWITCHFORGE
 
-Current completion update 2026-11-06T18:14:44.933930+00:00: SW-02 VERIFIED from genuine successful room receipt (private local reference); correlation<DEMO_RECORD_ID>. Earlier failures below are historical. No criteria/test, patch or release attestation exists; no approved four-engine READY result is claimed. Full audit was not rerun or weakened.
+Current targeted update — November 7: the human's criteria/test review `<DEMO_RECORD_ID>` is independently VERIFIED through canonical read-only CLI inspection in local PowerShell and the provider-equivalent sandbox. All twelve binding checks passed; real ledger unchanged. Saved existing-agent instructions now permit only that fixed-path inspection and condition reviewed execution on actual valid records. Auto remains ON and Bypass OFF. Full main suite now 137/137 PASS across 19 files, including 20 new safety cases. Historical isolated baseline remains 117/117. GATE-HUMAN-01 is verified for this observable Level 1 criteria review; CORE-01, DEMO-01 and DEMO-02 still require fresh live evidence/delivery. Patch and final release approvals remain PENDING. Prior genuine live doctor receipt (private local reference) remains VERIFIED. No new reviewed Switch run or READY result is claimed.
+
+## Historical engineering audit before the criteria review
+
+The audit below is preserved as its earlier checkpoint. Its pending-criteria statements, source baseline and test counts describe that time; the targeted update above supersedes them without changing requirements or historical evidence.
 
 Updated 2026-11-06T14:44:45.254041+00:00. Authoritative protected source: DEEP_TECHNICAL_ARCHITECTURE_V2.md; §§50–65 override earlier text. This report supersedes the earlier delivery checkpoint, which is preserved in private history. Evaluator **f27d79c3ee58b6153868930ddd70e9206c652a7d**; CI tooling **a2233ef9ae374a668c7ae5436d7f694786b35fe1**; branch `codex/switchforge-implementation`. The final documentation commit is recorded separately in WORK_LOG.md. This is an engineering self-audit, not human approval or submission confirmation.
 
