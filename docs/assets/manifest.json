@@ -1,0 +1,67 @@
+[
+  {
+    "file": "agent-response.png",
+    "bytes": 62631,
+    "sha256": "9c6df833a314c61aec8a73281da4d275a8d0ad9ec1e50a383a8515eaa6dfc0d7"
+  },
+  {
+    "file": "architecture.svg",
+    "bytes": 4238,
+    "sha256": "258e4dfb64113354230d6d765ecfca2c139a782a4b7b8ea8aa656d475590d67c"
+  },
+  {
+    "file": "before-after.svg",
+    "bytes": 3500,
+    "sha256": "d614f950e10ab8835551e60ca3e4f5ce3f8a989d94ba3e8707c8d74c96d3eb33"
+  },
+  {
+    "file": "corrected-checkout.png",
+    "bytes": 5967,
+    "sha256": "dffe09bd9a072634537c2a2394e8a395b94451d3486fa10b27d33664323e45ee"
+  },
+  {
+    "file": "defective-checkout.png",
+    "bytes": 5804,
+    "sha256": "2aada54a2950df3fe4aa96c9aea2c18e42ccd546cbd8052e957d8ef1320184b0"
+  },
+  {
+    "file": "demo-thumbnail.png",
+    "bytes": 118789,
+    "sha256": "1801f56bb39d3f98a1dd0518bec09e06c4e050e3127e7cdd43ef0ceb4dac6edb"
+  },
+  {
+    "file": "four-engines.svg",
+    "bytes": 2621,
+    "sha256": "f33ca983ceecc26d3a138f0cdca465dd47d8619d95c7e11a824ac65081b90469"
+  },
+  {
+    "file": "hero.svg",
+    "bytes": 2677,
+    "sha256": "03244111e8dcf3bc077c7889c3220e69167899473d7a32ba0ca9db57f898e0e5"
+  },
+  {
+    "file": "human-gates.svg",
+    "bytes": 1871,
+    "sha256": "575ff2d3c90fc0fe1a251e6a987b21e2c08e162e3035cd0b6c8889d8677a3891"
+  },
+  {
+    "file": "human-request.png",
+    "bytes": 100979,
+    "sha256": "16e32ca01ff15e8637df9dfa758681c44525fdd894ad8f005699a9aa417d7d0c"
+  },
+  {
+    "file": "verified-agent-table.png",
+    "bytes": 151262,
+    "sha256": "eee77dcedd3ef500c8f404b91da3a5bd4daffe030743bca7097b488b84c518b7"
+  },
+  {
+    "file": "video-thumbnail.svg",
+    "bytes": 1346,
+    "sha256": "4a9b777e79b37d9a00f39b573cbc4030d137f6923811afb8e33c46c5c44eb0d2"
+  },
+  {
+    "file": "workflow.svg",
+    "bytes": 3289,
+    "sha256": "63d0a17e88a7a8635ad18b56f5fafbc638ccbca8d3398232d4d72950996db0df"
+  }
+]
