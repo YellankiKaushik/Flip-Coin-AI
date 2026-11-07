@@ -1,0 +1,124 @@
+name: Local engine and evidence contracts
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  dependency-install:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: ./.github/actions/setup-tested-tools
+      - name: Run mandatory checks and preserve actual receipts
+        run: npm run ci:proof -- dependency-install
+      - name: Upload synthetic redacted receipts and provenance
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: switchforge-dependency-install-${{ github.run_id }}
+          path: .local/ci/dependency-install/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
+  typecheck:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: ./.github/actions/setup-tested-tools
+      - name: Run mandatory checks and preserve actual receipts
+        run: npm run ci:proof -- typecheck
+      - name: Upload synthetic redacted receipts and provenance
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: switchforge-typecheck-${{ github.run_id }}
+          path: .local/ci/typecheck/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
+  unit:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: ./.github/actions/setup-tested-tools
+      - name: Run mandatory checks and preserve actual receipts
+        run: npm run ci:proof -- unit
+      - name: Upload synthetic redacted receipts and provenance
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: switchforge-unit-${{ github.run_id }}
+          path: .local/ci/unit/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
+  integration-checks:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: ./.github/actions/setup-tested-tools
+      - name: Run mandatory checks and preserve actual receipts
+        run: npm run ci:proof -- integration-checks
+      - name: Upload synthetic redacted receipts and provenance
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: switchforge-integration-checks-${{ github.run_id }}
+          path: .local/ci/integration-checks/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
+  security-smoke:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: ./.github/actions/setup-tested-tools
+      - name: Run mandatory checks and preserve actual receipts
+        run: npm run ci:proof -- security-smoke
+      - name: Upload synthetic redacted receipts and provenance
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: switchforge-security-smoke-${{ github.run_id }}
+          path: .local/ci/security-smoke/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
+  artifact-contract:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: ./.github/actions/setup-tested-tools
+      - name: Run mandatory checks and preserve actual receipts
+        run: npm run ci:proof -- artifact-contract
+      - name: Upload synthetic redacted receipts and provenance
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: switchforge-artifact-contract-${{ github.run_id }}
+          path: .local/ci/artifact-contract/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
+  docs-link-check:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: ./.github/actions/setup-tested-tools
+      - name: Run mandatory checks and preserve actual receipts
+        run: npm run ci:proof -- docs-link-check
+      - name: Upload synthetic redacted receipts and provenance
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: switchforge-docs-link-check-${{ github.run_id }}
+          path: .local/ci/docs-link-check/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7

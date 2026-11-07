@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "projectId": "checkout-demo",
+  "include": [
+    "apps/**/*.ts",
+    "apps/checkout-demo/index.html",
+    "apps/*/package.json",
+    "packages/**/*.ts",
+    "packages/*/package.json",
+    "config/*.json",
+    "package.json",
+    "package-lock.json",
+    "tsconfig.base.json",
+    "vitest.candidate.ts",
+    "fixtures/current/app/*",
+    "fixtures/current/api/*",
+    "fixtures/current/data/*",
+    "fixtures/current/criteria/approved.json",
+    "packages/evidence/src/migrations/*.sql",
+    ".gitattributes"
+  ],
+  "exclude": [
+    "artifacts/**",
+    ".local/**",
+    "node_modules/**",
+    "dist/**",
+    ".git/**"
+  ]
+}

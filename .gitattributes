@@ -1,0 +1,6 @@
+* text=auto eol=lf
+fixtures/**/*.csv -text whitespace=cr-at-eol
+docs/licenses/** -text whitespace=-blank-at-eol,-blank-at-eof
+DEEP_TECHNICAL_ARCHITECTURE_V2.md -text
+PROJECT_ANALYSIS.md -text
+hack details.pdf -text

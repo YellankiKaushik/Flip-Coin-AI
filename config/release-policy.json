@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "requiredChecks": ["acceptance", "accessibility", "contract", "data"],
+  "allowWaivers": false,
+  "requireVerifiedArtifacts": true
+}

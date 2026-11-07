@@ -1,0 +1,19 @@
+node_modules/
+.local/
+artifacts/
+dist/
+coverage/
+.vitest/
+*.log
+.env
+.env.*
+hack details.pdf
+DEEP_TECHNICAL_ARCHITECTURE_V2.md
+PROJECT_ANALYSIS.md
+SETUP_STATUS.md
+WORK_LOG.md
+BLOCKERS.md
+REPORT_TO_CHATGPT.md
+SOURCE_INTEGRITY.md
+IMPLEMENTATION_STATUS.md
+REQUIREMENTS_TRACEABILITY.md

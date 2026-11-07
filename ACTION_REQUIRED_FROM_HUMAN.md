@@ -1,0 +1,13 @@
+# Human review procedure
+
+The synthetic demonstration completed through a real human, Switch, Mattermost and Codex. The reviewed defective run produced four FAIL results with valid evidence and a BLOCKED assessment. After a separate human patch review, the corrected run produced four PASS results with valid evidence, READY_FOR_HUMAN_APPROVAL and zero blockers. A third human review then recorded a Level 1 HUMAN_ATTESTED_FOR_DEMO decision. The decision was effective at completion. A later read reported EXPIRED while retaining the recorded decision. Level 1 records manual demo attestation and provides no production deployment authority.
+
+Use the pinned setup in [README.md](README.md) and the tracked CLI for a fresh reproduction. Substitute values returned by your own run for every placeholder. Keep each approval in a real interactive PowerShell terminal controlled by the reviewer.
+
+1. Read the [criteria and test packet](HUMAN_REVIEW_PACKET.md). Run `npm --silent run sf -- criteria propose --file fixtures/scenarios/corrected/criteria/approved.json --json`. If the criteria and tests are acceptable, run `npm --silent run sf -- criteria attest --proposal <CRITERIA_PROPOSAL_ID> --json` and personally respond to the prompt. Verify the record with `criteria inspect --proposal <CRITERIA_PROPOSAL_ID> --file fixtures/scenarios/corrected/criteria/approved.json --json` through the same npm entry point.
+2. In the configured Switch room, have the runner prepare the defective snapshot, execute the four engines, and report the actual findings, IDs and evidence. Verify evidence before preparing the correction. See [the Switch guide](docs/SWITCH_GUIDE.md).
+3. Inspect the exact synthetic changes in the [patch packet](PATCH_REVIEW_PACKET.md) and create a separate patch proposal bound to the defective snapshot. Personally complete `patch attest` only after reviewing it. Use the corrected scenario only after this approval is recorded.
+4. Ask the runner to prepare the corrected snapshot under the same candidate ID and use a fresh run key. Verify the corrected evidence, compare the two runs and inspect the ReleaseProof assessment.
+5. After four PASS results and a valid READY assessment, run `npm --silent run sf -- release-request --run <CORRECTED_RUN_ID> --json`. Personally review and respond to `npm --silent run sf -- release-attest --proposal <RELEASE_PROPOSAL_ID> --json`. Read `report --run <CORRECTED_RUN_ID> --json` through the same entry point and verify the recorded and effective decision.
+
+The agent can gather evidence and report results. The human supplies the reviewer reference and confirmation. The [CLI reference](docs/CLI.md) documents the available commands and flags.

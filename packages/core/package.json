@@ -1,0 +1,11 @@
+{
+  "name": "@switchforge/core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./domain": "./src/public/domain.ts",
+    "./infrastructure": "./src/public/infrastructure.ts",
+    "./coordinator": "./src/public/coordinator.ts"
+  }
+}
