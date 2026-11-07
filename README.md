@@ -2,7 +2,7 @@
 
 ![SwitchForge: four engineering signals converge on a human-controlled release gate](docs/assets/brand/release-signal.svg)
 
-**Your agent runs the checks. Your team makes the call.** SwitchForge helps a release reviewer answer a question a green chat summary cannot: _which candidate was checked, and can I inspect the evidence?_ A human asks in Mattermost, **Switch routes the conversation to Codex**, and the agent returns four checks on the same frozen checkout candidate to the room.
+**Your agent runs the checks. Your team makes the call.** SwitchForge helps release reviewers and engineering teams answer a question a green chat summary cannot: _which candidate was checked, and can I inspect the evidence?_ A human asks in Mattermost, **Switch routes the conversation to Codex**, and the agent returns four checks on the same frozen checkout candidate to the room.
 
 [![Windows CI](https://github.com/YellankiKaushik/Flip-Coin-AI/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/YellankiKaushik/Flip-Coin-AI/actions/workflows/ci.yml)
 
@@ -56,7 +56,7 @@ The candidate binds inputs, reviewed tests, policy, lockfile, and tool identitie
 
 ## Reproduce and inspect
 
-Use Windows x64, Node `24.16.0`, npm `11.9.0`, pinned Playwright Chromium, and checksum-verified oasdiff `1.35.0`. Follow the [setup guide](docs/getting-started/README.md) for the exact install and diagnostic commands, then [connect your own room](docs/switch/SWITCH_GUIDE.md) and follow the [human procedure](docs/human-review/PROCEDURE.md) for a reviewed reproduction.
+Use Windows x64, Node `24.16.0`, npm `11.9.0`, pinned Playwright Chromium, and checksum-verified oasdiff `1.35.0`. Start with the [Windows quickstart](docs/getting-started/README.md) to install, run doctor and reproduce a safe diagnostic. Then [connect Codex and Mattermost](docs/switch/SWITCH_GUIDE.md) for a same-room response. Use the [human procedure](docs/human-review/PROCEDURE.md) for a reviewed reproduction, or trace the [candidate, evidence and ReleaseProof policy](docs/architecture/ARCHITECTURE.md).
 
 The complete suite passed **137 tests across 19 files**. The [testing guide](docs/testing/TESTING.md) separates automated fixtures from actual human review and explains the seven Windows CI jobs.
 
