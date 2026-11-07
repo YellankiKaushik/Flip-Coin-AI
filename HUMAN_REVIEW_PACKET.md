@@ -1,6 +1,6 @@
 # HUMAN REVIEW PACKET — CRITERIA REVIEW VERIFIED
 
-Current live follow-through: the genuinely reviewed defective run<DEMO_RECORD_ID> now executed all six unchanged tests (5PASS/1FAIL), together with the other three real engines. Evidence is valid and ReleaseProof correctly BLOCKED. Separate correction review is now prepared in [PATCH_REVIEW_PACKET.md](PATCH_REVIEW_PACKET.md); patch and final release approvals remain PENDING. The earlier checkpoint below describes criteria verification before that live run, and its embedded criteria/test source remains unchanged.
+The synthetic demonstration completed through a real human, Switch, Mattermost and Codex. The reviewed defective run produced four FAIL results with valid evidence and a BLOCKED assessment. After a separate human patch review, the corrected run produced four PASS results with valid evidence, READY_FOR_HUMAN_APPROVAL and zero blockers. A third human review then recorded a Level 1 HUMAN_ATTESTED_FOR_DEMO decision. The decision was effective at completion. A later read reported EXPIRED while retaining the recorded decision. Level 1 records manual demo attestation and provides no production deployment authority. The criteria and test content below remains the reviewed material.
 
 Updated November 7, 2026 IST. Human criteria/test proposal `<DEMO_RECORD_ID>` was consumed at `2026-11-06T19:28:04.476Z` with HUMAN_ATTESTED_FOR_DEMO, Level 1. Independent canonical inspection in ordinary PowerShell and the existing Codex workspace sandbox returned exit 0, `data.valid:true`, and all twelve checks true. Current criteria digest `51c39baba13fee5d5cd52078f3adab301566588b29dc1b405b5eff7706818eb7` and test SHA256 `e62a5a42d226dbb351c8e532a3834a577c0cbaffca195695988944b4a6e99c2f` match. No assistant attestation was performed. Raw file metadata stays PENDING by design; eligibility is the independent ledger record. Patch and final release approvals remain PENDING. Exact criteria/tests below are unchanged. Full main suite now 137/137, including 20 new inspection safety cases; no fresh reviewed Switch run has occurred in this repair.
 
@@ -10,7 +10,7 @@ Do not repeat attestation solely because the proposal's decision-entry TTL has e
 
 1. Review the exact five criteria and six tests in this packet, including the disclosed SAVE100/100-cent, millisecond-Z UTC and zero-clamping choices.
 2. V2 §55.2 requires real criteria/test review before AcceptanceRelay may execute those tests as approved evidence; chat or doctor success grants no approval.
-3. In an ordinary interactive PowerShell terminal at the existing project root, run the local review procedure. Inspect the displayed files, create the fresh proposal only when ready, then personally enter your reviewer reference and the exact confirmation requested by the CLI if you approve; Ctrl+C cancels without approval.
+3. Follow the tracked CLI steps in the [human review procedure](ACTION_REQUIRED_FROM_HUMAN.md). Personally enter your reviewer reference and confirmation in an interactive terminal.
 4. Success is CLI exit0/ok:true with a genuine matching Level1 HUMAN_ATTESTED_FOR_DEMO ledger record. Identity is not cryptographically verified; patch and release decisions remain separate and PENDING.
 
 ## Exact proposed criteria

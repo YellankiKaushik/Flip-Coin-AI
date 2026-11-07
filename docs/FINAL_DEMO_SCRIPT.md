@@ -1,22 +1,11 @@
-# Authentic final demonstration script — LIVE DEFECTIVE VERIFIED
+# Recording plan for the completed SwitchForge demo
 
-This is a recording plan, not a fabricated video. The real reviewed defective segment exists; patch approval, corrected segment and final release decision remain PENDING. Never automate human messages or confirmations.
+1. Introduce the synthetic checkout and the human, Switch, Mattermost and Codex roles.
+2. Show the real human request and agent response in the configured room after reviewing the capture area for private information.
+3. Show the genuine defective assessment and the four findings. Explain why valid evidence can support a BLOCKED decision.
+4. Show the criteria review, exact patch and separate human patch approval. Explain the synthetic order authority for the reconciliation correction.
+5. Show the actual corrected run, four PASS results, the comparison, and valid evidence with READY_FOR_HUMAN_APPROVAL and zero blockers.
+6. Show the recorded Level 1 final human decision. Explain the manual identity limit and the synthetic scope.
+7. Show the public repository and any actual verified CI results. Keep account details, filesystem paths, message identifiers and raw private receipts out of the public cut.
 
-1. Show existing Switch room, real human<PRIVATE_POST_ID> and bot<PRIVATE_POST_ID>. Show exact command prefix, actual exits and genuine recorded IDs. Do not repeat the solved doctor or defective run merely for footage.
-2. Show criteria proposal9afe6866 canonical validtrue/all12checks; explain Level1 cooperative identity limitations.
-3. Show snapshot`<DEMO_RECORD_ID>`, run`<DEMO_RECORD_ID>`, digest`9b44dae5eafad01e0b2a8a7582161ada67e0f26eaf6a752229c0a8c87f196922`. Show actual Vitest5/6, axe label, oasdiff removedJSON and O-1002difference500. Evidence verification validtrue; ReleaseProofBLOCKED. Clarify sf operation exit0 versus expected Vitest/oasdiff childexit1.
-4. Show PATCH_REVIEW_PACKET.md and exact existing3344-byte diff SHA`2344c847a48c1751ae7018acfa2da43cbee8f579a25f54f92cfe2f9fd54488ee`. Disclose precommitted corrected fixtures. Explain explicit synthetic orders-authoritative correction rule and quoted proposedCSV. Do not call this a new production fix.
-5. Human personally launches local review tooling in an ordinary interactive terminal, reads exact source/binding, waits untilready and personally uses canonical approve/reject prompt. Do not record private reviewer identity or nonce/key data. Show only actual resulting redacted decision and correct Level1 label. A rejection ends this path. This positive review has NOT happened yet.
-6. Only after genuine matching patch approval/independent verification, use the conditional Switch message in PATCH_REVIEW_PACKET.md. Use only the saved exact read-only patch inspector exception and normal sf commands. Require actual approved/recordedValid matching binding; if unavailable or false, stop. Never run the human PowerShell helper or arbitrary Node/SQL through the agent.
-7. If a real corrected run occurs, show its actual new snapshot/run/digest, all four raw reports, evidenceverification and compare to5bd5c74e. FourPASS/READY is a requirement, not an assumed result. Current bad historical assessment may later be superseded while immutable evidence remains.
-8. Only after actualREADY, the human separately requests/reviews a final release proposal and personallyattests; this is a THIRD action. Readiness is not deployment. No release proposal/decision exists now.
-9. Show actual current sourceSHA/strictpins, fresh current137/137 main test result plus8helper cases per shell and18private patch tests accurately. The625matrix is one test. Scope limits: oneaxe label rule, syntheticCSV, shared-accountLevel1, localonlyruntime. Do not claim remoteCI, production release, WCAGcertification or business impact.
-10. Genuine defective redacted export exists locally at `<PRIVATE_RECEIPT_LOCATION>`,24files plus exportmanifest. Keep originals/exporthashes distinct. No fakecorrectedvideo, upload, publication or submission; wait for actualauthorizedfinalevidence. Checkpubliclinks onlyafterpublicationauthorization.
-
-## Browser consistency and authentic remaining sequence
-
-Before any recording, run the actual human terminal's private patch preflight; it prints the real selected browser path, frozen hash and launched version. The human review helpers select the verified project-local Chromium cache per process, preserving parent settings. Do not reinstall/update a browser for footage or obscure an error.
-
-Use only authentic preserved human/bot receipts for the current defective segment. The correction-review, corrected4PASS/READY and final-human-decision segments have not happened yet. Keep placeholders in this recording plan until they genuinely occur; no simulated messages, terminal output or fake video. After actual corrected readiness, use the third human Start-ReleaseReview helper with the real run/patch UUIDs; it revalidates evidence through the same browser selection. Do not film private reviewer references, keys, nonce data or unrelated setup logs.
-
-A three-minute narrative is a proposed editing target, not an observed submission limit: collaboration/problem, actual fourFAIL evidence, exact reviewed correction, genuine corrected results, separate final decision and scoped limitations. Authenticated upload/length constraints remain UNSPECIFIED. Current source/redacted ZIPs are local; upload and public links require actual authorization and completed footage. See FINAL_SUBMISSION_CHECKLIST.md.
+Use the preserved evidence for the completed demonstration. The final video and accessible upload URL are separate deliverables.

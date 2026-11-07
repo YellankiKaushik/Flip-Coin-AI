@@ -2,7 +2,7 @@
 
 Human-supervised engineering release assurance for one synthetic local checkout, operated through a Switch room with Codex and Mattermost.
 
-**Current status (November 7).** The previously open human PowerShell terminal could not read the pinned browser at its AppData path. The private review helpers now select the verified project-local cache at `.local/switchforge-runner-tools/playwright-browsers/`. Two canonical verifications and two complete read-only patch preflights passed in each of fresh ordinary PowerShell 5.1, profile-enabled PowerShell 5.1, and the managed Codex sandbox. The same already-open terminal still needs its read-only check. The live reviewed defective run `5bd5c74e` has four FAIL results, valid evidence and ReleaseProof BLOCKED. Criteria review is verified. Patch and final release decisions remain pending. The corrected reviewed run awaits patch approval. See [human action](ACTION_REQUIRED_FROM_HUMAN.md), [patch packet](PATCH_REVIEW_PACKET.md), [final checklist](FINAL_SUBMISSION_CHECKLIST.md) and [publication packet](PUBLICATION_PACKET.md). Level 1 review records cooperative human attestation.
+**Current status (November 7).** The synthetic demonstration completed through a real human, Switch, Mattermost and Codex. The reviewed defective run produced four FAIL results with valid evidence and a BLOCKED assessment. After a separate human patch review, the corrected run produced four PASS results with valid evidence, READY_FOR_HUMAN_APPROVAL and zero blockers. A third human review then recorded a Level 1 HUMAN_ATTESTED_FOR_DEMO decision. The decision was effective at completion. A later read reported EXPIRED while retaining the recorded decision. Level 1 records manual demo attestation and provides no production deployment authority. See the [human review procedure](ACTION_REQUIRED_FROM_HUMAN.md) and [Switch setup guide](docs/SWITCH_GUIDE.md).
 
 Four engines check one frozen candidate:
 
@@ -121,12 +121,12 @@ The full exact recording sequence and separate human checkpoints are in [FINAL_D
 
 Evaluator f27d79c; CI tooling a2233ef. Main and clean-checkout suites each passed 117/117 across 18 files with zero failures/skips. Standalone opposing frozen-source acceptance gave defective 5/6 (AC-001 fails), corrected 6/6; these grant no approval. Unit/integration/security/E2E groups total 117 distinct tests; the artifact-contract CI job repeats an 18-test subset. The 625 combinations are one generated test. Strict persistence boundaries, public package interfaces, dependency-cycle checks and actual adapter fault tests pass.
 
-Current diagnostic runs: defective <DEMO_RECORD_ID> and corrected <DEMO_RECORD_ID>. Acceptance ERROR/coverage 0 while review is pending; accessibility, contract and data FAIL→PASS; both ReleaseProof BLOCKED, evidence verified. These are local unreviewed diagnostics, not the final reviewed Switch demonstration. No actual GitHub Actions result or submission is claimed.
+Earlier diagnostic runs took place before human review. The completed reviewed defective and corrected runs are the release demonstration described above.
 
 Run `npm run docs:check` for tracked local Markdown destinations. `npm run ci:proof -- <job>` records actual job receipts, redacted reports and provenance; local runs are labelled LOCAL_ONLY. Seven job names are in .github/workflows/ci.yml. External URLs and Markdown heading anchors are outside the offline link check. [Submission copy](SUBMISSION_FIELDS.md) distinguishes prepared content from the authenticated form's unobserved fields.
 
 The existing Windows agent uses its exact installed Node executable plus the ignored workspace-local npm11.9.0 CLI, as documented in its runner instructions. The genuine human-requested doctor now passes in the actual room; previous bootstrap/version/access failures are preserved as history. Do not substitute a different launcher or disable provider protections.
 
-Live integration evidence: genuine successful room receipt (private local reference), November6 23:25 IST; human request<PRIVATE_POST_ID>, command exit0, JSON correlation<DEMO_RECORD_ID>. This proves the command path, not human approval or a completed reviewed release.
+The verified demo used an actual human room request and a same-room Codex response. The underlying room receipts are retained privately.
 
 The Mattermost loopback permalinks are local verification references, not public submission evidence links. A real public demo video, authorized source publication and final reviewed workflow are still required before claiming a complete submission.

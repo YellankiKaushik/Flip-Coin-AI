@@ -1,23 +1,13 @@
-# Human action required — exact-terminal browser preflight
+# Human review procedure
 
-The previously open human PowerShell terminal could not read the pinned browser at its AppData path. The private review helpers now select the verified project-local cache at `.local/switchforge-runner-tools/playwright-browsers/`. Two canonical verifications and two complete read-only patch preflights passed in each of fresh ordinary PowerShell 5.1, profile-enabled PowerShell 5.1, and the managed Codex sandbox. The same already-open terminal still needs its read-only check.
+The synthetic demonstration completed through a real human, Switch, Mattermost and Codex. The reviewed defective run produced four FAIL results with valid evidence and a BLOCKED assessment. After a separate human patch review, the corrected run produced four PASS results with valid evidence, READY_FOR_HUMAN_APPROVAL and zero blockers. A third human review then recorded a Level 1 HUMAN_ATTESTED_FOR_DEMO decision. The decision was effective at completion. A later read reported EXPIRED while retaining the recorded decision. Level 1 records manual demo attestation and provides no production deployment authority.
 
-ONE current action in that same project PowerShell window:
+Use the pinned setup in [README.md](README.md) and the tracked CLI for a fresh reproduction. Substitute values returned by your own run for every placeholder. Keep each approval in a real interactive PowerShell terminal controlled by the reviewer.
 
-Use the tracked CLI commands documented in the repository. This historical example used a local review setup.
+1. Read the [criteria and test packet](HUMAN_REVIEW_PACKET.md). Run `npm --silent run sf -- criteria propose --file fixtures/scenarios/corrected/criteria/approved.json --json`. If the criteria and tests are acceptable, run `npm --silent run sf -- criteria attest --proposal <CRITERIA_PROPOSAL_ID> --json` and personally respond to the prompt. Verify the record with `criteria inspect --proposal <CRITERIA_PROPOSAL_ID> --file fixtures/scenarios/corrected/criteria/approved.json --json` through the same npm entry point.
+2. In the configured Switch room, have the runner prepare the defective snapshot, execute the four engines, and report the actual findings, IDs and evidence. Verify evidence before preparing the correction. See [the Switch guide](docs/SWITCH_GUIDE.md).
+3. Inspect the exact synthetic changes in the [patch packet](PATCH_REVIEW_PACKET.md) and create a separate patch proposal bound to the defective snapshot. Personally complete `patch attest` only after reviewing it. Use the corrected scenario only after this approval is recorded.
+4. Ask the runner to prepare the corrected snapshot under the same candidate ID and use a fresh run key. Verify the corrected evidence, compare the two runs and inspect the ReleaseProof assessment.
+5. After four PASS results and a valid READY assessment, run `npm --silent run sf -- release-request --run <CORRECTED_RUN_ID> --json`. Personally review and respond to `npm --silent run sf -- release-attest --proposal <RELEASE_PROPOSAL_ID> --json`. Read `report --run <CORRECTED_RUN_ID> --json` through the same entry point and verify the recorded and effective decision.
 
-This is read-only with respect to review/run state. It prints the actual path/version/hash and canonical evidence result, stores complete private receipts, and returns before any READY prompt or proposal. If it fails, stop; the exact diagnostic path/error is retained. Do not change ACLs, execution policy, antivirus, sandbox or tool versions.
-
-After this actual same-window check succeeds, the ordinary personal patch-review command remains:
-
-Use the tracked CLI commands documented in the repository. This historical example used a local review setup.
-
-Read PATCH_REVIEW_PACKET.md, then personally choose READY and approval/rejection/cancellation. This reviews selection of precommitted synthetic fixtures, not a new production patch. Criteria review already exists; do not repeat it. Patch helper SHA256`4d03bd3ad13fbccef001d5aa8cc772b7d8d0481434e69d6231fa73d17a067511`. Canonical approvals remain interactive Level1; no helper supplies a name or confirmation. The verified cache is `.local/switchforge-runner-tools/playwright-browsers/`. The helpers select it for the child process and preserve the parent environment.
-
-After actual patch approval, use the conditional corrected Switch request in PATCH_REVIEW_PACKET.md; replace only its actual proposal UUID. No request has been sent by the assistant. After a real corrected fourPASS/valid/READY result, a third separate personal final review is prepared with:
-
-Use the tracked CLI commands documented in the repository. This historical example used a local review setup.
-
-Both UUIDs must come from real returned evidence. That helper blocks noninteractive, unapproved, wrong-action, failed or non-READY input before creating a release request. Positive final path is untested because its prerequisites are not met. No new script permission is granted to the agent; the private interactive helpers remain human-only.
-
-Publish/upload/submit only after actual required results and explicit authorization. Concrete publication procedure, PR draft and final checklist are prepared in PUBLICATION_PACKET.md and FINAL_SUBMISSION_CHECKLIST.md. A ready assessment is not deployment authorization.
+The agent can gather evidence and report results. The human supplies the reviewer reference and confirmation. The [CLI reference](docs/CLI.md) documents the available commands and flags.

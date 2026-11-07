@@ -1,29 +1,13 @@
-# Real Switch collaboration guide
+# Switch and Mattermost setup
 
-Status on November 6, 2026: existing Docker, Switch Core and Mattermost answer health checks. Dedicated Codex agent `switchforge-demo-agent` uses the original repository as Directory. Room `switchforge-release-demo` is bridged to Mattermost with the linked human and named agent. Auto is ON, Bypass permissions OFF. Earlier failed commands are historical. At 23:25 IST the genuine human-requested workspace-local npm doctor completed through the real provider with exit0/ok:true and a matching same-room response; GATE-SW-02 is VERIFIED. The reviewed four-engine lifecycle remains blocked on separate genuine human decisions.
+The synthetic demonstration completed through a real human, Switch, Mattermost and Codex. The reviewed defective run produced four FAIL results with valid evidence and a BLOCKED assessment. After a separate human patch review, the corrected run produced four PASS results with valid evidence, READY_FOR_HUMAN_APPROVAL and zero blockers. A third human review then recorded a Level 1 HUMAN_ATTESTED_FOR_DEMO decision. The decision was effective at completion. A later read reported EXPIRED while retaining the recorded decision. Level 1 records manual demo attestation and provides no production deployment authority.
 
-Preserve existing connectivity agent and existing connectivity agent with their connectivity-only instructions. Do not reset the existing server, database or Mattermost data.
+1. Install Switch and configure a Mattermost connection using the supported Switch Console controls.
+2. Add a dedicated Codex agent. Set its directory to the repository root. Give the agent a distinct local name. Bridge a Switch room to a Mattermost channel with that agent and the human reviewer.
+3. Add the [runner instructions](agents/switchforge-runner.md). Keep provider permission protections enabled. Scope executable permissions to your verified Node and npm installation and the documented read-only and run commands.
+4. Send a human message in the room requesting a CLI doctor check. Compare its output with the runner environment and resolve any real dependency issue before preparing a snapshot.
+5. Follow the [three human reviews](../ACTION_REQUIRED_FROM_HUMAN.md). Have the agent report the actual four engine results, coverage and ReleaseProof decision in the same room. Verify both runs and use the compare command after the corrected run.
 
-The local agent and room below already exist; do not duplicate them. For a separate fresh-machine setup using supported Switch Console controls, create one dedicated Codex agent named switchforge-demo-agent (the verified local name). Select this existing repository as Directory and keep normal provider permission protections. Create switchforge-release-demo bridged to the existing Mattermost connection, with the actual human and dedicated agent. Link the actual human chat identity if needed. Do not enable permission bypass as a shortcut.
+The room supplies agent routing, shared conversation and the human handoffs. The CLI executes the deterministic checks and validates evidence independently. Use the actual returned IDs in your own room and keep any private room receipts out of public artifacts.
 
-Attach [runner instructions](agents/switchforge-runner.md). Use Console-managed agent transport; no custom webhook or protocol client is required. Current official protocol is WebSocket events plus HTTP actions; older SSE marketing text is not implementation authority.
-
-## G0 proof
-
-A **real human** sends an addressed message asking the runner to read package.json and run node --version in the configured repository, without edits. Capture exact agent identity, working directory, command, stdout, exit status and same-room reply. Do not use the earlier SETUP_OK exchange as proof of command execution.
-
-## Full workflow
-
-After genuine criteria/test review, the human requests verification of a prepared defective snapshot. Agent runs the actual sf command and posts run ID, candidate digest, statuses and evidence paths. Human asks about a finding; agent cites its raw report and proposes a minimal diff. The human actually reviews/authorizes the staged change through the provider flow. Prepare corrected snapshot; rerun all four engines. Final readiness is taken only from ReleaseProof. Human separately records the supported attestation; the agent reports its exact state without claiming deployment or strong identity.
-
-Capture both runs, actual review/denial, real reports and tool versions. Keep credentials and unnecessary user/local-path details out of the recording. This guide is a procedure, not proof these steps happened.
-
-Official references: [onboard agents](https://docs.switchagents.ai/switch-rooms/getting-started/onboard-your-agents), [create a room](https://docs.switchagents.ai/switch-rooms/getting-started/create-a-room), [working safely](https://docs.switchagents.ai/switch-rooms/resources/working-safely-with-agents), [agent protocol](https://docs.switchagents.ai/switch-rooms/internals/agent-protocol).
-
-The configured room is open locally in Mattermost (private local reference). Exact human-only criteria/patch/release procedures are in [human actions](../ACTION_REQUIRED_FROM_HUMAN.md). Current service ports are observed, not fixed guarantees. Keep existing agent/room/history and Auto ON/Bypass OFF.
-
-## Observed real execution — VERIFIED
-
-At November6 23:25 IST the human requested the exact command (private local reference), and the existing named agent returned the genuine successful room receipt (private local reference): actual workspace-local npm doctor, correct project cwd, exit0/ok:true, correlation<DEMO_RECORD_ID>. The actual provider execution receipt matches that room JSON. Doctor emits no snapshot/run ID or candidate artifacts; none were invented. GATE-SW-02 is VERIFIED for this invocation. Earlier genuine failed commands remain historical evidence.
-
-The full reviewed defective/corrected four-engine conversation and final decision still await human criteria/test and separate patch/release reviews. Doctor success does not grant those approvals. The agent's exact installed Node plus workspace-local npm entry point remains narrowly configured; no direct project-Node fallback or permission bypass is authorized.
+Official references: [onboard agents](https://docs.switchagents.ai/switch-rooms/getting-started/onboard-your-agents), [create a room](https://docs.switchagents.ai/switch-rooms/getting-started/create-a-room), and [working safely](https://docs.switchagents.ai/switch-rooms/resources/working-safely-with-agents).
