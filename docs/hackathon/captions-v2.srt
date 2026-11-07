@@ -1,0 +1,75 @@
+1
+00:00:00,000 --> 00:00:08,000
+A green summary cannot tell you what was checked.
+
+2
+00:00:08,000 --> 00:00:17,000
+Mattermost carries the conversation. Switch connects it to Codex.
+
+3
+00:00:17,000 --> 00:00:26,000
+Actual human handoff in the existing room. Private details masked.
+
+4
+00:00:26,000 --> 00:00:36,000
+Codex verified the recorded patch review before proceeding.
+
+5
+00:00:36,000 --> 00:00:44,000
+The original candidate had four independent defects.
+
+6
+00:00:44,000 --> 00:00:50,000
+The evidence was valid. The candidate was blocked.
+
+7
+00:00:50,000 --> 00:00:57,000
+The human reviewed the criteria and tests, then the separate patch.
+
+8
+00:00:57,000 --> 00:01:04,000
+The correction changed four inputs. The six tests stayed fixed.
+
+9
+00:01:04,000 --> 00:01:10,000
+The defective checkout has no visible email label.
+
+10
+00:01:10,000 --> 00:01:16,000
+The corrected checkout restores the label. Same synthetic fixture.
+
+11
+00:01:16,000 --> 00:01:24,000
+The real corrected report shows all four checks passing.
+
+12
+00:01:24,000 --> 00:01:32,000
+The new frozen snapshot has valid evidence and zero blockers.
+
+13
+00:01:32,000 --> 00:01:45,000
+Four verified results make the candidate ready for human review.
+
+14
+00:01:45,000 --> 00:01:51,000
+The final decision was recorded separately by a human.
+
+15
+00:01:51,000 --> 00:01:57,000
+Level 1 is manual identity. The effective decision later expired.
+
+16
+00:01:57,000 --> 00:02:03,000
+Readiness does not authorize a production release.
+
+17
+00:02:03,000 --> 00:02:11,000
+GitHub Actions passed all seven jobs on the published implementation.
+
+18
+00:02:11,000 --> 00:02:19,000
+The Windows setup pins the tools and documents reproduction.
+
+19
+00:02:19,000 --> 00:02:32,000
+Inspect the source, run the checks, and review the evidence.

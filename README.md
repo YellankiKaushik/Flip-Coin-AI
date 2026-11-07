@@ -6,9 +6,9 @@
 
 [![Windows CI](https://github.com/YellankiKaushik/Flip-Coin-AI/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/YellankiKaushik/Flip-Coin-AI/actions/workflows/ci.yml)
 
-**[Watch the real workflow](https://github.com/YellankiKaushik/Flip-Coin-AI/releases/download/switchforge-demo-2026-11-07/SwitchForge-2026-demo.mp4)** · [Reproduce it](docs/getting-started/README.md) · [Inspect the evidence](docs/hackathon/DEMO.md) · [Browse the docs](docs/README.md)
+**[Watch the 2:32 demo](https://github.com/YellankiKaushik/Flip-Coin-AI/releases/download/switchforge-demo-2026-v2/SwitchForge-2026-editorial-v2.mp4)** · [Reproduce it](docs/getting-started/README.md) · [Inspect the evidence](docs/hackathon/DEMO.md) · [Browse the docs](docs/README.md)
 
-[![Watch the captioned SwitchForge workflow: four failures, a reviewed patch, and a separate human decision](docs/assets/thumbnails/demo-thumbnail.png)](https://github.com/YellankiKaushik/Flip-Coin-AI/releases/download/switchforge-demo-2026-11-07/SwitchForge-2026-demo.mp4)
+[![Watch the captioned SwitchForge workflow: four failures, a reviewed patch, and a separate human decision](docs/assets/thumbnails/release-signal-v2.png)](https://github.com/YellankiKaushik/Flip-Coin-AI/releases/download/switchforge-demo-2026-v2/SwitchForge-2026-editorial-v2.mp4)
 
 ## What happened in the room
 

@@ -7,3 +7,5 @@
 - [Legacy art and v1 hash manifest](legacy): original asset bytes retained. [Prior provenance](../history/ASSET-PROVENANCE-v1.md) explains the v1 images.
 
 The [demo guide](../hackathon/DEMO.md) records which shots contain real captures and which summarize actual evidence. The film is silent and uses no music, stock footage or redistributed font files. Raw room screenshots and detailed masking records are retained privately.
+
+The [public hash manifest](manifest.json) identifies every tracked visual asset. The v2 poster is the 00:06 frame from the reviewed delivery MP4.
