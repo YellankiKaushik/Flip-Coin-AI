@@ -66,10 +66,11 @@ The complete suite passed **137 tests across 19 files**. The [testing guide](doc
 | Engines, coordinator, evidence store, policy  | [packages](packages)                      |
 | Input inventory, pins, and release policy     | [config](config) and [fixtures](fixtures) |
 | Unit, integration, security, and E2E tests    | [tests](tests)                            |
+| Source entry points and data flow             | [Project map](docs/PROJECT_MAP.md)        |
 | Setup, architecture, provenance, and archives | [docs](docs/README.md)                    |
 
 ## Scope, credits, and license
 
 Synthetic checkout only: no real payments or production deployment. Level 1 is manual attestation, without cryptographic identity proof. axe tests the configured label rule, oasdiff compares OpenAPI documents, and CSV reconciliation covers narrow deterministic cases. Local hashes and SQLite are not an independently anchored immutable audit store; an actor who controls both can alter them. Windows x64 is the tested platform.
 
-Built by [Yellanki Kaushik](https://github.com/YellankiKaushik) with Codex for **Flip the Switch Hackathon 2026 — Best Business Workflow**. See the [official challenge](https://www.wemakedevs.org/hackathons/switch), [submission checklist](docs/hackathon/CHECKLIST.md), [Apache-2.0 license](LICENSE), and [third-party notices](THIRD_PARTY_NOTICES.md). The [history index](docs/history/README.md) preserves earlier audits, artwork, and the first film.
+Built by [Yellanki Kaushik](https://github.com/YellankiKaushik) with Codex for **Flip the Switch Hackathon 2026 — Best Business Workflow**. See the [hackathon and problem overview](docs/hackathon/PROJECT_OVERVIEW.md), [submission checklist](docs/hackathon/CHECKLIST.md), [Apache-2.0 license](LICENSE), and [third-party notices](THIRD_PARTY_NOTICES.md). The [history index](docs/history/README.md) preserves earlier audits, artwork, and the first film.
