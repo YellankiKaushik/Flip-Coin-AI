@@ -1,4 +1,4 @@
-# Recording plan for the completed SwitchForge demo
+# Storyboard and completed-film provenance
 
 1. Introduce the synthetic checkout and the human, Switch, Mattermost and Codex roles.
 2. Show the real human request and agent response in the configured room after reviewing the capture area for private information.
@@ -8,4 +8,4 @@
 6. Show the recorded Level 1 final human decision. Explain the manual identity limit and the synthetic scope.
 7. Show the public repository and any actual verified CI results. Keep account details, filesystem paths, message identifiers and raw private receipts out of the public cut.
 
-Use the preserved evidence for the completed demonstration. The final video and accessible upload URL are separate deliverables.
+Use the preserved evidence for the completed demonstration. The final film is complete and published: [watch or download](https://github.com/YellankiKaushik/Flip-Coin-AI/releases/download/switchforge-demo-2026-11-07/SwitchForge-2026-demo.mp4). It uses read-only GUI still captures of the actual existing conversation, editorial pans, and explicitly labeled record-derived evidence summaries. The later effective state of the recorded final human decision is EXPIRED. [Final chapters, metadata and QA](DEMO.md).

@@ -1,6 +1,8 @@
 # Implementation architecture
 
-The protected root DEEP_TECHNICAL_ARCHITECTURE_V2.md is authoritative and has not been modified. This file describes implementation, not a replacement specification. Sections 50–65 govern conflicts.
+The protected root DEEP_TECHNICAL_ARCHITECTURE_V2.md is authoritative and has not been modified. This file describes the implemented components. The private original specification remains a local reference.
+
+![SwitchForge architecture](assets/architecture.svg)
 
 ## Components
 
@@ -33,9 +35,9 @@ Each check preserves tool output/receipt, normalized result, coverage and hash r
 
 ## Readiness and review
 
-ReleaseProof validates four distinct required results, toolchain, candidate, policy, criteria/test review and artifacts. Historical evidence remains historical; superseded runs cannot authorize a newer candidate. Only an actual interactive human action can create a Level 1 attestation through the normal CLI; same-account isolation is not claimed. No final human decision has been recorded during development.
+ReleaseProof validates four distinct required results, toolchain, candidate, policy, criteria/test review and artifacts. Historical evidence remains historical; superseded runs cannot authorize a newer candidate. Only an actual interactive human action can create a Level 1 attestation through the normal CLI; same-account isolation is not claimed. The completed demo recorded three separate human decisions. The final recorded Level 1 decision persists, while a later canonical read reports effective EXPIRED under the existing policy.
 
-The room workflow is still a distinct manual integration gate. Local engine or CLI tests do not substitute for it.
+The real room workflow was completed through Mattermost, Switch and Codex. Its preserved private receipts are distinct from automated isolated test records.
 
 ## Final audit changes
 

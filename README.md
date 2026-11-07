@@ -1,132 +1,247 @@
 # SwitchForge
 
-Human-supervised engineering release assurance for one synthetic local checkout, operated through a Switch room with Codex and Mattermost.
+### Your agent runs the checks. Your team makes the call.
 
-**Current status (November 7).** The synthetic demonstration completed through a real human, Switch, Mattermost and Codex. The reviewed defective run produced four FAIL results with valid evidence and a BLOCKED assessment. After a separate human patch review, the corrected run produced four PASS results with valid evidence, READY_FOR_HUMAN_APPROVAL and zero blockers. A third human review then recorded a Level 1 HUMAN_ATTESTED_FOR_DEMO decision. The decision was effective at completion. A later read reported EXPIRED while retaining the recorded decision. Level 1 records manual demo attestation and provides no production deployment authority. See the [human review procedure](ACTION_REQUIRED_FROM_HUMAN.md) and [Switch setup guide](docs/SWITCH_GUIDE.md).
+![SwitchForge — human-supervised engineering release assurance](docs/assets/hero.svg)
 
-Four engines check one frozen candidate:
+SwitchForge brings release verification into the team conversation. A human asks in Mattermost, **Switch connects Codex to the room**, and four deterministic engines turn a frozen candidate into inspectable evidence and a human-gated readiness decision.
 
-| Engine           | Actual tool                     | Seeded defect                                  |
-| ---------------- | ------------------------------- | ---------------------------------------------- |
-| AcceptanceRelay  | Vitest                          | Coupon incorrectly accepted exactly at expiry  |
-| A11yRelay        | Playwright/Chromium + axe       | Checkout email input lacks an accessible label |
-| ContractGuardian | oasdiff                         | Existing response media type removed           |
-| DataRescue       | csv-parse + deterministic rules | 1500-cent order versus 1000-cent ledger charge |
+[![CI](https://github.com/YellankiKaushik/Flip-Coin-AI/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/YellankiKaushik/Flip-Coin-AI/actions/workflows/ci.yml)
+![Node](https://img.shields.io/badge/Node-24.16.0-4A9150) ![TypeScript](https://img.shields.io/badge/TypeScript-7.0.2-3178C6) ![Windows](https://img.shields.io/badge/Tested-Windows_x64-0078D4) ![Scope](https://img.shields.io/badge/Demo-synthetic-BC812D)
 
-ReleaseProof accepts four distinct PASS results only when candidate, tools, policy, reviewed criteria/tests and evidence all match. A missing/error/stale/tampered result blocks. READY_FOR_HUMAN_APPROVAL is separate from human attestation.
+[Watch the 2:45 demo](https://github.com/YellankiKaushik/Flip-Coin-AI/releases/download/switchforge-demo-2026-11-07/SwitchForge-2026-demo.mp4) · [Demo and evidence](docs/DEMO.md) · [Real before/after](#the-demonstration) · [Run it yourself](#run-it-yourself) · [Documentation](docs/README.md)
 
-## Supported local environment
+Built for **Flip the Switch Hackathon 2026 · Best Business Workflow**.
 
-Tested development target: Windows 11 x64, Node **24.16.0**, npm **11.9.0**. Versions are exact and recorded in package-lock.json and config/toolchain-expected.json. Other platforms are not yet supported by the binary installer or verified by this project.
+## Watch the workflow
 
-Switch is installed separately. Existing setup used Switch Console 0.40.1, Core 0.31.0, local Mattermost 11.9.0 and Codex 0.166.0. This recorded connectivity does not establish project command execution. Keep the original connectivity agent restricted.
+[![SwitchForge film - extracted frame from the reviewed 1080p edit](docs/assets/demo-thumbnail.png)](https://github.com/YellankiKaushik/Flip-Coin-AI/releases/download/switchforge-demo-2026-11-07/SwitchForge-2026-demo.mp4)
 
-## Install and verify
+**[Watch or download the completed 2:45 film](https://github.com/YellankiKaushik/Flip-Coin-AI/releases/download/switchforge-demo-2026-11-07/SwitchForge-2026-demo.mp4)** · [Media release](https://github.com/YellankiKaushik/Flip-Coin-AI/releases/tag/switchforge-demo-2026-11-07). Silent, captioned 1080p / 30 fps. The edit reframes genuine captures of the existing Switch conversation and labels visualizations of the completed run records. It depicts retained evidence rather than a new live run. [Provenance and chapters](docs/DEMO.md).
 
-From the repository root in PowerShell:
+![Actual recorded agent table showing four FAIL-to-PASS changes](docs/assets/verified-agent-table.png)
+
+The table above is a cropped capture of the real agent report inside Switch Console's Mattermost view. The original conversation and immutable run evidence are retained privately. [Asset provenance](docs/assets/README.md).
+
+## Release review has an evidence problem
+
+A green summary can hide the wrong candidate, an incomplete scan, a changed test, a broken contract, or a stale approval. A chat response alone gives a reviewer little way to establish which code was checked and whether every required result belongs to that candidate.
+
+SwitchForge freezes the inputs, runs the tools, retains raw reports, and checks their identity before assessing readiness. The human sees the findings where the work was requested and makes three distinct review decisions.
+
+## Why Switch is central
+
+The product workflow begins and ends in a shared room. Mattermost supplies the conversation. Switch routes the addressed request and shared context to the configured Codex agent. Codex executes the scoped CLI commands and returns the actual findings to that same conversation. The human reviews the proposed correction, then asks for the corrected run.
+
+Switch makes the agent available as a teammate throughout that review. The deterministic CLI can also be run directly for reproduction. Removing Switch removes the shared human-to-agent room workflow demonstrated here.
+
+![The human, Mattermost, Switch, Codex and review workflow](docs/assets/workflow.svg)
+
+## The demonstration
+
+Two genuine reviewed snapshots of the same synthetic checkout were executed through the configured Switch agent. The corrected snapshot followed a separate human patch review.
+
+| Engine               | Defective | Corrected                | What changed                                                                    |
+| -------------------- | --------- | ------------------------ | ------------------------------------------------------------------------------- |
+| **AcceptanceRelay**  | FAIL      | PASS                     | A coupon now rejects exactly at its UTC expiry boundary                         |
+| **A11yRelay**        | FAIL      | PASS                     | The checkout email input gains an explicit accessible label                     |
+| **ContractGuardian** | FAIL      | PASS                     | The order response restores its documented JSON media type                      |
+| **DataRescue**       | FAIL      | PASS                     | A synthetic 500-cent ledger difference is corrected against the order authority |
+| **ReleaseProof**     | BLOCKED   | READY_FOR_HUMAN_APPROVAL | Four valid passing results yield zero blockers                                  |
+
+Both runs had valid evidence. Validation establishes that the reports match their recorded inputs and hashes. A valid FAIL report still blocks readiness.
+
+![Evidence summary of the two completed synthetic runs](docs/assets/before-after.svg)
+
+### Recorded decision and effective state
+
+The human completed **CRITERIA_REVIEW**, **PATCH_REVIEW**, and **RELEASE_READINESS** separately. The final CLI recorded `HUMAN_ATTESTED_FOR_DEMO` at Level 1, and it was effective at completion. A later canonical read returned effective `EXPIRED` under the existing expiry policy. The recorded decision remains part of the history. Its current effectiveness is a separate policy result.
+
+Level 1 relies on manual review and cooperative identity. It does not provide cryptographic human identity or production deployment authorization.
+
+## Four verification engines
+
+| Engine           | Actual tools                            | Corrected coverage                           | Boundary                                           |
+| ---------------- | --------------------------------------- | -------------------------------------------- | -------------------------------------------------- |
+| AcceptanceRelay  | Vitest 5.1.0                            | Six acceptance tests, all passed             | The reviewed coupon criteria and exact test source |
+| A11yRelay        | Playwright 1.65.0, Chromium, axe 4.14.0 | One configured `label` rule, zero violations | Automated input-label testing                      |
+| ContractGuardian | oasdiff 1.35.0                          | One API comparison, zero breaking findings   | OpenAPI document-level compatibility               |
+| DataRescue       | csv-parse 7.0.3 and deterministic rules | Four records, zero reconciliation issues     | Two orders and two synthetic ledger rows           |
+
+The checks use different engineering tools. Candidate preparation, storage, policy, and portions of validation remain shared infrastructure.
+
+![The four engines and their engineering questions](docs/assets/four-engines.svg)
+
+## Three human gates
+
+1. **Criteria review** binds the human's review to the requirements and acceptance-test content.
+2. **Patch review** binds the reviewed correction to the defective snapshot and patch digest.
+3. **Final readiness review** binds the final human decision to the corrected candidate, assessment, and policy.
+
+The agent gathers and explains evidence. The reviewer personally enters the canonical interactive confirmation. Chat approval alone leaves the application ledger unchanged. [Portable human review procedure](ACTION_REQUIRED_FROM_HUMAN.md) · [Exact synthetic correction](PATCH_REVIEW_PACKET.md).
+
+![Three separate human decision gates](docs/assets/human-gates.svg)
+
+## How evidence becomes a verdict
+
+Preparation hashes the selected source, fixtures, reviewed tests, lockfile, configuration, policy and actual toolchain into a candidate manifest. Checks execute against the frozen snapshot. Raw reports, normalized results and coverage are stored with hash references. A completion record binds the full artifact inventory.
+
+ReleaseProof requires all four distinct checks, positive coverage, matching candidate and policy identities, eligible reviewed criteria/tests, and complete valid artifacts. Missing, ERROR, SKIPPED, stale, tampered or nonpassing results block readiness. Reusing an idempotency key with the same request returns its original run. Corrections get a new snapshot.
+
+Hashes detect inconsistency. A hostile same-account actor who can rewrite both the files and database can forge the local history. Storage is cooperative, and this prototype makes no hardware-backed or externally anchored audit guarantee.
+
+## Architecture
+
+```mermaid
+flowchart LR
+  H[Human reviewer] --> M[Mattermost conversation]
+  M <--> S[Switch room and agent routing]
+  S <--> C[Codex agent]
+  C --> CLI[Scoped SwitchForge CLI]
+  CLI --> F[Frozen candidate and pinned tools]
+  F --> A[AcceptanceRelay]
+  F --> X[A11yRelay]
+  F --> O[ContractGuardian]
+  F --> D[DataRescue]
+  A --> E[Reports, hashes and SQLite ledger]
+  X --> E
+  O --> E
+  D --> E
+  E --> R[ReleaseProof assessment]
+  R --> C
+  C --> M
+  H --> G[Three interactive human reviews]
+  G --> E
+```
+
+The runtime is one local CLI with bounded workers and a loopback checkout fixture. Switch, Mattermost and Codex provide external orchestration. [Implementation architecture](docs/ARCHITECTURE.md).
+
+## Capability and evidence matrix
+
+| Capability                    | Actual outcome                                                      | Limits                                                    |
+| ----------------------------- | ------------------------------------------------------------------- | --------------------------------------------------------- |
+| Human-to-agent room execution | Demonstrated through the real configured Switch and Mattermost room | An existing local integration, with private room receipts |
+| Defect detection              | All four defective checks returned FAIL                             | Deliberately authored synthetic defects                   |
+| Corrected validation          | All four checks passed with valid evidence                          | Narrow, declared tool coverage                            |
+| Human reviews                 | Three separate Level 1 records                                      | Manual cooperative identity and expiry                    |
+| Automated regression          | 137 tests passed across 19 files                                    | Isolated test records do not grant demo authority         |
+| Public CI                     | Seven Windows jobs passed on the implementation push and PR         | Current branch status is shown by GitHub Actions          |
+| Deployment                    | Local prototype                                                     | Production deployment is outside this project             |
+
+## Run it yourself
+
+Use **Windows x64, Node 24.16.0 and npm 11.9.0**. Git and system `tar` are required. The package lock pins JavaScript dependencies. Initial setup downloads the matching browser and the checksum-pinned oasdiff release.
 
 ```powershell
+git clone https://github.com/YellankiKaushik/Flip-Coin-AI.git
+cd Flip-Coin-AI
 node --version
 npm --version
 npm ci
 npx playwright install chromium
 powershell -NoProfile -File scripts/install-oasdiff.ps1
-npm run typecheck
-npm run format:check
-npm run test:unit
-npm run test:integration
-npm run test:security
-npm run test:e2e:local
 npm --silent run sf -- doctor --json
 ```
 
-The native better-sqlite3 package must load. No fallback ledger is silently substituted. The oasdiff installer downloads the pinned official Windows release and checks both archive and executable SHA-256 before execution. It uses the system tar command.
+If browser access differs across execution environments, install the matching browser into an operator-selected workspace cache and set `PLAYWRIGHT_BROWSERS_PATH` for that process. Use the installed pinned Playwright CLI. The same cache must be visible to the actual runner. Doctor retains exact version and executable-hash validation. [Environment baseline](docs/ENVIRONMENT_BASELINE.md).
 
-`npm --silent` suppresses npm banners. JSON commands emit one schema-versioned object; diagnostics and interactive reviewer prompts use stderr. The root `lint` script currently performs TypeScript static checking; no separate ESLint claim is made.
-
-## Prepare and run
+### A diagnostic run
 
 ```powershell
-$prepared = npm --silent run sf -- prepare --scenario defective --candidate checkout-v2 --json | ConvertFrom-Json
-if (-not $prepared.ok) { throw $prepared.error.message }
-$run = npm --silent run sf -- run --snapshot $prepared.data.snapshotId --key demo-defective-001 --json | ConvertFrom-Json
+$candidate = npm --silent run sf -- prepare --scenario defective --candidate checkout-demo --json | ConvertFrom-Json
+if (-not $candidate.ok) { throw $candidate.error.message }
+$runKey = 'diagnostic-' + [Guid]::NewGuid().ToString('N')
+$run = npm --silent run sf -- run --snapshot $candidate.data.snapshotId --key $runKey --json | ConvertFrom-Json
+if (-not $run.ok) { throw $run.error.message }
 $run.data.results | Select-Object checkId,status,coverage
-$run.data.assessment
+npm --silent run sf -- verify-evidence --run $run.data.run.runId --json
+npm --silent run sf -- report --run $run.data.run.runId --json
 ```
 
-While review is pending, AcceptanceRelay correctly reports ERROR before production test execution, and ReleaseProof remains BLOCKED. The other engines still execute independently. Direct standalone fixture tests are development verification, not approved release evidence.
+Before actual criteria/test review, AcceptanceRelay reports ERROR and ReleaseProof blocks. Follow the [human procedure](ACTION_REQUIRED_FROM_HUMAN.md) to reproduce the reviewed defective and corrected workflow. Use actual returned IDs and fresh snapshots. A CLI operation's exit 0 does not imply a ready candidate.
 
-Review [HUMAN_REVIEW_PACKET.md](HUMAN_REVIEW_PACKET.md) before recording anything. The agent must not perform the following human attestation itself:
+### Connect the room
+
+Configure a dedicated Codex agent in Switch Console with this checkout as its directory. Bridge a Switch room to Mattermost with the human reviewer and agent. Keep provider permission protections enabled and scope commands to the reviewed CLI. Use the [Switch setup guide](docs/SWITCH_GUIDE.md) and [runner guidance](docs/agents/switchforge-runner.md). Then send an actual human request and retain its same-room response.
+
+## Tested toolchain
+
+| Tool                               | Exact tested version                          |
+| ---------------------------------- | --------------------------------------------- |
+| Node / npm                         | 24.16.0 / 11.9.0                              |
+| TypeScript / tsx                   | 7.0.2 / 4.23.15                               |
+| Vitest                             | 5.1.0                                         |
+| Playwright / Chromium headless     | 1.65.0 / 158.0.8127.18, revision 1254         |
+| axe / oasdiff                      | 4.14.0 / 1.35.0                               |
+| better-sqlite3 / csv-parse         | 13.0.3 / 7.0.3                                |
+| Switch Console / Core / Mattermost | Recorded integration 0.40.1 / 0.31.0 / 11.9.0 |
+
+Other operating systems and browser distributions have no verified support in this release.
+
+## Tests and CI
 
 ```powershell
-$proposal = npm --silent run sf -- criteria propose --file fixtures/scenarios/corrected/criteria/approved.json --json | ConvertFrom-Json
-# A real human reviews the exact criteria AND test source, then in an interactive terminal:
-npm --silent run sf -- criteria attest --proposal $proposal.data.proposal.proposalId --json
+npm run typecheck
+npm run lint
+npm run format:check
+npm test
+npm run docs:check
+npm run integrity
 ```
 
-The terminal asks the reviewer for an actor reference and the exact confirmation. Request TTL is 15 minutes. Noninteractive calls are denied. This is **Level 1 HUMAN_ATTESTED_FOR_DEMO**, not cryptographic identity verification. A same-account agent remains a cooperative participant, not a separately isolated principal. Ordinary chat approval does not alter the ledger.
+The latest full sanitized-clone run passed **137/137 across 19 files**, zero failures or skips. The 625 policy-state combinations are exercised inside one unit test. Lint currently uses the TypeScript static check. Integrity verifies protected references when they are present locally and reports their intentional omission from a public checkout.
 
-After genuine review, prepare fresh defective and corrected snapshots and use new keys. Do not edit a prepared snapshot. Get returned IDs from actual output, never invent them:
+The seven actual Actions jobs are `dependency-install`, `typecheck`, `unit`, `integration-checks`, `security-smoke`, `artifact-contract` and `docs-link-check`. Every job passed on both the [implementation push](https://github.com/YellankiKaushik/Flip-Coin-AI/actions/runs/42335780195) and [PR run](https://github.com/YellankiKaushik/Flip-Coin-AI/actions/runs/42335865503). [Testing details and evidence boundaries](docs/TESTING.md).
 
-```powershell
-# After genuine criteria/test review, run a FRESH defective snapshot too:
-$reviewedBad = npm --silent run sf -- prepare --scenario defective --candidate checkout-v2 --json | ConvertFrom-Json
-$stamp = [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
-$run = npm --silent run sf -- run --snapshot $reviewedBad.data.snapshotId --key "reviewed-defective-$stamp" --json | ConvertFrom-Json
-# Complete separate actual correction review before selecting corrected fixtures.
-$fixed = npm --silent run sf -- prepare --scenario corrected --candidate checkout-v2 --json | ConvertFrom-Json
-$after = npm --silent run sf -- run --snapshot $fixed.data.snapshotId --key demo-corrected-001 --json | ConvertFrom-Json
-npm --silent run sf -- report --run $after.data.run.runId --json
-npm --silent run sf -- verify-evidence --run $after.data.run.runId --json
-npm --silent run sf -- compare --before $run.data.run.runId --after $after.data.run.runId --json
+## Repository map
+
+```text
+apps/cli/                 Strict JSON CLI and interactive review commands
+apps/checkout-demo/       Loopback synthetic checkout and acceptance tests
+packages/core/            Models, snapshots, tool inventory and coordinator
+packages/checks/          Four real verification engines
+packages/evidence/        Canonical hashes, artifacts and SQLite persistence
+packages/release/         ReleaseProof and human review lifecycle
+fixtures/scenarios/       Versioned defective and corrected synthetic inputs
+config/                   Pinned tools, input inventory and release policy
+tests/                    Unit, integration, security and local E2E suites
+docs/                     Architecture, setup, evidence and media provenance
+.github/                  Seven-job Windows CI and pinned tool setup
 ```
 
-A command exit 0 means the check operation completed; it does not mean release readiness. Use the JSON assessment. `assert-ready --run ID --json` is a separate policy gate returning nonzero when blocked.
+## Privacy, provenance and rights
 
-When a current run is genuinely READY, `release-request --run ID` creates a request only. A real human may resolve it with interactive `release-attest --proposal ID`, or reject using `--reject`. This records synthetic readiness and never deploys.
+Only distributable source and reviewed public media are published. The original specification references, private room receipts, review database, authentication material and tool caches remain outside the public repository. The public history retains the meaningful development sequence with privacy-safe documentation.
 
-## Why Switch is central
+The banner and diagrams are original vector artwork. Screenshots come from the actual local synthetic demo and recorded conversation. Cropping and opaque redactions remove private references. Evidence summaries are explicitly labeled. No model-generated screenshot is presented as proof. [Media provenance](docs/assets/README.md).
 
-The complete product workflow is human request → Mattermost → Switch → Codex → real CLI → evidence → same-room explanation → reviewed correction → new run → separate human decision. Switch supplies shared context, addressing and human-agent handoff. The deterministic CLI remains independently runnable for reproducibility; a terminal-only demonstration is not a complete Switch hackathon workflow.
+## Hackathon alignment
 
-Use [the Switch setup guide](docs/SWITCH_GUIDE.md) for the dedicated runner/room. No custom transport client, webhook or replacement chat application is required.
+**Best Business Workflow** is the intended track. Switch supplies the shared human-agent review loop, while deterministic tools make results reproducible. The business problem is practical release-review coordination. Impact beyond this controlled demo remains a hypothesis.
 
-## Other commands
+Official judging covers Switch use, technical execution, creativity/impact, and presentation/documentation. The public deliverables are a repository, a short workflow video, and reproducible Switch setup documentation. Submission closes November 7, 2026 at 11:59 PM IST. The owner personally submits the authenticated entry. [Official challenge](https://www.wemakedevs.org/hackathons/switch) · [Schedule](https://www.wemakedevs.org/hackathons/switch/schedule) · [Rules](https://www.wemakedevs.org/hackathons/switch/rules).
 
-See [CLI reference](docs/CLI.md). Implemented families include doctor, prepare, criteria show/propose/attest, run, report, compare, verify-evidence, release-request/attest, recover, export-demo and purge preview. Patch propose/attest and assert-ready are explicit supporting extensions. Purge never deletes; it requires --dry-run.
+## Documentation
 
-## Evidence and safety
+| Start here                      | Read                                                                                           |
+| ------------------------------- | ---------------------------------------------------------------------------------------------- |
+| Understand the implementation   | [Architecture](docs/ARCHITECTURE.md)                                                           |
+| Configure Switch and Mattermost | [Switch guide](docs/SWITCH_GUIDE.md)                                                           |
+| Review exact commands and exits | [CLI reference](docs/CLI.md)                                                                   |
+| Reproduce human gates           | [Human procedure](ACTION_REQUIRED_FROM_HUMAN.md) and [criteria packet](HUMAN_REVIEW_PACKET.md) |
+| Inspect the correction          | [Patch packet](PATCH_REVIEW_PACKET.md)                                                         |
+| Evaluate tests and artifacts    | [Testing](docs/TESTING.md) and [runbooks](docs/RUNBOOKS.md)                                    |
+| Inspect film and captures       | [Demo](docs/DEMO.md) and [asset provenance](docs/assets/README.md)                             |
+| Explore every guide             | [Documentation index](docs/README.md)                                                          |
 
-- Candidate identity hashes raw source/test/spec/CSV/config/policy/lockfile bytes plus actual toolchain records, not just git HEAD or modification times.
-- SQLite ledger: .local/switchforge.sqlite. Frozen snapshots: .local/snapshots. Evidence: artifacts/runs. These directories are ignored by Git.
-- Hashes detect inconsistency; a same-user attacker able to rewrite files and ledger can forge both. Evidence is not audit-proof or immutable storage.
-- Credential-shaped strings are redacted before text evidence and audit persistence. Hashes refer to persisted redacted bytes; tool findings/status are not changed. Inputs must remain synthetic.
-- Only synthetic data and owned local browser targets. No real payments, customer data, external website scanning, deployments or model secrets.
-- Automated axe checks cover the configured rule scope, not complete accessibility compliance.
-- OpenAPI diffing is not live consumer-contract or runtime-implementation verification.
-- Strong isolated human identity, multi-tenant security, cloud hosting, dashboards, additional agents and REA research are not implemented P0 dependencies.
-- Provider/model access can transmit room context/code outside the host; local-first does not imply all data stays local.
+## Scope and next steps
 
-For a new export directory inside the repository, use `export-demo --runs ID,ID --output demo-export --json`. Export rehashes redacted bytes and distinguishes original versus exported hashes. Inspect the export yourself before publishing; publication and final GitHub push require explicit authorization.
+The demo uses synthetic checkout and CSV data. It processes no real payment or bank ledger. Accessibility is the configured label rule. API validation compares OpenAPI documents. CSV reconciliation follows narrow deterministic rules. Windows x64 is the tested platform. The same user account controls the local files and ledger.
 
-Further documents: [architecture](docs/ARCHITECTURE.md), [testing](docs/TESTING.md), [operations](docs/RUNBOOKS.md), [decisions](docs/DECISIONS.md), [demo/submission](docs/DEMO_AND_SUBMISSION.md), and [third-party notices](THIRD_PARTY_NOTICES.md).
+Possible future work includes stronger independently verified reviewer identity, externally anchored evidence, additional accessibility and contract coverage, and additional platform support. Each would require its own implementation and acceptance evidence.
 
-License: Apache-2.0 for project code; dependencies retain their own licenses. No competition win, production readiness, compliance certification or measured commercial impact is claimed.
+## Credits and license
 
-Finalization handoff: [engineering audit](FINAL_ENGINEERING_AUDIT.md), [required human actions](ACTION_REQUIRED_FROM_HUMAN.md), and [submission readiness](SUBMISSION_READINESS.md). Genuine room-driven doctor execution is now verified. Human criteria/test review, the reviewed four-engine run pair, separate correction/release decisions and submission remain incomplete.
+Built by [Yellanki Kaushik](https://github.com/YellankiKaushik) with Codex for the Flip the Switch Hackathon. Switch and Mattermost provide the collaboration environment. Vitest, Playwright/Chromium, axe, oasdiff, csv-parse and SQLite tooling provide deterministic checks and persistence.
 
-The full exact recording sequence and separate human checkpoints are in [FINAL_DEMO_SCRIPT](docs/FINAL_DEMO_SCRIPT.md). Current final engineering evidence is BLOCKED; it is not a completed reviewed demonstration.
-
-## Latest verified delivery evidence
-
-Evaluator f27d79c; CI tooling a2233ef. Main and clean-checkout suites each passed 117/117 across 18 files with zero failures/skips. Standalone opposing frozen-source acceptance gave defective 5/6 (AC-001 fails), corrected 6/6; these grant no approval. Unit/integration/security/E2E groups total 117 distinct tests; the artifact-contract CI job repeats an 18-test subset. The 625 combinations are one generated test. Strict persistence boundaries, public package interfaces, dependency-cycle checks and actual adapter fault tests pass.
-
-Earlier diagnostic runs took place before human review. The completed reviewed defective and corrected runs are the release demonstration described above.
-
-Run `npm run docs:check` for tracked local Markdown destinations. `npm run ci:proof -- <job>` records actual job receipts, redacted reports and provenance; local runs are labelled LOCAL_ONLY. Seven job names are in .github/workflows/ci.yml. External URLs and Markdown heading anchors are outside the offline link check. [Submission copy](SUBMISSION_FIELDS.md) distinguishes prepared content from the authenticated form's unobserved fields.
-
-The existing Windows agent uses its exact installed Node executable plus the ignored workspace-local npm11.9.0 CLI, as documented in its runner instructions. The genuine human-requested doctor now passes in the actual room; previous bootstrap/version/access failures are preserved as history. Do not substitute a different launcher or disable provider protections.
-
-The verified demo used an actual human room request and a same-room Codex response. The underlying room receipts are retained privately.
-
-The Mattermost loopback permalinks are local verification references, not public submission evidence links. A real public demo video, authorized source publication and final reviewed workflow are still required before claiming a complete submission.
+Project source uses the [Apache License 2.0](LICENSE). Dependency versions and license notices are indexed in [the dependency manifest](docs/dependencies.lock.json) and [third-party notices](docs/licenses/README.md).
