@@ -2,7 +2,7 @@
 
 The protected root DEEP_TECHNICAL_ARCHITECTURE_V2.md is authoritative and has not been modified. This file describes the implemented components. The private original specification remains a local reference.
 
-![SwitchForge architecture](assets/architecture.svg)
+![SwitchForge architecture](../assets/legacy/architecture.svg)
 
 ## Components
 

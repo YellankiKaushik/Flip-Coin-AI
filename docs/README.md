@@ -1,18 +1,16 @@
-# SwitchForge documentation
+# Start with SwitchForge
 
-Start with the [project overview](../README.md) and [demonstration](DEMO.md). The public source reproduces the local synthetic workflow with the operator's own human reviews.
+SwitchForge runs four engineering checks for a frozen synthetic checkout and brings the evidence back to the team through Switch. [Project overview](../README.md) · [Watch the demonstration](hackathon/DEMO.md)
 
-| Need                                | Guide                                                                                                                    |
-| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| Implementation and trust boundaries | [Architecture](ARCHITECTURE.md)                                                                                          |
-| Pinned environment                  | [Environment baseline](ENVIRONMENT_BASELINE.md)                                                                          |
-| Connect people and Codex            | [Switch guide](SWITCH_GUIDE.md) and [runner instructions](agents/switchforge-runner.md)                                  |
-| CLI grammar and exit codes          | [CLI reference](CLI.md)                                                                                                  |
-| Human decisions                     | [Procedure](../ACTION_REQUIRED_FROM_HUMAN.md), [criteria](../HUMAN_REVIEW_PACKET.md), [patch](../PATCH_REVIEW_PACKET.md) |
-| Current regression and public CI    | [Testing](TESTING.md)                                                                                                    |
-| Recovery and operation              | [Runbooks](RUNBOOKS.md)                                                                                                  |
-| Demo evidence, media and privacy    | [Demo](DEMO.md), [assets](assets/README.md), [recording plan](FINAL_DEMO_SCRIPT.md)                                      |
-| Submission preparation              | [Submission fields](../SUBMISSION_FIELDS.md) and [checklist](../FINAL_SUBMISSION_CHECKLIST.md)                           |
-| Design choices and dependencies     | [Decisions](DECISIONS.md), [dependency manifest](dependencies.lock.json), [licenses](licenses/README.md)                 |
+| If you want to…                        | Start here                                                                                                                                                       |
+| -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Judge the completed workflow           | [Demo and evidence](hackathon/DEMO.md), [scope and entry checklist](hackathon/CHECKLIST.md)                                                                      |
+| Reproduce on Windows x64               | [Setup and reproduction](getting-started/README.md), [pinned environment](getting-started/ENVIRONMENT_BASELINE.md), [CLI reference](getting-started/CLI.md)      |
+| Connect the agent to the team          | [Switch and Mattermost setup](switch/SWITCH_GUIDE.md), [runner command boundaries](switch/switchforge-runner.md)                                                 |
+| Inspect source and evidence boundaries | [Architecture](architecture/ARCHITECTURE.md), [design decisions](architecture/DECISIONS.md), [tests and CI](testing/TESTING.md)                                  |
+| Understand the three human decisions   | [Review procedure](human-review/PROCEDURE.md), [original criteria/test packet](../HUMAN_REVIEW_PACKET.md), [reviewed patch](human-review/PATCH_REVIEW_PACKET.md) |
+| Troubleshoot a local run               | [Recovery runbook](engineering/RUNBOOKS.md)                                                                                                                      |
+| Verify media or licenses               | [Asset provenance](assets/README.md), [dependency manifest](dependencies.lock.json), [license notices](licenses/README.md)                                       |
+| Read earlier checkpoints               | [Engineering history](history/README.md)                                                                                                                         |
 
-Historical engineering audit files describe their checkpoint. Current README, testing guide and demo page identify the completed reviewed demonstration and the later effective expiry of its final decision. Private specification originals and privileged runtime evidence are intentionally excluded.
+**Current verified demo:** four genuine failures blocked the defective run. After a separate human patch review, four genuine passes and valid evidence yielded `READY_FOR_HUMAN_APPROVAL`. The final Level 1 decision was recorded as `HUMAN_ATTESTED_FOR_DEMO`; the latest effective state is `EXPIRED`. Historical checkpoint language does not describe a current approval.

@@ -20,4 +20,4 @@ SHA-256: `3a82a9dba55563a65ba2b0c1337acc91663f61057fbcc446dedd031662de6820`. Ano
 | 02:03–02:25 | Recorded final human decision and current effective expiry |
 | 02:25–02:45 | Public source, passed CI and reproducibility               |
 
-See [asset provenance](assets/README.md) for capture and visualization boundaries.
+See [asset provenance](../assets/README.md) for capture and visualization boundaries.

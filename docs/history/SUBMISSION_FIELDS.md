@@ -1,5 +1,7 @@
 # Submission copy and observed fields — NOT SUBMITTED
 
+> Historical checkpoint. For current results, see the [documentation index](../README.md).
+
 The synthetic demonstration completed through a real human, Switch, Mattermost and Codex. The reviewed defective run produced four FAIL results with valid evidence and a BLOCKED assessment. After a separate human patch review, the corrected run produced four PASS results with valid evidence, READY_FOR_HUMAN_APPROVAL and zero blockers. A third human review then recorded a Level 1 HUMAN_ATTESTED_FOR_DEMO decision. The decision was effective at completion. A later read reported EXPIRED while retaining the recorded decision. Level 1 records manual demo attestation and provides no production deployment authority. The authenticated submission form remains a separate delivery step.
 
 Prepared current results paragraph: A genuine human request in the existing Switch/Mattermost room reached the dedicated Codex agent, which froze candidate76c34400 and ran all four real engines. Acceptance5/6, the missing email label, removed JSON media type and500-cent discrepancy produced fourFAIL; evidence hashes verified and ReleaseProof correctly BLOCKED. A separate human correction review is prepared against an exact precommitted scenario diff. No corrected reviewed PASS, final human release approval, remote CI result, completed video or submission is claimed. Level1 reviewer identity is not cryptographically verified.

@@ -1,4 +1,6 @@
-# Observed environment baseline
+# Historical environment baseline — November 6, 2026
+
+> This snapshot preserves the earlier provider and review state. The room execution and human reviews were subsequently completed; see the [current demo](../hackathon/DEMO.md) and [reproduction steps](README.md).
 
 Development verification: November 6, 2026, Windows x64. Exact supported local runtime is Node 24.16.0 and selected npm 11.9.0. The bundled Node npm package differs (11.13.0); inventory follows the npm wrapper's actual selected installation.
 
