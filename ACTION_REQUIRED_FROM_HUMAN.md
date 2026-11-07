@@ -1,6 +1,6 @@
 # Human action required — exact-terminal browser preflight
 
-The exact existing Chromium is verified and reused; private helpers now select its approved cache per child.9clean canonical launches and full helper preflights pass in ordinary5.1, profile5.1 and the managed Codex sandbox. The old failed-child path/reason remainsUNKNOWN; no result from a new process proves your already-open window.
+The previously open human PowerShell terminal could not read the pinned browser at its AppData path. The private review helpers now select the verified project-local cache at `.local/switchforge-runner-tools/playwright-browsers/`. Two canonical verifications and two complete read-only patch preflights passed in each of fresh ordinary PowerShell 5.1, profile-enabled PowerShell 5.1, and the managed Codex sandbox. The same already-open terminal still needs its read-only check.
 
 ONE current action in that same project PowerShell window:
 
@@ -12,7 +12,7 @@ After this actual same-window check succeeds, the ordinary personal patch-review
 
 Use the tracked CLI commands documented in the repository. This historical example used a local review setup.
 
-Read PATCH_REVIEW_PACKET.md, then personally choose READY and approval/rejection/cancellation. This reviews selection of precommitted synthetic fixtures, not a new production patch. Criteria review already exists; do not repeat it. Patch helper SHA256`4dfe06b5d81d1d0ef0cb01ea80716e35e31492ebfcd212c640a03430339bc8d6`. Canonical approvals remain interactive Level1; no helper supplies a name or confirmation. The verified cache is `<LOCAL_RUNTIME_ROOT>`; no copy/download or global environment change.
+Read PATCH_REVIEW_PACKET.md, then personally choose READY and approval/rejection/cancellation. This reviews selection of precommitted synthetic fixtures, not a new production patch. Criteria review already exists; do not repeat it. Patch helper SHA256`4d03bd3ad13fbccef001d5aa8cc772b7d8d0481434e69d6231fa73d17a067511`. Canonical approvals remain interactive Level1; no helper supplies a name or confirmation. The verified cache is `.local/switchforge-runner-tools/playwright-browsers/`. The helpers select it for the child process and preserve the parent environment.
 
 After actual patch approval, use the conditional corrected Switch request in PATCH_REVIEW_PACKET.md; replace only its actual proposal UUID. No request has been sent by the assistant. After a real corrected fourPASS/valid/READY result, a third separate personal final review is prepared with:
 

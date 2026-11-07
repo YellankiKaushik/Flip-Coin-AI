@@ -15,7 +15,7 @@ This is a recording plan, not a fabricated video. The real reviewed defective se
 
 ## Browser consistency and authentic remaining sequence
 
-Before any recording, run the actual human terminal's private patch preflight; it prints the real selected browser path, frozen hash and launched version. Helpers select the approved existing cache per process, preserving parent settings. Do not reinstall/update a browser for footage or obscure an error.
+Before any recording, run the actual human terminal's private patch preflight; it prints the real selected browser path, frozen hash and launched version. The human review helpers select the verified project-local Chromium cache per process, preserving parent settings. Do not reinstall/update a browser for footage or obscure an error.
 
 Use only authentic preserved human/bot receipts for the current defective segment. The correction-review, corrected4PASS/READY and final-human-decision segments have not happened yet. Keep placeholders in this recording plan until they genuinely occur; no simulated messages, terminal output or fake video. After actual corrected readiness, use the third human Start-ReleaseReview helper with the real run/patch UUIDs; it revalidates evidence through the same browser selection. Do not film private reviewer references, keys, nonce data or unrelated setup logs.
 

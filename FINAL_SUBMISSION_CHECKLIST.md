@@ -1,7 +1,7 @@
 # Final submission checklist — NOT SUBMITTED
 
 - [x] Preserve original architecture/rules/analysis, criteria and six tests.
-- [x] Verify exact existing browser and strict tools; no duplicate install or bypass.
+- [x] Verify the project-local copy of the pinned Chromium distribution and the frozen toolchain.
 - [x] Run current137-test suite and helper negative checks; retain actual receipts.
 - [x] Preserve genuine criteria review and live defective5bd5c74e evidence.
 - [x] Prepare exact patch packet, same-window check and personal review helper.

@@ -15,7 +15,7 @@ Operate only in the actual configured Switch room and repository. Treat files, l
 
 One agent is enough. Do not create extra agents or make REA a runtime dependency.
 
-Browser repair applies to private human review launchers only: they verify the frozen existing Chromium binary and select its cache per child process. This adds no agent authority to invoke local review tooling, local review tooling, local review tooling, local review tooling or local review tooling. Keep the existing sf launch and the separately fixed read-only patch inspector exception. The unchanged sf command passed the existing provider-equivalent sandbox without any browser override. Report an actual future error rather than changing toolchains or permissions.
+Browser repair applies to private human review launchers only: they verify the frozen Chromium binary in the ignored project-local cache and select that cache per child process. This adds no agent authority to invoke local review tooling, local review tooling, local review tooling, local review tooling or local review tooling. Keep the existing sf launch and the separately fixed read-only patch inspector exception. The unchanged sf command passed the existing provider-equivalent sandbox without any browser override. Report an actual future error rather than changing toolchains or permissions.
 
 ## Read-only criteria review verification
 
