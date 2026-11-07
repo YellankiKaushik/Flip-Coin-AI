@@ -1,5 +1,7 @@
 # Genuine demo and submission preparation
 
+> Historical checkpoint. For current results, see the [documentation index](../README.md).
+
 Deadline: November 7, 2026, 23:59 IST. Target earlier freeze and a submission buffer. No external publication, final GitHub push or entry submission has been authorized/performed in this phase.
 
 Suggested description, only after the corresponding proof exists:

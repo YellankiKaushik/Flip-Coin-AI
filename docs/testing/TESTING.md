@@ -18,7 +18,7 @@ npm run docs:check
 npm run integrity
 ```
 
-Use the pinned Windows tool installation in the [README](../README.md). Integration and E2E need the real Chromium and checksum-verified oasdiff executable. Lint currently invokes TypeScript static checking. The integrity command verifies private protected references when present locally and reports their exclusion from public checkouts. Markdown checking covers tracked local destinations outside fenced examples. It does not prove authenticated external-page access.
+Use the pinned Windows tool installation in the [README](../../README.md). Integration and E2E need the real Chromium and checksum-verified oasdiff executable. Lint currently invokes TypeScript static checking. The integrity command verifies private protected references when present locally and reports their exclusion from public checkouts. Markdown checking covers tracked local destinations outside fenced examples. It does not prove authenticated external-page access.
 
 ## Meaningful boundaries
 
@@ -28,7 +28,7 @@ Isolated test review records are TEST_ONLY fixtures. They do not create, replace
 
 ## Real CI
 
-The [workflow](../.github/workflows/ci.yml) declares seven Windows jobs with pinned action SHAs and exact tool setup. Each job writes actual command receipts and redacted synthetic reports with source, lockfile and tool provenance. The upload step selects only that job's private runtime output for the CI artifact.
+The [workflow](../../.github/workflows/ci.yml) declares seven Windows jobs with pinned action SHAs and exact tool setup. Each job writes actual command receipts and redacted synthetic reports with source, lockfile and tool provenance. The upload step selects only that job's private runtime output for the CI artifact.
 
 All seven jobs passed on the implementation [push](https://github.com/YellankiKaushik/Flip-Coin-AI/actions/runs/42335780195), [PR](https://github.com/YellankiKaushik/Flip-Coin-AI/actions/runs/42335865503), and [first main merge](https://github.com/YellankiKaushik/Flip-Coin-AI/actions/runs/42339056170). Current later runs are visible on [Actions](https://github.com/YellankiKaushik/Flip-Coin-AI/actions).
 

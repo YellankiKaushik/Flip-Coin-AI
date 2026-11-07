@@ -74,4 +74,4 @@ git diff --no-index --output=.local/reviewed-scenario.patch -- fixtures/scenario
 
 Run `npm --silent run sf -- patch propose --snapshot <DEFECTIVE_SNAPSHOT_ID> --file .local/reviewed-scenario.patch --json`. Check the returned proposal against the intended snapshot and patch digest. In an interactive human-controlled terminal, run `npm --silent run sf -- patch attest --proposal <PATCH_PROPOSAL_ID> --json` and personally respond to the review prompt. Use `--reject` to record a rejection. Continue with the corrected scenario after a genuine matching approval.
 
-See the [full human review procedure](ACTION_REQUIRED_FROM_HUMAN.md) and [CLI reference](docs/CLI.md).
+See the [full human review procedure](PROCEDURE.md) and [CLI reference](../getting-started/CLI.md).
