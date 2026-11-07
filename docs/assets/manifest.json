@@ -1,13 +1,13 @@
 [
   {
     "path": "brand/release-signal.svg",
-    "bytes": 2149,
-    "sha256": "29316ce25e794922724ef03e87746a00e721e2269aa08cbcaf1f9ccc85274b9a"
+    "bytes": 2142,
+    "sha256": "c49be20d173eaac7402f7afe6b4ef775d8dd06ead7e38dce338ff3f642d82408"
   },
   {
     "path": "diagrams/verified-change.svg",
-    "bytes": 1744,
-    "sha256": "00f6faaf52ac290ad4fd65bc0c843b878260a6a3bc3b6030470b162f8e1fd1f4"
+    "bytes": 1740,
+    "sha256": "3c45104c9fa68a3ff35bb3a97a1dcbd8e3c8b8a9968d0cd874661c572c5bfd1b"
   },
   {
     "path": "evidence/agent-response.png",
