@@ -1,35 +1,39 @@
-# Verification strategy
+# Testing and evidence
 
-Unit suites exercise canonical hashes, path confinement, strict CSV rules, state validation and all 625 combinations of PASS/FAIL/ERROR/SKIPPED/missing across four required checks. Those inputs are explicitly unit-test fixtures, not recorded tool executions or human approvals.
+## Current measured results
 
-Integration suites use actual SQLite and oasdiff. Security tests use bounded real processes to test timeout/output exhaustion, allowlisting and literal argument handling. Local E2E invokes the actual CLI and real browser/API/data workers against both scenarios. Acceptance remains ERROR in the production workflow while the human criteria/test review is pending; other engines still execute.
+The complete sanitized-clone suite passed **137 tests across 19 files**, with zero failures or skips. It runs unit, integration, security and real local CLI/browser checks against isolated synthetic data. The 625 required-check state combinations are exercised inside one reported unit test. Counts from overlapping groups must not be added together.
 
-Standalone coupon verification:
+The completed human-supervised room demo is separate evidence. Its defective run returned four FAIL results. After a real patch review, a separate corrected run returned four PASS results with valid evidence, positive coverage and zero blockers. Three separate human reviews were recorded. The final Level 1 recorded decision persists, while its later effective state is EXPIRED.
+
+## Run the checks
 
 ```powershell
-npx vitest run --config vitest.candidate.ts
+npm ci
+npm run typecheck
+npm run lint
+npm run format:check
+npm test
+npm run docs:check
+npm run integrity
 ```
 
-This command is development testing and grants no approval. The reviewed acceptance test source and raw machine report are linked by HUMAN_REVIEW_PACKET.md.
+Use the pinned Windows tool installation in the [README](../README.md). Integration and E2E need the real Chromium and checksum-verified oasdiff executable. Lint currently invokes TypeScript static checking. The integrity command verifies private protected references when present locally and reports their exclusion from public checkouts. Markdown checking covers tracked local destinations outside fenced examples. It does not prove authenticated external-page access.
 
-Use npm run test:unit, test:integration, test:security, test:e2e:local, and typecheck. `npm test` runs all tests. Never use ignored failures or turn unknown output into PASS. Test report counts must come from actual executed reports. No invented coverage percentage is provided.
+## Meaningful boundaries
 
-Evidence under .local/verification and artifacts/runs is private local runtime output. Validate with verify-evidence before use. Changing verifier/config/lockfile invalidates old candidates; prepare a new snapshot after source changes. Tests do not fabricate human review records.
+Unit tests exercise canonical hashes, paths, model validation, candidate idempotency, approval expiry and fail-closed policy. Persistence regressions cover malformed stored data, evidence tampering, artifact overwrite denial, incomplete completion records and package interfaces. Integration tests use actual SQLite and oasdiff. Security tests use bounded child processes for timeout, output and literal-argument behavior. Local E2E executes the actual CLI and workers against separate defective and corrected fixture states.
 
-Not established by local tests: genuine Switch project execution, human review/attestation, complete accessibility, runtime consumer compatibility, hostile same-account isolation, cross-platform support or production readiness.
+Isolated test review records are TEST_ONLY fixtures. They do not create, replace or prove real human approval. Normal acceptance execution requires the reviewed criteria/test digests. Missing review yields ERROR and blocks readiness. Standalone fixture testing grants no approval.
 
-A checksum-pinned Windows GitHub Actions workflow is prepared in .github/workflows/ci.yml. It has not been pushed or run. Its local engine tests deliberately retain the pending human gate and cannot prove live Switch collaboration or final approval.
+## Real CI
 
-## Final audit verification additions
+The [workflow](../.github/workflows/ci.yml) declares seven Windows jobs with pinned action SHAs and exact tool setup. Each job writes actual command receipts and redacted synthetic reports with source, lockfile and tool provenance. The upload step selects only that job's private runtime output for the CI artifact.
 
-The audit regression file covers contradictory PASS payloads, engine identity, exact criterion IDs, split UTF-8 process output, concurrent artifact overwrite denial, missing finalization and duplicate CSV rows. Snapshot monitoring tests include an edit restored before validation and an excluded runtime file. The zero/unknown-coupon tests are engineering tests of explicit implementation decisions; the six proposed acceptance tests remain unchanged.
+All seven jobs passed on the implementation [push](https://github.com/YellankiKaushik/Flip-Coin-AI/actions/runs/42335780195), [PR](https://github.com/YellankiKaushik/Flip-Coin-AI/actions/runs/42335865503), and [first main merge](https://github.com/YellankiKaushik/Flip-Coin-AI/actions/runs/42339056170). Current later runs are visible on [Actions](https://github.com/YellankiKaushik/Flip-Coin-AI/actions).
 
-Run `npm run format:check` for the actual Prettier check. Upstream license text is excluded from formatting. E2E commands use a fresh isolated test ledger/artifact root and never read or create real human review records. The 625 state combinations are exercised inside one reported unit test.
+The jobs are dependency-install, typecheck, unit, integration-checks, security-smoke, artifact-contract, and docs-link-check. The artifact-contract group repeats selected tests. These job counts are not extra tests to add to the full suite.
 
-`node scripts/review-packet.mjs` prepares a new corrected frozen snapshot, runs the actual Vitest executable from that snapshot and records hashes, IDs and execution data in HUMAN_REVIEW_PACKET.md. It grants no approval. The local finalization report records the separate opposing-source experiment and clean-checkout results; remote CI remains a separate verification gate.
+## What remains outside the evidence
 
-## Current delivery verification
-
-Main and isolated checkout: 117/117 across 18 files, no failures/skips. Added 12 persistence boundary regressions, five production-adapter faults and a package import/public-interface/cycle check to the previous 99-test baseline. Initial nine persistence regressions actually failed before the repair. Negative adapter tests explicitly damage owned isolated inputs and never create review authority or production PASS evidence.
-
-All seven declared CI jobs passed through the actual ci-proof script locally in the isolated checkout. Groups: 67 unit, 19 integration, 28 security, 3 local E2E; the artifact-contract job repeats 18 tests. Receipts retain exact command exits, counts, Node/browser/oasdiff versions, git SHA/worktree state, lock hash and original/redacted report hashes. Only job-specific redacted synthetic receipts/reports are selected for upload. No remote Actions run has occurred. Offline docs:check checks tracked local Markdown destinations, excluding code examples; it does not check external URL reachability or heading anchors.
+This release tests the synthetic Windows x64 workflow. Automated axe coverage is the configured label rule. API compatibility is at OpenAPI document level. CSV rules cover narrow reconciliation cases. Business adoption, runtime consumer compatibility, complete accessibility, cross-platform operation, hostile same-account isolation and production deployment have no acceptance claim.
