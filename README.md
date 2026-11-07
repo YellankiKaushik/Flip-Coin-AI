@@ -9,15 +9,15 @@ SwitchForge brings release verification into the team conversation. A human asks
 [![CI](https://github.com/YellankiKaushik/Flip-Coin-AI/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/YellankiKaushik/Flip-Coin-AI/actions/workflows/ci.yml)
 ![Node](https://img.shields.io/badge/Node-24.16.0-4A9150) ![TypeScript](https://img.shields.io/badge/TypeScript-7.0.2-3178C6) ![Windows](https://img.shields.io/badge/Tested-Windows_x64-0078D4) ![Scope](https://img.shields.io/badge/Demo-synthetic-BC812D)
 
-[Watch the 2:45 demo](https://github.com/YellankiKaushik/Flip-Coin-AI/releases/download/switchforge-demo-2026-11-07/SwitchForge-2026-demo.mp4) � [Demo and evidence](docs/DEMO.md) · [Real before/after](#the-demonstration) · [Run it yourself](#run-it-yourself) · [Documentation](docs/README.md)
+[Watch the 2:45 demo](https://github.com/YellankiKaushik/Flip-Coin-AI/releases/download/switchforge-demo-2026-11-07/SwitchForge-2026-demo.mp4) · [Demo and evidence](docs/DEMO.md) · [Real before/after](#the-demonstration) · [Run it yourself](#run-it-yourself) · [Documentation](docs/README.md)
 
 Built for **Flip the Switch Hackathon 2026 · Best Business Workflow**.
 
 ## Watch the workflow
 
-![SwitchForge film preview — original project artwork](docs/assets/video-thumbnail.svg)
+[![SwitchForge film - extracted frame from the reviewed 1080p edit](docs/assets/demo-thumbnail.png)](https://github.com/YellankiKaushik/Flip-Coin-AI/releases/download/switchforge-demo-2026-11-07/SwitchForge-2026-demo.mp4)
 
-**Edited demo video — final render and publication in progress.** The film uses captures of the actual existing Switch conversation and clearly labeled visualizations of the completed run records. The hosted URL will be added after media verification. [Demo provenance and chapters](docs/DEMO.md).
+**[Watch or download the completed 2:45 film](https://github.com/YellankiKaushik/Flip-Coin-AI/releases/download/switchforge-demo-2026-11-07/SwitchForge-2026-demo.mp4)** · [Media release](https://github.com/YellankiKaushik/Flip-Coin-AI/releases/tag/switchforge-demo-2026-11-07). Silent, captioned 1080p / 30 fps. The edit reframes genuine captures of the existing Switch conversation and labels visualizations of the completed run records. It depicts retained evidence rather than a new live run. [Provenance and chapters](docs/DEMO.md).
 
 ![Actual recorded agent table showing four FAIL-to-PASS changes](docs/assets/verified-agent-table.png)
 
@@ -150,7 +150,9 @@ If browser access differs across execution environments, install the matching br
 ```powershell
 $candidate = npm --silent run sf -- prepare --scenario defective --candidate checkout-demo --json | ConvertFrom-Json
 if (-not $candidate.ok) { throw $candidate.error.message }
-$run = npm --silent run sf -- run --snapshot $candidate.data.snapshotId --key first-defective-run --json | ConvertFrom-Json
+$runKey = 'diagnostic-' + [Guid]::NewGuid().ToString('N')
+$run = npm --silent run sf -- run --snapshot $candidate.data.snapshotId --key $runKey --json | ConvertFrom-Json
+if (-not $run.ok) { throw $run.error.message }
 $run.data.results | Select-Object checkId,status,coverage
 npm --silent run sf -- verify-evidence --run $run.data.run.runId --json
 npm --silent run sf -- report --run $run.data.run.runId --json
